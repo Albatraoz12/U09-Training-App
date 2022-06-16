@@ -9,8 +9,6 @@ const jwt = require("jsonwebtoken");
 function authorization(req, res, next) {
   const token = req.cookies.access_token;
 
-  console.log("token", token);
-
   if (!token) {
     return res.sendStatus(403);
   }
@@ -19,12 +17,39 @@ function authorization(req, res, next) {
     const data = jwt.verify(token, process.env.SECRET);
     req.userId = data.id;
     req.userRole = data.role;
-    req.username = data.username;
+    req.firstName = data.firstName;
     return next();
   } catch {
     return res.sendStatus(403);
   }
 }
+
+//@desc Authorized a user
+//@routes GET /user/protected
+//@access Public
+router.get("/protected", authorization, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+
+    if (user === null) {
+      res.status(404);
+      return;
+    }
+
+    res.status(200).json({
+      user: {
+        id: req.userId,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.roll,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500);
+  }
+});
 
 //@desc Login A User
 //@routes POST /user/login
