@@ -3,11 +3,73 @@ const router = express.Router();
 const dotenv = require("dotenv").config();
 const User = require("../model/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+//Middleweare, authorize users token
+function authorization(req, res, next) {
+  const token = req.cookies.access_token;
+
+  console.log("token", token);
+
+  if (!token) {
+    return res.sendStatus(403);
+  }
+
+  try {
+    const data = jwt.verify(token, process.env.SECRET);
+    req.userId = data.id;
+    req.userRole = data.role;
+    req.username = data.username;
+    return next();
+  } catch {
+    return res.sendStatus(403);
+  }
+}
+
+//@desc Login A User
+//@routes POST /user/login
+//@access Public
+router.post("/signin", async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const user = await User.findOne({ email });
+
+  if (user) {
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (passwordMatch) {
+      const token = jwt.sign(
+        {
+          id: user._id,
+        },
+        process.env.SECRET
+      );
+
+      return res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          // secure: process.env.NODE_ENV === 'production',
+        })
+        .status(200)
+        .json({
+          message: user.firstName + " Signed in successfully",
+          token: token,
+        });
+    } else if (!passwordMatch) {
+      res.json({ message: "Wrong Password, try again" });
+    }
+  } else {
+    res.json({ message: "sorry, could not login" });
+  }
+});
 
 //@desc Register A User
 //@routes POST /user/register
 //@access Public
-router.post("/register", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
     const user = new User(req.body);
 
@@ -15,11 +77,21 @@ router.post("/register", async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
 
     user.save().then(() => {
-      res.status(200).json({ message: "New user has been created! 👏" });
+      res.status(200).json({ message: "New user has been created!" });
     });
   } catch (error) {
     res.status(404).json({ message: error });
   }
+});
+
+//@desc Logout A User
+//@routes Get /user/logout
+//@access Public
+router.get("/signout", authorization, (req, res) => {
+  return res
+    .clearCookie("access_token")
+    .status(200)
+    .json({ message: "Successfully logged out" });
 });
 
 module.exports = router;
