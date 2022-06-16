@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const userRouter = require("./routes/user");
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 8081;
 const app = express();
@@ -16,6 +17,8 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use("/user", userRouter);
 
 //Start server function
 const startServer = (port) => {

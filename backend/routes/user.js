@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const dotenv = require("dotenv").config();
-const User = require("../models/user");
+const User = require("../model/user");
 const bcrypt = require("bcrypt");
 
 //@desc Register A User
@@ -21,3 +21,5 @@ router.post("/register", async (req, res) => {
     res.status(404).json({ message: error });
   }
 });
+
+module.exports = router;

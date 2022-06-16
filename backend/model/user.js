@@ -14,7 +14,6 @@ const UserSchema = new mongoose.Schema(
     },
     roll: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
