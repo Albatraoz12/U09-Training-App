@@ -3,6 +3,14 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 8081;
 const app = express();
+const cors = require("cors");
+
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
 
 const startServer = (port) => {
   try {
