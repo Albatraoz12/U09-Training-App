@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       max: 50,
     },
-    roll: {
+    role: {
       type: String,
     },
     email: {

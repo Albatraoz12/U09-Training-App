@@ -42,7 +42,7 @@ router.get("/protected", authorization, async (req, res) => {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        role: user.roll,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -76,7 +76,6 @@ router.post("/signin", async (req, res) => {
           httpOnly: true,
           secure: true,
           sameSite: "none",
-          // secure: process.env.NODE_ENV === 'production',
         })
         .status(200)
         .json({
