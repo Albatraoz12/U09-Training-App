@@ -55,7 +55,7 @@ router.post("/signin", async (req, res) => {
         })
         .status(200)
         .json({
-          message: "Logged in successfully " + user.firstName,
+          message: user.firstName + " Signed in successfully",
           token: token,
         });
     } else if (!passwordMatch) {
@@ -77,11 +77,21 @@ router.post("/signup", async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
 
     user.save().then(() => {
-      res.status(200).json({ message: "New user has been created! 👏" });
+      res.status(200).json({ message: "New user has been created!" });
     });
   } catch (error) {
     res.status(404).json({ message: error });
   }
+});
+
+//@desc Logout A User
+//@routes Get /user/logout
+//@access Public
+router.get("/signout", authorization, (req, res) => {
+  return res
+    .clearCookie("access_token")
+    .status(200)
+    .json({ message: "Successfully logged out" });
 });
 
 module.exports = router;
