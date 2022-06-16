@@ -3,6 +3,28 @@ const router = express.Router();
 const dotenv = require("dotenv").config();
 const User = require("../model/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+//Middleweare, authorize users token
+function authorization(req, res, next) {
+  const token = req.cookies.access_token;
+
+  console.log("token", token);
+
+  if (!token) {
+    return res.sendStatus(403);
+  }
+
+  try {
+    const data = jwt.verify(token, process.env.SECRET);
+    req.userId = data.id;
+    req.userRole = data.role;
+    req.username = data.username;
+    return next();
+  } catch {
+    return res.sendStatus(403);
+  }
+}
 
 //@desc Register A User
 //@routes POST /user/register
