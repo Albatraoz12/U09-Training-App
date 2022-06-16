@@ -12,6 +12,9 @@ app.use(
   })
 );
 
+app.use(express.json());
+app.use(cookieParser());
+
 const startServer = (port) => {
   try {
     app.listen(port, () => {
