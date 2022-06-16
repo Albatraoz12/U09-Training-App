@@ -69,7 +69,7 @@ router.post("/signin", async (req, res) => {
 //@desc Register A User
 //@routes POST /user/register
 //@access Public
-router.post("/register", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
     const user = new User(req.body);
 
