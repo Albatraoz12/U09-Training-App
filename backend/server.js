@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 8081;
 const app = express();
@@ -15,6 +17,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+//Start server function
 const startServer = (port) => {
   try {
     app.listen(port, () => {
