@@ -26,6 +26,46 @@ function authorization(req, res, next) {
   }
 }
 
+//@desc Login A User
+//@routes POST /user/login
+//@access Public
+router.post("/signin", async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const user = await User.findOne({ email });
+
+  if (user) {
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (passwordMatch) {
+      const token = jwt.sign(
+        {
+          id: user._id,
+        },
+        process.env.SECRET
+      );
+
+      return res
+        .cookie("access_token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          // secure: process.env.NODE_ENV === 'production',
+        })
+        .status(200)
+        .json({
+          message: "Logged in successfully " + user.firstName,
+          token: token,
+        });
+    } else if (!passwordMatch) {
+      res.json({ message: "Wrong Password, try again" });
+    }
+  } else {
+    res.json({ message: "sorry, could not login" });
+  }
+});
+
 //@desc Register A User
 //@routes POST /user/register
 //@access Public
