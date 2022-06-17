@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
-  res.send("Hello There! - Obi-Wan");
+  res.send("Hello There! - Obi-Wan, aaahhhh general kanobi!");
 });
 //Start server function
 const startServer = (port) => {
