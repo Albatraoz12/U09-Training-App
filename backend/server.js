@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const userRouter = require("./routes/user");
-const userListRouter = require("./routes/userList");
+const listRouter = require("./routes/userList");
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 8081;
 const app = express();
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/user", userRouter);
-app.use("/userList", userListRouter);
+app.use("/userList", listRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello There! - Obi-Wan, aaahhhh general kanobi!");
