@@ -30,4 +30,18 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+//Edit user list with userId
+router.put("/editList/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const options = { new: true };
+    const editList = await userList.findByIdAndUpdate(id, req.body, options);
+    res
+      .status(200)
+      .json({ message: "book with ID " + id + " has now been updated!" });
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
 module.exports = router;
