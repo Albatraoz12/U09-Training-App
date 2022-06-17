@@ -20,6 +20,9 @@ app.use(cookieParser());
 
 app.use("/user", userRouter);
 
+app.get("/", (req, res) => {
+  res.send("Hello There");
+});
 //Start server function
 const startServer = (port) => {
   try {
