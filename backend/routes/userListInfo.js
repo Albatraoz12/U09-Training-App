@@ -28,4 +28,10 @@ router.post("/createInfo/:id", async (req, res) => {
   }
 });
 
+//Read User Lists Information
+router.get("/listInfo/:id", (req, res) => {});
+
+//Delete User Lists Information
+router.delete("/listInfoDelete/:id", (req, res) => {});
+
 module.exports = router;
