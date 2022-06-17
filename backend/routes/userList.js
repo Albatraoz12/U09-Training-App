@@ -10,7 +10,7 @@ router.get("/:id", async (req, res) => {
     const list = await userList.find({ user: id });
     res.status(200).json({ message: list });
   } catch (error) {
-    console.log(error);
+    res.status(404).json({ message: "There is no user in the system" });
   }
 });
 
