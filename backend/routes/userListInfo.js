@@ -29,7 +29,15 @@ router.post("/createInfo/:id", async (req, res) => {
 });
 
 //Read User Lists Information
-router.get("/listInfo/:id", (req, res) => {});
+router.get("/listInfo/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const lInfo = await userListInfo.find({ uList: id });
+    res.status(200).json({ lInfo });
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
 
 //Delete User Lists Information
 router.delete("/listInfoDelete/:id", (req, res) => {});
