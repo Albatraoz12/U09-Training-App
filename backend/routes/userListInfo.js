@@ -28,4 +28,28 @@ router.post("/createInfo/:id", async (req, res) => {
   }
 });
 
+//Read User Lists Information
+router.get("/listInfo/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const lInfo = await userListInfo.find({ uList: id });
+    res.status(200).json({ lInfo });
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+//Delete User Lists Information
+router.delete("/listInfoDelete/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    await userListInfo.findByIdAndDelete(id);
+    res
+      .status(200)
+      .json({ message: "Exercise has now been deletet from list!" });
+  } catch (error) {
+    res.status(404).json({ message: "Invalid Id!" });
+  }
+});
+
 module.exports = router;
