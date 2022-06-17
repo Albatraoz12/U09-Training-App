@@ -27,3 +27,5 @@ router.post("/createInfo/:id", async (req, res) => {
     res.status(404).json({ message: "Invalid Information, try again" });
   }
 });
+
+module.exports = router;
