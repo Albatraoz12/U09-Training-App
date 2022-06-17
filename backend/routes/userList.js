@@ -45,6 +45,14 @@ router.put("/editList/:id", async (req, res) => {
 });
 
 //Delete userList by Id
-router.delete("delete/:id", async (req, res) => {});
+router.delete("delete/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const dList = await userList.findByIdAndDelete(id);
+    res.status(200).json({ message: "User List has now been deletet!" });
+  } catch (error) {
+    res.status(404).json({ message: "Invalid Id!" });
+  }
+});
 
 module.exports = router;
