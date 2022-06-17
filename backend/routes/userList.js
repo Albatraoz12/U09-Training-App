@@ -1,8 +1,18 @@
 const express = require("express");
-const router = express.Router();
-const dotenv = require("dotenv").config();
 const User = require("../model/user");
 const userList = require("../model/userList");
+const dotenv = require("dotenv").config();
+const router = express.Router();
+
+router.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const list = await userList.find({ user: id });
+    res.status(200).json({ message: list });
+  } catch (error) {
+    res.status(404).json({ message: "There is no user in the system" });
+  }
+});
 
 //Crate userList
 router.post("/createList", (req, res) => {
