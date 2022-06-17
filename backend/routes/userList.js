@@ -44,4 +44,7 @@ router.put("/editList/:id", async (req, res) => {
   }
 });
 
+//Delete userList by Id
+router.delete("delete/:id", async (req, res) => {});
+
 module.exports = router;
