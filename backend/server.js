@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const userRouter = require("./routes/user");
 const listRouter = require("./routes/userList");
+const listInfoRouter = require("./routes/userListInfo");
 const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 8081;
 const app = express();
@@ -21,6 +22,7 @@ app.use(cookieParser());
 
 app.use("/user", userRouter);
 app.use("/userList", listRouter);
+app.use("/userListInfo", listInfoRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello There! - Obi-Wan, aaahhhh general kanobi!");
