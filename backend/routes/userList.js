@@ -40,7 +40,7 @@ router.put("/editList/:id", async (req, res) => {
       .status(200)
       .json({ message: "book with ID " + id + " has now been updated!" });
   } catch (error) {
-    res.status(404).json({ message: error });
+    res.status(404).json({ message: "No List with that ID" });
   }
 });
 
