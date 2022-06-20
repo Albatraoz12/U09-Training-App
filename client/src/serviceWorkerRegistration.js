@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -40,6 +41,7 @@ export function register(config) {
                 // Add some additional logging to localhost, pointing developers to the
                 // service worker/PWA documentation.
                 navigator.serviceWorker.ready.then(() => {
+                    // eslint-disable-next-line no-console
                     console.log(
                         'This web app is being served cache-first by a service ' +
                             'worker. To learn more, visit https://cra.link/PWA'
