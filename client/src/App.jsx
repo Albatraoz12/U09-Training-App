@@ -7,11 +7,13 @@ import Signup from './components/Signup'
 import Dashboard from './components/Dashboard'
 import Search from './components/Search'
 import Errorpage from './components/Errorpage'
+import Navbar from './components/Navbar'
 
 function App() {
     return (
         <div className="App">
             <Router>
+                <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/signin" element={<Signin />} />
