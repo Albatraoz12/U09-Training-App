@@ -95,7 +95,13 @@ router.post("/signin", async (req, res) => {
 //@access Public
 router.post("/signup", async (req, res) => {
   try {
-    const user = new User(req.body);
+    const user = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      role: "user",
+      email: req.body.email,
+      password: req.body.password,
+    });
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
