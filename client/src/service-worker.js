@@ -45,7 +45,7 @@ registerRoute(
 
         return true
     },
-    createHandlerBoundToURL('http://localhost:3000/index.html')
+    createHandlerBoundToURL('https://relaxed-raindrop-21bc84.netlify.app/index.html')
 )
 
 // An example runtime caching route for requests that aren't handled by the
