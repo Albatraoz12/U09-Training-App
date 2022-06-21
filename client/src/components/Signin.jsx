@@ -2,7 +2,7 @@ import React from 'react'
 
 function Signin() {
     return (
-        <main className="container">
+        <main className="container my-5">
             <section className="my-5 pb-1">
                 <h1>Sign In</h1>
                 <form className="d-flex justify-content-center row g-3 my-3">

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Signup() {
     return (
-        <main className="container">
+        <main className="container my-5">
             <section className="my-3">
                 <h1>Sign Up</h1>
                 <form className="row g-3 mt-2">
