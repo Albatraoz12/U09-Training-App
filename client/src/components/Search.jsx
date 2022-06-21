@@ -5,10 +5,10 @@ function Search() {
         <main>
             <section className="container mx-auto my-5">
                 <h1>Search</h1>
-                <form className="row g-3 mt-2">
+                <form className="row g-3 mt-4">
                     <div className="col-12">
-                        <label htmlFor="search" className="form-label hidden">
-                            Search Exercise
+                        <label htmlFor="search" className="form-label">
+                            Search exercise by name
                         </label>
                         <input
                             type="text"
@@ -19,9 +19,11 @@ function Search() {
                         />
                     </div>
                     <div className="col-12">
+                        <label htmlFor="selectedWorkoutGroup">Or search for muscle group</label>
                         <select
                             className="form-select form-select-sm mb-3"
                             aria-label=".form-select-lg example"
+                            id="selectedWorkoutGroup"
                         >
                             <option defaultValue>Open this select menu</option>
                             <option value="1">One</option>
