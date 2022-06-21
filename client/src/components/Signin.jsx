@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function Signin() {
     const navigate = useNavigate()
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    })
+    const { email, password } = formData
     return (
         <main className="container my-5">
             <section className="my-5 pb-1">
@@ -17,6 +23,7 @@ function Signin() {
                             className="form-control"
                             id="email"
                             name="email"
+                            value={email}
                             placeholder="Enter your email"
                         />
                     </div>
@@ -29,6 +36,7 @@ function Signin() {
                             className="form-control"
                             id="password"
                             name="password"
+                            value={password}
                             placeholder="Password"
                         />
                     </div>
