@@ -70,10 +70,24 @@ function Signup() {
         }
         return errors
     }
+    const onChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        setFormErrors(validate(formData))
+        setSubmitted(true)
+    }
+    const successmessage = () => {
+        alert('Registration successful!')
+        navigate('/login')
+    }
     return (
         <main className="container my-5">
             <section className="my-3">
                 <h1>Sign Up</h1>
+                {Object.keys(formErrors).length === 0 && submitted ? successmessage() : null}
                 <form className="row g-3 mt-2">
                     <div className="col-md-6">
                         <label htmlFor="firstName" className="form-label">
@@ -87,6 +101,7 @@ function Signup() {
                             name="firstName"
                             value={firstName}
                             placeholder="your first name"
+                            onChange={onChange}
                         />
                     </div>
                     <div className="col-md-6">
@@ -101,6 +116,7 @@ function Signup() {
                             name="lastName"
                             value={lastName}
                             placeholder="your last name"
+                            onChange={onChange}
                         />
                     </div>
                     <div className="col-12">
@@ -115,6 +131,7 @@ function Signup() {
                             id="email"
                             value={email}
                             placeholder="example@gmail.com"
+                            onChange={onChange}
                         />
                     </div>
                     <div className="col-md-6">
@@ -129,6 +146,7 @@ function Signup() {
                             name="password"
                             value={password}
                             placeholder="Password must be 5"
+                            onChange={onChange}
                         />
                     </div>
                     <div className="col-md-6">
@@ -143,10 +161,11 @@ function Signup() {
                             name="confirmPassword"
                             value={confirmPassword}
                             placeholder="confirm your password"
+                            onChange={onChange}
                         />
                     </div>
                     <div className="col-12">
-                        <button type="submit" className="btn btn-primary btn-lg">
+                        <button type="submit" className="btn btn-primary btn-lg" onClick={onSubmit}>
                             Sign in
                         </button>
                     </div>
