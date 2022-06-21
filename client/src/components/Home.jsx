@@ -2,8 +2,8 @@ import React from 'react'
 
 function Home() {
     return (
-        <main className="w-auto mx-auto">
-            <article className="container mx-auto my-5">
+        <main className="w-auto mx-auto mb-5">
+            <article className="container mx-auto my-5 pb-5">
                 <h1>Welcome to DTrain!</h1>
                 <p>Here you will be able to find exercises and how to execute them correcly.</p>
                 <p>
@@ -19,7 +19,7 @@ function Home() {
                 <a className="btn btn-primary mb-1" href="/signup">
                     Get started by Signing Up Here
                 </a>
-                <p className="mt-3">
+                <p className="my-5 pb-5">
                     Already Signed Up,{' '}
                     <a className="text-white fw-bolder" href="/signin">
                         {' '}

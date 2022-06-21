@@ -4,7 +4,7 @@ function Footer() {
     return (
         <footer className="text-center text-white">
             <div className="container mt-5">
-                <section className="">
+                <section>
                     {/* Instagram */}
                     <a
                         className="btn btn-outline-light btn-floating m-1"
