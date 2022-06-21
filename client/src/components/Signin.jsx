@@ -50,6 +50,7 @@ function Signin() {
             })
             .then((res) => {
                 if (res.data) {
+                    // will this work?
                     // eslint-disable-next-line no-console
                     console.log('successfully Logged Out!')
                     // window.location.reload()
