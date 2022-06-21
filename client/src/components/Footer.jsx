@@ -2,9 +2,9 @@ import React from 'react'
 
 function Footer() {
     return (
-        <footer className="text-center text-white">
+        <footer className="text-center text-white mt-5">
             <div className="container mt-5">
-                <section>
+                <section className="py-3">
                     {/* Instagram */}
                     <a
                         className="btn btn-outline-light btn-floating m-1"
@@ -35,7 +35,7 @@ function Footer() {
                     <h1 className="mt-3 fs-4 text-decoration-underline">Socials</h1>
                 </section>
                 <section>
-                    <h2 className="f2-4">&copy; Dimosthenis Emmanouil</h2>
+                    <h2 className="f2-4 py-3">&copy; Dimosthenis Emmanouil</h2>
                 </section>
             </div>
         </footer>
