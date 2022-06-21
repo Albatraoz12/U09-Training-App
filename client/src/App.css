@@ -1,3 +1,9 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
 .App {
     text-align: center;
 }
@@ -16,7 +22,19 @@ body {
 .navbar {
     background-color: #6c6d84;
 }
+footer {
+    background-color: #6c6d84;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    /* height: auto; */
+}
 
 .container-fluid a {
     color: #ffffff;
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
 }
