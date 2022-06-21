@@ -16,6 +16,12 @@ body {
 .navbar {
     background-color: #6c6d84;
 }
+footer {
+    background-color: #6c6d84;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 
 .container-fluid a {
     color: #ffffff;
