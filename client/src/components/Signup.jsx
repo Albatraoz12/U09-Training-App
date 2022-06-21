@@ -1,6 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Signup() {
+    const navigate = useNavigate()
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+    })
+    const [formErrors, setFormErrors] = useState({})
+    const [error, setError] = useState(true)
+    const [submitted, setSubmitted] = useState(false)
+    const { firstName, lastName, city, email, password, confirmPassword } = formData
     return (
         <main className="container my-5">
             <section className="my-3">
