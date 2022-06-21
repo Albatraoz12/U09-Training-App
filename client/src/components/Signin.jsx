@@ -39,6 +39,20 @@ function Signin() {
 
         login(userData)
     }
+    // Logout
+    const onLogout = async () => {
+        // Send token info in headers to backend to let user logout. Backend will remove HTTPOnly cookies
+        await axios
+            .get(`${process.env.REACT_APP_API_URL}user/signout`, {
+                withCredentials: true,
+            })
+            .then((res) => {
+                if (res.data) {
+                    console.log('successfully Logged Out!')
+                    // window.location.reload()
+                }
+            })
+    }
     return (
         <main className="container my-5">
             <section className="my-5 pb-1">
@@ -78,6 +92,10 @@ function Signin() {
                         </button>
                     </div>
                 </form>
+                {/* Temporary here */}
+                <button type="submit" className="btn btn-primary" onClick={onLogout}>
+                    Sign Out
+                </button>
             </section>
         </main>
     )
