@@ -17,7 +17,7 @@ function Signup() {
     const { firstName, lastName, email, password, confirmPassword } = formData
     useEffect(() => {
         const signup = async (userData) => {
-            await axios.post(`${process.env.REACT_APP_API_URL}user/register`, userData)
+            await axios.post(`${process.env.REACT_APP_API_URL}user/signup`, userData)
         }
         if (error === false) {
             signup(formData)
@@ -81,7 +81,7 @@ function Signup() {
     }
     const successmessage = () => {
         alert('Registration successful!')
-        navigate('/login')
+        navigate('/singin')
     }
     return (
         <main className="container my-5">
