@@ -35,7 +35,7 @@ function Search() {
             </section>
             <section className="container">
                 <h1 className="text-start">You searched for:</h1>
-                <div className="row row-cols-1 row-cols-md-2 g-4">
+                <div className="row row-cols-1 row-cols-md-3 g-2">
                     <div>
                         <div className="col">
                             <div className="card">
@@ -43,7 +43,7 @@ function Search() {
                                     src="http://d205bpvrqc9yn1.cloudfront.net/1254.gif"
                                     className="card-img-top"
                                     alt="exercise-gif"
-                                    // height={150}
+                                    height={150}
                                 />
                                 <div className="card-body">
                                     <h2 className="card-title text-dark">Exercise Name</h2>
@@ -57,7 +57,7 @@ function Search() {
                                 src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
                                 className="card-img-top"
                                 alt="exercise-gif"
-                                // height={150}
+                                height={150}
                             />
                             <div className="card-body">
                                 <h2 className="card-title text-dark">Exercise Name</h2>
@@ -70,7 +70,7 @@ function Search() {
                                 src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
                                 className="card-img-top"
                                 alt="exercise-gif"
-                                // height={150}
+                                height={150}
                             />
                             <div className="card-body">
                                 <h2 className="card-title text-dark">Exercise Name</h2>
@@ -83,7 +83,7 @@ function Search() {
                                 src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
                                 className="card-img-top"
                                 alt="exercise-gif"
-                                // height={150}
+                                height={150}
                             />
                             <div className="card-body">
                                 <h2 className="card-title text-dark">Exercise Name</h2>
@@ -96,7 +96,7 @@ function Search() {
                                 src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
                                 className="card-img-top"
                                 alt="exercise-gif"
-                                // height={150}
+                                height={150}
                             />
                             <div className="card-body">
                                 <h2 className="card-title text-dark">Exercise Name</h2>
