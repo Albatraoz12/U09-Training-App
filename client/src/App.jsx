@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard'
 import Search from './components/Search'
 import Errorpage from './components/Errorpage'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                     <Route path="/search" element={<Search />} />
                     <Route path="*" element={<Errorpage />} />
                 </Routes>
+                <Footer />
             </Router>
         </div>
     )
