@@ -14,6 +14,7 @@ function Signin() {
     const login = async (userData) => {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}user/signin`, userData)
         if (response.data.token) {
+            // eslint-disable-next-line no-console
             console.log(response.data.token)
             // navigate('/dashboard')
             // window.location.reload()
@@ -49,6 +50,7 @@ function Signin() {
             })
             .then((res) => {
                 if (res.data) {
+                    // eslint-disable-next-line no-console
                     console.log('successfully Logged Out!')
                     // window.location.reload()
                 }
