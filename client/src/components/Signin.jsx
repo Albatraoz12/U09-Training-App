@@ -9,11 +9,41 @@ function Signin() {
         password: '',
     })
     const { email, password } = formData
+
+    // Login function
+    const login = async (userData) => {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}user/signin`, userData)
+        if (response.data.token) {
+            navigate('/dashboard')
+            window.location.reload()
+        } else {
+            // eslint-disable-next-line no-alert
+            alert('Email or password incorrect')
+        }
+    }
+
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }))
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+        const userData = {
+            email,
+            password,
+        }
+
+        login(userData)
+    }
     return (
         <main className="container my-5">
             <section className="my-5 pb-1">
                 <h1>Sign In</h1>
-                <form className="d-flex justify-content-center row g-3 my-3">
+                <form className="d-flex justify-content-center row g-3 my-3" onSubmit={onSubmit}>
                     <div className="col-12">
                         <label htmlFor="email" className="form-label">
                             Email
@@ -25,6 +55,7 @@ function Signin() {
                             name="email"
                             value={email}
                             placeholder="Enter your email"
+                            onChange={onChange}
                         />
                     </div>
                     <div className="col-12">
@@ -38,6 +69,7 @@ function Signin() {
                             name="password"
                             value={password}
                             placeholder="Password"
+                            onChange={onChange}
                         />
                     </div>
                     <div className="col-12 pb-5">
