@@ -20,3 +20,8 @@ body {
 .container-fluid a {
     color: #ffffff;
 }
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
