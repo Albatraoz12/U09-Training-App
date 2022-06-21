@@ -10,6 +10,7 @@ function Footer() {
                         className="btn btn-outline-light btn-floating m-1"
                         href="https://www.instagram.com/androomeda12/"
                         role="button"
+                        title="Link to Instagram"
                     >
                         <i className="bi bi-instagram" />
                     </a>
@@ -18,6 +19,7 @@ function Footer() {
                         className="btn btn-outline-light btn-floating m-1"
                         href="https://www.linkedin.com/in/dimosthenis-emmanouil-4ba731207/"
                         role="button"
+                        title="Link to Linkedin"
                     >
                         <i className="bi bi-linkedin" />
                     </a>
@@ -26,6 +28,7 @@ function Footer() {
                         className="btn btn-outline-light btn-floating m-1"
                         href="https://github.com/Albatraoz12"
                         role="button"
+                        title="Link to Github"
                     >
                         <i className="bi bi-github" />
                     </a>
