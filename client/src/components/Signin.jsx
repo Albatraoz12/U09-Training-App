@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 function Signin() {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -14,8 +14,9 @@ function Signin() {
     const login = async (userData) => {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}user/signin`, userData)
         if (response.data.token) {
-            navigate('/dashboard')
-            window.location.reload()
+            console.log(response.data.token)
+            // navigate('/dashboard')
+            // window.location.reload()
         } else {
             // eslint-disable-next-line no-alert
             alert('Email or password incorrect')
