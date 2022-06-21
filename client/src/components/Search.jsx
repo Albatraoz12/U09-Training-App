@@ -43,7 +43,6 @@ function Search() {
                                     src="http://d205bpvrqc9yn1.cloudfront.net/1254.gif"
                                     className="card-img-top"
                                     alt="exercise-gif"
-                                    height={150}
                                 />
                                 <div className="card-body">
                                     <h2 className="card-title text-dark">Exercise Name</h2>
@@ -57,7 +56,6 @@ function Search() {
                                 src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
                                 className="card-img-top"
                                 alt="exercise-gif"
-                                height={150}
                             />
                             <div className="card-body">
                                 <h2 className="card-title text-dark">Exercise Name</h2>
@@ -70,7 +68,6 @@ function Search() {
                                 src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
                                 className="card-img-top"
                                 alt="exercise-gif"
-                                height={150}
                             />
                             <div className="card-body">
                                 <h2 className="card-title text-dark">Exercise Name</h2>
@@ -83,7 +80,6 @@ function Search() {
                                 src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
                                 className="card-img-top"
                                 alt="exercise-gif"
-                                height={150}
                             />
                             <div className="card-body">
                                 <h2 className="card-title text-dark">Exercise Name</h2>
@@ -96,7 +92,6 @@ function Search() {
                                 src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
                                 className="card-img-top"
                                 alt="exercise-gif"
-                                height={150}
                             />
                             <div className="card-body">
                                 <h2 className="card-title text-dark">Exercise Name</h2>
