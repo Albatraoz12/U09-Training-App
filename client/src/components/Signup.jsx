@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function Signup() {
     const navigate = useNavigate()
@@ -13,7 +14,17 @@ function Signup() {
     const [formErrors, setFormErrors] = useState({})
     const [error, setError] = useState(true)
     const [submitted, setSubmitted] = useState(false)
-    const { firstName, lastName, city, email, password, confirmPassword } = formData
+    const { firstName, lastName, email, password, confirmPassword } = formData
+    useEffect(() => {
+        const register = async (userData) => {
+            await axios
+                .post(`${process.env.REACT_APP_API_URL}user/register`, userData)
+                .then((res) => console.log(res))
+        }
+        if (error === false) {
+            register(formData)
+        }
+    }, [error, formData])
     return (
         <main className="container my-5">
             <section className="my-3">
