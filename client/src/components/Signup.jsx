@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -15,14 +17,6 @@ function Signup() {
     const [error, setError] = useState(true)
     const [submitted, setSubmitted] = useState(false)
     const { firstName, lastName, email, password, confirmPassword } = formData
-    useEffect(() => {
-        const signup = async (userData) => {
-            await axios.post(`${process.env.REACT_APP_API_URL}user/signup`, userData)
-        }
-        if (error === false) {
-            signup(formData)
-        }
-    }, [error, formData])
 
     const validate = (values) => {
         // Empty errors object - data is added if the form is not filled out properly
@@ -37,10 +31,6 @@ function Signup() {
         }
         if (!values.lastName) {
             errors.lastName = 'Last name is required!'
-            setError(true)
-        }
-        if (!values.city) {
-            errors.city = 'City is required!'
             setError(true)
         }
         if (!values.email) {
@@ -79,15 +69,29 @@ function Signup() {
         setFormErrors(validate(formData))
         setSubmitted(true)
     }
+    const signup = async (userData) => {
+        await axios.post(`${process.env.REACT_APP_API_URL}user/signup`, userData).then((res) => {
+            if (res.data) {
+                console.log('hejsan')
+            }
+        })
+    }
+
+    useEffect(() => {
+        if (error === false) {
+            signup(formData)
+        }
+    }, [error, formData])
     const successmessage = () => {
-        alert('Registration successful!')
-        navigate('/singin')
+        // alert('Registration successful!')
+        navigate('/signin')
     }
     return (
         <main className="container my-5">
             <section className="my-3">
                 <h1>Sign Up</h1>
-                {Object.keys(formErrors).length === 0 && submitted ? successmessage() : null}
+                {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
+                {Object.keys(formErrors).length === 0 && submitted ? successmessage() : <></>}
                 <form className="row g-3 mt-2">
                     <div className="col-md-6">
                         <label htmlFor="firstName" className="form-label">
@@ -166,7 +170,7 @@ function Signup() {
                     </div>
                     <div className="col-12">
                         <button type="submit" className="btn btn-primary btn-lg" onClick={onSubmit}>
-                            Sign in
+                            Sign up
                         </button>
                     </div>
                 </form>
