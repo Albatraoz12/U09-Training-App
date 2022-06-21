@@ -1,11 +1,13 @@
 import React from 'react'
+import logo from '../assets/logo-test.png'
 
 function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark">
             <div className="container-fluid">
                 <a className="navbar-brand" href="/">
-                    Navbar
+                    <img src={logo} alt="DTrain Logo, go Home" height={35} width={35} />
+                    DTrain
                 </a>
                 <button
                     className="navbar-toggler"
