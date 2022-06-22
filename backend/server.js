@@ -1,15 +1,16 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
-const userRouter = require("./routes/user");
-const listRouter = require("./routes/userList");
-const listInfoRouter = require("./routes/userListInfo");
-const dotenv = require("dotenv").config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv').config();
 const PORT = process.env.PORT || 8081;
+const userRouter = require('./routes/user');
+const listRouter = require('./routes/userList');
+const listInfoRouter = require('./routes/userListInfo');
 const app = express();
-const cors = require("cors");
 
+app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
@@ -17,15 +18,12 @@ app.use(
   })
 );
 
-app.use(express.json());
-app.use(cookieParser());
+app.use('/user', userRouter);
+app.use('/userList', listRouter);
+app.use('/userListInfo', listInfoRouter);
 
-app.use("/user", userRouter);
-app.use("/userList", listRouter);
-app.use("/userListInfo", listInfoRouter);
-
-app.get("/", (req, res) => {
-  res.send("Hello There! - Obi-Wan, aaahhhh general kanobi!");
+app.get('/', (req, res) => {
+  res.send('Hello There! - Obi-Wan, aaahhhh general kanobi!');
 });
 //Start server function
 const startServer = (port) => {
