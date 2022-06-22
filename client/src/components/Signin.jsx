@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
 function Signin() {
-    // const navigate = useNavigate()
-    // const user = Cookies.get('access_token')
+    const navigate = useNavigate()
+    const user = Cookies.get('access_token')
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -21,7 +21,7 @@ function Signin() {
             // eslint-disable-next-line no-console
             console.log(response.data.token)
             Cookies.set('access_token', response.data.token)
-            // navigate('/dashboard')
+            navigate('/dashboard')
             // window.location.reload()
         } else {
             // eslint-disable-next-line no-alert
@@ -53,15 +53,15 @@ function Signin() {
                 .get(`${process.env.REACT_APP_API_URL}user/signout`, {
                     withCredentials: true,
                     headers: {
-                        Cookie: 'access_token',
+                        Authorization: `Bearer ${user}`,
                     },
                 })
                 .then((res) => {
                     if (res) {
                         // FrontEnd removed access_token from cookies("localstorage").
-                        // Cookies.remove('access_token')
+                        Cookies.remove('access_token')
                         // eslint-disable-next-line no-console
-                        console.log('successfully Logged Out!')
+                        console.log('Success: successfully Logged Out!')
                     }
                 })
         } catch (error) {
