@@ -70,13 +70,14 @@ function Navbar() {
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a
+                                    <button
                                         className="nav-link fw-bold text-white"
-                                        href="/signin"
+                                        type="button"
+                                        // href=""
                                         onClick={onLogout}
                                     >
                                         logout
-                                    </a>
+                                    </button>
                                 </li>
                             </>
                         ) : (
