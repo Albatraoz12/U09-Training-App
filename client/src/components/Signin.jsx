@@ -5,7 +5,6 @@ import Cookies from 'js-cookie'
 
 function Signin() {
     const navigate = useNavigate()
-    const user = Cookies.get('access_token')
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -46,29 +45,6 @@ function Signin() {
 
         login(userData)
     }
-    const onLogout = async () => {
-        try {
-            // Send token info in headers to backend to let user logout. Backend will remove HTTPOnly cookies
-            await axios
-                .get(`${process.env.REACT_APP_API_URL}user/signout`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    if (res) {
-                        // FrontEnd removed access_token from cookies("localstorage").
-                        Cookies.remove('access_token')
-                        // eslint-disable-next-line no-console
-                        console.log('Success: successfully Logged Out!')
-                    }
-                })
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.log(error)
-        }
-    }
     return (
         <main className="container my-5">
             <section className="my-5 pb-1">
@@ -108,10 +84,6 @@ function Signin() {
                         </button>
                     </div>
                 </form>
-                {/* Temporary here */}
-                <button type="submit" className="btn btn-primary" onClick={onLogout}>
-                    Sign Out
-                </button>
             </section>
         </main>
     )
