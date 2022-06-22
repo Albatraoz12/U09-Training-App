@@ -115,7 +115,7 @@ router.post('/signup', async (req, res) => {
 //@access Public
 router.get('/signout', authorization, (req, res) => {
   return res
-    .clearCookie('access_token')
+    .clearCookie()
     .status(200)
     .json({ message: 'Successfully logged out' });
 });
