@@ -1,7 +1,10 @@
 import React from 'react'
+import Cookies from 'js-cookie'
 import logo from '../assets/logo-test.png'
 
 function Navbar() {
+    const user = Cookies.get('access_token')
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark">
             <div className="container-fluid">
@@ -23,20 +26,41 @@ function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="/search">
+                            <a
+                                className="nav-link fw-bold text-white"
+                                aria-current="page"
+                                href="/search"
+                            >
                                 Search
                             </a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/signin">
-                                Sign In
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/signup">
-                                Sign Up
-                            </a>
-                        </li>
+                        {user ? (
+                            <>
+                                <li className="nav-item">
+                                    <a className="nav-link fw-bold text-white" href="/dashboard">
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link fw-bold text-white" href="/login">
+                                        logout
+                                    </a>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li className="nav-item">
+                                    <a className="nav-link fw-bold text-white" href="/signin">
+                                        Sign In
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link fw-bold text-white" href="/signup">
+                                        Sign Up
+                                    </a>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>
