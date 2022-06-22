@@ -12,7 +12,9 @@ function Signin() {
 
     // Login function
     const login = async (userData) => {
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}user/signin`, userData)
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}user/signin`, userData, {
+            withCredentials: true,
+        })
         if (response.data.token) {
             // eslint-disable-next-line no-console
             console.log(response.data.token)
