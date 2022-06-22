@@ -13,7 +13,7 @@ function Errorpage() {
                 <p>Error code: 404</p>
 
                 <a href="/" className="btn btn-primary">
-                    Click Here to go back come
+                    Click Here to go back to home
                 </a>
             </section>
         </main>
