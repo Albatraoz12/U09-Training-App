@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 // import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-// import Cookies from 'js-cookie'
+import Cookies from 'js-cookie'
 
 function Signin() {
     // const navigate = useNavigate()
@@ -20,7 +20,7 @@ function Signin() {
         if (response.data.token) {
             // eslint-disable-next-line no-console
             console.log(response.data.token)
-            // Cookies.set('access_token', response.data.token)
+            Cookies.set('access_token', response.data.token)
             // navigate('/dashboard')
             // window.location.reload()
         } else {
@@ -52,9 +52,9 @@ function Signin() {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}user/signout`, {
                     withCredentials: true,
-                    // headers: {
-                    //     Authorization: `Bearer ${user}`,
-                    // },
+                    headers: {
+                        Cookie: 'access_token',
+                    },
                 })
                 .then((res) => {
                     if (res) {
