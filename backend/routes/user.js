@@ -12,18 +12,12 @@ function authorization(req, res, next) {
     return res.status(403).json({ message: 'You are not Authorized!' });
   }
 
-  if (!token) {
-    return res.sendStatus(403);
-  }
-
   try {
     const data = jwt.verify(token, process.env.SECRET);
     req.userId = data.id;
-    req.userRole = data.role;
-    req.firstName = data.firstName;
     return next();
   } catch {
-    return res.sendStatus(403);
+    return res.status(403).json({ message: 'You have no valid token' });
   }
 }
 
