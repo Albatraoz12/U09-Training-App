@@ -19,6 +19,7 @@ function Navbar() {
                     if (res) {
                         // FrontEnd removed access_token from cookies("localstorage").
                         Cookies.remove('access_token')
+                        window.location.reload()
                         // eslint-disable-next-line no-console
                         console.log('Success: successfully Logged Out!')
                     }
