@@ -52,9 +52,9 @@ function Signin() {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}user/signout`, {
                     withCredentials: true,
-                    // headers: {
-                    //     Authorization: `Bearer ${user}`,
-                    // },
+                    headers: {
+                        Cookie: 'access_token',
+                    },
                 })
                 .then((res) => {
                     if (res) {
