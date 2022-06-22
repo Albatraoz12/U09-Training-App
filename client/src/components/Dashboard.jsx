@@ -39,7 +39,7 @@ function Dashboard() {
                 <section>
                     <div>
                         <h2>Your Lists</h2>
-                        <ul className="d-flex justify-content-center flex-column list-unstyled">
+                        <ul className="d-flex justify-content-center flex-column list-unstyled gap-1">
                             <li>
                                 <a className="text-white" href="/">
                                     ListName1
@@ -53,6 +53,28 @@ function Dashboard() {
                             <li>
                                 <a className="text-white" href="/">
                                     ListName3
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h2>Your Saves</h2>
+                    <div>
+                        <ul className="d-flex justify-content-center flex-column list-unstyled gap-1">
+                            <li>
+                                <a className="text-white" href="/">
+                                    Save 1
+                                </a>
+                            </li>
+                            <li>
+                                <a className="text-white" href="/">
+                                    Save 2
+                                </a>
+                            </li>
+                            <li>
+                                <a className="text-white" href="/">
+                                    Save 3
                                 </a>
                             </li>
                         </ul>
