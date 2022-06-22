@@ -1,13 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const dotenv = require("dotenv").config();
-const User = require("../model/user");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const dotenv = require('dotenv').config();
+const User = require('../model/user');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //Middleweare, authorize users token
 function authorization(req, res, next) {
-  const token = req.cookies.access_token;
+  const token = req.headers.authorization.split(' ')[1];
+  if (!token) {
+    return res.status(403).json({ message: 'You are not Authorized!' });
+  }
 
   if (!token) {
     return res.sendStatus(403);
@@ -27,7 +30,7 @@ function authorization(req, res, next) {
 //@desc Authorized a user
 //@routes GET /user/protected
 //@access Public
-router.get("/protected", authorization, async (req, res) => {
+router.get('/protected', authorization, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
 
@@ -54,7 +57,7 @@ router.get("/protected", authorization, async (req, res) => {
 //@desc Login A User
 //@routes POST /user/login
 //@access Public
-router.post("/signin", async (req, res) => {
+router.post('/signin', async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -72,33 +75,33 @@ router.post("/signin", async (req, res) => {
       );
 
       return res
-        .cookie("access_token", token, {
+        .cookie('access_token', token, {
           httpOnly: true,
           secure: true,
-          sameSite: "none",
+          sameSite: 'none',
         })
         .status(200)
         .json({
-          message: user.firstName + " Signed in successfully",
+          message: user.firstName + ' Signed in successfully',
           token: token,
         });
     } else if (!passwordMatch) {
-      res.json({ message: "Wrong Password, try again" });
+      res.json({ message: 'Wrong Password, try again' });
     }
   } else {
-    res.json({ message: "sorry, could not login" });
+    res.json({ message: 'sorry, could not login' });
   }
 });
 
 //@desc Register A User
 //@routes POST /user/register
 //@access Public
-router.post("/signup", async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     const user = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      role: "user",
+      role: 'user',
       email: req.body.email,
       password: req.body.password,
     });
@@ -107,7 +110,7 @@ router.post("/signup", async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
 
     user.save().then(() => {
-      res.status(200).json({ message: "New user has been created!" });
+      res.status(200).json({ message: 'New user has been created!' });
     });
   } catch (error) {
     res.status(404).json({ message: error });
@@ -117,11 +120,11 @@ router.post("/signup", async (req, res) => {
 //@desc Logout A User
 //@routes Get /user/logout
 //@access Public
-router.get("/signout", authorization, (req, res) => {
+router.get('/signout', authorization, (req, res) => {
   return res
-    .clearCookie("access_token")
+    .clearCookie('access_token')
     .status(200)
-    .json({ message: "Successfully logged out" });
+    .json({ message: 'Successfully logged out' });
 });
 
 module.exports = router;
