@@ -48,7 +48,10 @@ function Navbar() {
                 >
                     <span className="navbar-toggler-icon" />
                 </button>
-                <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <div
+                    className="collapse navbar-collapse justify-content-end"
+                    id="navbarNavDropdown"
+                >
                     <ul className="navbar-nav">
                         <li className="nav-item">
                             <a
