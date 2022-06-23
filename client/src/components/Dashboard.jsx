@@ -41,17 +41,17 @@ function Dashboard() {
                         <h2>Your Lists</h2>
                         <ul className="d-flex justify-content-center flex-column list-unstyled gap-1">
                             <li>
-                                <a className="text-white" href="/">
+                                <a className="text-white" href="/userList/1">
                                     ListName1
                                 </a>
                             </li>
                             <li>
-                                <a className="text-white" href="/">
+                                <a className="text-white" href="/userList/1">
                                     ListName2
                                 </a>
                             </li>
                             <li>
-                                <a className="text-white" href="/">
+                                <a className="text-white" href="/userList/1">
                                     ListName3
                                 </a>
                             </li>
@@ -63,17 +63,17 @@ function Dashboard() {
                     <div>
                         <ul className="d-flex justify-content-center flex-column list-unstyled gap-1">
                             <li>
-                                <a className="text-white" href="/">
+                                <a className="text-white" href="/exercise/1">
                                     Save 1
                                 </a>
                             </li>
                             <li>
-                                <a className="text-white" href="/">
+                                <a className="text-white" href="/exercise/1">
                                     Save 2
                                 </a>
                             </li>
                             <li>
-                                <a className="text-white" href="/">
+                                <a className="text-white" href="/exercise/1">
                                     Save 3
                                 </a>
                             </li>
