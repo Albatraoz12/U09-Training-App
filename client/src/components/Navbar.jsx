@@ -71,10 +71,10 @@ function Navbar() {
                                 </li>
                                 <li className="nav-item">
                                     <button
-                                        className="nav-link fw-bold text-white"
+                                        className="nav-link fw-bolder text-white btn btn-danger btn-sm"
                                         type="button"
-                                        // href=""
                                         onClick={onLogout}
+                                        aria-label="sign out button"
                                     >
                                         logout
                                     </button>
