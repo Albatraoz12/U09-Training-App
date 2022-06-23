@@ -41,6 +41,18 @@ body {
 .navbar {
     background-color: #6c6d84;
 }
+
+.btn-danger {
+    display: inline-block;
+    background-color: transparent;
+    border: 1px solid #6c6d84;
+}
+
+.btn-danger:hover {
+    background-color: #272848;
+    border: 1px solid #272848;
+}
+
 footer {
     background-color: #6c6d84;
     position: relative;

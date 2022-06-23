@@ -1,9 +1,11 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import logo from '../assets/logo-test.png'
 
 function Navbar() {
+    const navigate = useNavigate()
     const user = Cookies.get('access_token')
     const onLogout = async () => {
         try {
@@ -19,7 +21,8 @@ function Navbar() {
                     if (res) {
                         // FrontEnd removed access_token from cookies("localstorage").
                         Cookies.remove('access_token')
-                        // window.location.reload()
+                        navigate('/signin')
+                        window.location.reload()
                         // eslint-disable-next-line no-console
                         console.log('Success: successfully Logged Out!')
                     }
@@ -71,10 +74,10 @@ function Navbar() {
                                 </li>
                                 <li className="nav-item">
                                     <button
-                                        className="nav-link fw-bold text-white"
+                                        className="nav-link fw-bolder text-white btn btn-danger btn-sm"
                                         type="button"
-                                        // href=""
                                         onClick={onLogout}
+                                        aria-label="sign out button"
                                     >
                                         logout
                                     </button>
