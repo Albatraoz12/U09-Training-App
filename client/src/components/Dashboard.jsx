@@ -40,20 +40,35 @@ function Dashboard() {
                     <div>
                         <h2>Your Lists</h2>
                         <ul className="d-flex justify-content-center flex-column list-unstyled gap-1">
-                            <li>
+                            <li className="d-flex justify-content-center align-items-center gap-2">
                                 <a className="text-white" href="/userList/1">
                                     ListName1
                                 </a>
+                                <button
+                                    type="button"
+                                    className="bi bi-x-lg btn btn-danger"
+                                    aria-label="remove list"
+                                />
                             </li>
-                            <li>
+                            <li className="d-flex justify-content-center align-items-center gap-2">
                                 <a className="text-white" href="/userList/1">
                                     ListName2
                                 </a>
+                                <button
+                                    type="button"
+                                    className="bi bi-x-lg btn btn-danger"
+                                    aria-label="remove list"
+                                />
                             </li>
-                            <li>
+                            <li className="d-flex justify-content-center align-items-center gap-2">
                                 <a className="text-white" href="/userList/1">
                                     ListName3
                                 </a>
+                                <button
+                                    type="button"
+                                    className="bi bi-x-lg btn btn-danger"
+                                    aria-label="remove list"
+                                />
                             </li>
                         </ul>
                     </div>
@@ -62,20 +77,35 @@ function Dashboard() {
                     <h2>Your Saves</h2>
                     <div>
                         <ul className="d-flex justify-content-center flex-column list-unstyled gap-1">
-                            <li>
+                            <li className="d-flex justify-content-center align-items-center gap-2">
                                 <a className="text-white" href="/exercise/1">
                                     Save 1
                                 </a>
+                                <button
+                                    type="button"
+                                    className="bi bi-x-lg btn btn-danger"
+                                    aria-label="remove list"
+                                />
                             </li>
-                            <li>
+                            <li className="d-flex justify-content-center align-items-center gap-2">
                                 <a className="text-white" href="/exercise/1">
                                     Save 2
                                 </a>
+                                <button
+                                    type="button"
+                                    className="bi bi-x-lg btn btn-danger"
+                                    aria-label="remove list"
+                                />
                             </li>
-                            <li>
+                            <li className="d-flex justify-content-center align-items-center gap-2">
                                 <a className="text-white" href="/exercise/1">
                                     Save 3
                                 </a>
+                                <button
+                                    type="button"
+                                    className="bi bi-x-lg btn btn-danger"
+                                    aria-label="remove list"
+                                />
                             </li>
                         </ul>
                     </div>
