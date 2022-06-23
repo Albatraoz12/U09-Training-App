@@ -38,9 +38,25 @@ function Search() {
                 <div className="row row-cols-1 row-cols-md-3 g-2">
                     <div>
                         <div className="col">
+                            <a href="/exercise/1" className="text-decoration-none">
+                                <div className="card">
+                                    <img
+                                        src="http://d205bpvrqc9yn1.cloudfront.net/1254.gif"
+                                        className="card-img-top"
+                                        alt="exercise-gif"
+                                    />
+                                    <div className="card-body">
+                                        <h2 className="card-title text-dark">Exercise Name</h2>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div className="col">
+                        <a href="/exercise/1" className="text-decoration-none">
                             <div className="card">
                                 <img
-                                    src="http://d205bpvrqc9yn1.cloudfront.net/1254.gif"
+                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
                                     className="card-img-top"
                                     alt="exercise-gif"
                                 />
@@ -48,55 +64,49 @@ function Search() {
                                     <h2 className="card-title text-dark">Exercise Name</h2>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div className="col">
-                        <div className="card">
-                            <img
-                                src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                className="card-img-top"
-                                alt="exercise-gif"
-                            />
-                            <div className="card-body">
-                                <h2 className="card-title text-dark">Exercise Name</h2>
+                        <a href="/exercise/1" className="text-decoration-none">
+                            <div className="card">
+                                <img
+                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
+                                    className="card-img-top"
+                                    alt="exercise-gif"
+                                />
+                                <div className="card-body">
+                                    <h2 className="card-title text-dark">Exercise Name</h2>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div className="col">
-                        <div className="card">
-                            <img
-                                src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                className="card-img-top"
-                                alt="exercise-gif"
-                            />
-                            <div className="card-body">
-                                <h2 className="card-title text-dark">Exercise Name</h2>
+                        <a href="/exercise/1" className="text-decoration-none">
+                            <div className="card">
+                                <img
+                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
+                                    className="card-img-top"
+                                    alt="exercise-gif"
+                                />
+                                <div className="card-body">
+                                    <h2 className="card-title text-dark">Exercise Name</h2>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div className="col">
-                        <div className="card">
-                            <img
-                                src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                className="card-img-top"
-                                alt="exercise-gif"
-                            />
-                            <div className="card-body">
-                                <h2 className="card-title text-dark">Exercise Name</h2>
+                        <a href="/exercise/1" className="text-decoration-none">
+                            <div className="card">
+                                <img
+                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
+                                    className="card-img-top"
+                                    alt="exercise-gif"
+                                />
+                                <div className="card-body">
+                                    <h2 className="card-title text-dark">Exercise Name</h2>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="card">
-                            <img
-                                src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                className="card-img-top"
-                                alt="exercise-gif"
-                            />
-                            <div className="card-body">
-                                <h2 className="card-title text-dark">Exercise Name</h2>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </section>
