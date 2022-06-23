@@ -46,6 +46,11 @@ function Dashboard() {
                                 </a>
                                 <button
                                     type="button"
+                                    className="bi bi-pencil-square btn btn-danger"
+                                    aria-label="remove list"
+                                />
+                                <button
+                                    type="button"
                                     className="bi bi-x-lg btn btn-danger"
                                     aria-label="remove list"
                                 />
@@ -56,6 +61,11 @@ function Dashboard() {
                                 </a>
                                 <button
                                     type="button"
+                                    className="bi bi-pencil-square btn btn-danger"
+                                    aria-label="remove list"
+                                />
+                                <button
+                                    type="button"
                                     className="bi bi-x-lg btn btn-danger"
                                     aria-label="remove list"
                                 />
@@ -64,6 +74,11 @@ function Dashboard() {
                                 <a className="text-white" href="/userList/1">
                                     ListName3
                                 </a>
+                                <button
+                                    type="button"
+                                    className="bi bi-pencil-square btn btn-danger"
+                                    aria-label="remove list"
+                                />
                                 <button
                                     type="button"
                                     className="bi bi-x-lg btn btn-danger"
