@@ -12,11 +12,13 @@ function ExercisePage() {
                         legs
                     </p>
                 </article>
-                <img
-                    className="card-img-top"
-                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                    alt="Exercise Gif"
-                />
+                <div className="col-12 col-xl-4 mx-auto">
+                    <img
+                        className="card-img-top"
+                        src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
+                        alt="Exercise Gif"
+                    />
+                </div>
             </section>
         </main>
     )
