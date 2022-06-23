@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const userListInfo = require('./userListInfo');
 
 const userListSchema = new mongoose.Schema(
   {
@@ -10,10 +11,20 @@ const userListSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: 'User',
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("UserList", userListSchema);
+userListSchema.pre('remove', function (next) {
+  userListInfo.deleteMany({ uList: this.id }, (err) => {
+    if (err) {
+      next(err);
+    } else {
+      next();
+    }
+  });
+});
+
+module.exports = mongoose.model('UserList', userListSchema);
