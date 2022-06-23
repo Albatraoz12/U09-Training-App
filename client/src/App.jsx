@@ -9,6 +9,8 @@ import Search from './components/Search'
 import Errorpage from './components/Errorpage'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ExercisePage from './components/ExercisePage'
+import UserListPage from './components/UserListPage'
 
 function App() {
     return (
@@ -19,7 +21,9 @@ function App() {
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/userList/:id" element={<UserListPage />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/exercise/:id" element={<ExercisePage />} />
                 <Route path="*" element={<Errorpage />} />
             </Routes>
             <Footer />
