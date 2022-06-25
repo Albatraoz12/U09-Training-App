@@ -53,7 +53,11 @@ The Home component is the websites landing page to let the user getting started.
 
 ### **Navbar**
 
+The Navbar component is where the navbar is and is responseble to navigate the user where he/she wants to go.
+
 ### **Search**
+
+This component is where the user will search for either an exercise by name or exercises by an targeted muscle e.g Chest
 
 ### **Signin**
 
