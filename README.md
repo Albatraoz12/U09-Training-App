@@ -37,13 +37,19 @@ In the dasboard the user will also be able to see its saved exercises and if the
 
 ### **Errorpage**
 
-When ever the user types in the wrong url e.g https://website.com/* a message will apear saying error message and a link to the home page.
+When ever the user types in the wrong url e.g https://relaxed-raindrop-21bc84.netlify.app/* a message will apear saying error message and a link to the home page.
 
 ### **ExcercisePage**
 
+This component will make an api call to the ExerciseDB with the ID of an exercise and later display it for the user. NOTE! The api dosent have any description so the About section is just some dummy text with api variables.
+
 ### **Footer**
 
+Footer component to display what a footer does, Authors (me) socials and copyright.
+
 ### **Home**
+
+The Home component is the websites landing page to let the user getting started.
 
 ### **Navbar**
 
