@@ -8,7 +8,7 @@ function Search() {
 
     const options = {
         method: 'GET',
-        url: `https://exercisedb.p.rapidapi.com/exercises/name/${exerciseName}`,
+        url: `https://exercisedb.p.rapidapi.com/exercises/name/${exerciseName.toLowerCase()}`,
         headers: {
             'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
             'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
@@ -54,6 +54,7 @@ function Search() {
                             placeholder="Enter a exercise name"
                             onChange={(e) => {
                                 setExerciseName(e.target.value)
+                                console.log(exerciseName)
                             }}
                         />
                         <button
@@ -96,7 +97,7 @@ function Search() {
                                             alt="exercise-gif"
                                         />
                                         <div className="card-body">
-                                            <h2 className="card-title text-dark">
+                                            <h2 className="card-title text-dark fs-6 fw-bold">
                                                 {exercise.name}
                                             </h2>
                                         </div>
