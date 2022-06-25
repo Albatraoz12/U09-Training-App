@@ -20,7 +20,7 @@ function ExercisePage() {
             await axios
                 .request(options)
                 .then((response) => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     setExercise(response.data)
                 })
                 .catch((error) => {

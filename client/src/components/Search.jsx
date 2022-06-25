@@ -21,7 +21,7 @@ function Search() {
             .request(options)
             .then((response) => {
                 setExcercises(response.data)
-                console.log(response.data)
+                // console.log(response.data)
             })
             .catch((error) => {
                 // eslint-disable-next-line no-console
@@ -43,7 +43,7 @@ function Search() {
             .request(optionsTwo)
             .then((response) => {
                 setExcercises(response.data)
-                console.log(response.data)
+                // console.log(response.data)
             })
             .catch((error) => {
                 // eslint-disable-next-line no-console
