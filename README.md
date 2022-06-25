@@ -22,6 +22,36 @@ The admin roles are like developers, they will check that every new implementaio
 
 # Backend
 
+## User Api Routes
+
+#### Sign up
+
+```http
+  POST /user/signup
+```
+
+| Parameter   | Type     | Description                             |
+| :---------- | :------- | :-------------------------------------- |
+| `firstName` | `string` | **Required**. User input                |
+| `lastName`  | `string` | **Required**. User input                |
+| `role`      | `string` | **Required**. will be user as default   |
+| `email`     | `string` | **Required**. User input                |
+| `password`  | `string` | **Required**. User input, will be hased |
+
+#### Sign in
+
+```http
+  POST /user/signin
+```
+
+| Parameter  | Type     | Description              |
+| :--------- | :------- | :----------------------- |
+| `email`    | `string` | **Required**. user input |
+| `password` | `string` | **Required**. user input |
+
+app.use('/userList', listRouter);
+app.use('/userListInfo', listInfoRouter);
+
 ## **Api Routes**
 
 #frontend
