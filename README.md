@@ -61,10 +61,15 @@ This component is where the user will search for either an exercise by name or e
 
 ### **Signin**
 
+This component is responseble to send the users credentials to the my DB api to login the users if the credentionals is true.
+
 ### **Signup**
+
+This component is responseble to create an user with the information given by the user.
 
 ### **userListPage**
 
+This component will fetch the users list and the information it has with other words the exercises saved to that list.
 #Futher Work
 
 implement new role:
