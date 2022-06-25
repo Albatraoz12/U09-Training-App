@@ -16,10 +16,14 @@ May only be able to search gym exercises but will not be able to save them nor c
 
 Registered Users can login and create, update, read and delete a list aswell as save exercises.
 
-## **Trainers**
-
-Trainers can do what an registered user can but also puplish their workout lists to help users complete their goal.
-
 ## **Admin**
 
 The admin roles are like developers, they will check that every new implementaion works on the site that means that they can do what a Registered user can and also Create a new user, Update a User, Read a user and Delete a user.
+
+#Futher Work
+
+implement new role:
+
+## **Trainers**
+
+Trainers can do what an registered user can but also puplish their workout lists to help users complete their goal.
