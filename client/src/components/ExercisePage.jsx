@@ -16,16 +16,20 @@ function ExercisePage() {
             },
         }
 
-        axios
-            .request(options)
-            .then((response) => {
-                console.log(response.data)
-                setExercise(response.data)
-            })
-            .catch((error) => {
-                // eslint-disable-next-line no-console
-                console.error(error)
-            })
+        const getExercise = async () => {
+            await axios
+                .request(options)
+                .then((response) => {
+                    console.log(response.data)
+                    setExercise(response.data)
+                })
+                .catch((error) => {
+                    // eslint-disable-next-line no-console
+                    console.error(error)
+                })
+        }
+
+        getExercise()
     }, [params.id])
     return (
         <main className="my-5">
