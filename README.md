@@ -30,6 +30,11 @@ The admin roles are like developers, they will check that every new implementaio
 
 ### **Dashboard**
 
+Dashboard component is the users page where they can create lists and use that list wo save exercises to.
+The user can open its lists and see what exercises are stored inside that lists. The user can delete exercises from that list or delte the whole list.
+
+In the dasboard the user will also be able to see its saved exercises and if the user wants to see more details the user can then navigate through clicking on the saved item and see more dtails.
+
 ### **Errorpage**
 
 ### **ExcercisePage**
