@@ -26,7 +26,7 @@ const userListInfoSchema = new mongoose.Schema(
       type: String,
       required: true,
       max: 50,
-      unique,
+      unique: true,
     },
     gifUrl: {
       type: String,
