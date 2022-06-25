@@ -24,6 +24,7 @@ function Search() {
                 console.log(response.data)
             })
             .catch((error) => {
+                // eslint-disable-next-line no-console
                 console.error(error)
             })
     }
@@ -45,6 +46,7 @@ function Search() {
                 console.log(response.data)
             })
             .catch((error) => {
+                // eslint-disable-next-line no-console
                 console.error(error)
             })
     }
@@ -52,7 +54,6 @@ function Search() {
     const handleSubmit = (e) => {
         e.preventDefault()
         getEx()
-        console.log(exercises)
     }
 
     const ten = exercises.filter((item, index) => {
@@ -76,7 +77,6 @@ function Search() {
                             placeholder="Enter a exercise name"
                             onChange={(e) => {
                                 setExerciseName(e.target.value)
-                                console.log(exerciseName)
                             }}
                         />
                         <button
@@ -95,11 +95,10 @@ function Search() {
                             id="selectedWorkoutGroup"
                             onChange={(e) => {
                                 setBodyPart(e.target.value)
-                                console.log(e.target.value)
                                 getExTwo()
                             }}
                         >
-                            <option defaultValue>Open this select menu</option>
+                            <option defaultValue>Get Excersises by clicking on a bodypart</option>
                             <option value="back">Back</option>
                             <option value="chest">Chest</option>
                             <option value="lower%20arms">Lower Arm</option>
@@ -131,6 +130,14 @@ function Search() {
                                             <h2 className="card-title text-dark fs-6 fw-bold">
                                                 {exercise.name}
                                             </h2>
+                                            <div className="d-flex justify-content-center align-items-center gap-2">
+                                                <span className="btn btn-primary rounded">
+                                                    {exercise.equipment}
+                                                </span>
+                                                <span className="btn btn-primary rounded">
+                                                    {exercise.target}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </a>
@@ -138,64 +145,6 @@ function Search() {
                         )
                     })}
                 </div>
-                {/*                     
-                    <div className="col">
-                        <a href="/exercise/1" className="text-decoration-none">
-                            <div className="card">
-                                <img
-                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                    className="card-img-top"
-                                    alt="exercise-gif"
-                                />
-                                <div className="card-body">
-                                    <h2 className="card-title text-dark">Exercise Name</h2>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="col">
-                        <a href="/exercise/1" className="text-decoration-none">
-                            <div className="card">
-                                <img
-                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                    className="card-img-top"
-                                    alt="exercise-gif"
-                                />
-                                <div className="card-body">
-                                    <h2 className="card-title text-dark">Exercise Name</h2>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="col">
-                        <a href="/exercise/1" className="text-decoration-none">
-                            <div className="card">
-                                <img
-                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                    className="card-img-top"
-                                    alt="exercise-gif"
-                                />
-                                <div className="card-body">
-                                    <h2 className="card-title text-dark">Exercise Name</h2>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="col">
-                        <a href="/exercise/1" className="text-decoration-none">
-                            <div className="card">
-                                <img
-                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                    className="card-img-top"
-                                    alt="exercise-gif"
-                                />
-                                <div className="card-body">
-                                    <h2 className="card-title text-dark">Exercise Name</h2>
-                                </div>
-                            </div>
-                        </a>
-                    </div> */}
-                {/* </div> */}
             </section>
         </main>
     )
