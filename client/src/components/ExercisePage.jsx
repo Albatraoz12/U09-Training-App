@@ -23,6 +23,7 @@ function ExercisePage() {
                 setExercise(response.data)
             })
             .catch((error) => {
+                // eslint-disable-next-line no-console
                 console.error(error)
             })
     }, [params.id])
