@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const userListInfoSchema = new mongoose.Schema(
   {
@@ -26,6 +26,7 @@ const userListInfoSchema = new mongoose.Schema(
       type: String,
       required: true,
       max: 50,
+      unique,
     },
     gifUrl: {
       type: String,
@@ -40,10 +41,10 @@ const userListInfoSchema = new mongoose.Schema(
     uList: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "UserList",
+      ref: 'UserList',
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("UserListInfo", userListInfoSchema);
+module.exports = mongoose.model('UserListInfo', userListInfoSchema);
