@@ -37,6 +37,8 @@ In the dasboard the user will also be able to see its saved exercises and if the
 
 ### **Errorpage**
 
+When ever the user types in the wrong url e.g https://website.com/* a message will apear saying error message and a link to the home page.
+
 ### **ExcercisePage**
 
 ### **Footer**
