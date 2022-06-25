@@ -20,7 +20,7 @@ Registered Users can login and create, update, read and delete a list aswell as 
 
 The admin roles are like developers, they will check that every new implementaion works on the site that means that they can do what a Registered user can and also Create a new user, Update a User, Read a user and Delete a user.
 
-#Backend
+# Backend
 
 ## **Api Routes**
 
@@ -70,7 +70,8 @@ This component is responseble to create an user with the information given by th
 ### **userListPage**
 
 This component will fetch the users list and the information it has with other words the exercises saved to that list.
-#Futher Work
+
+# Futher Work
 
 implement new role:
 
