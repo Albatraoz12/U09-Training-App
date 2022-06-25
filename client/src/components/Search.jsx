@@ -4,10 +4,11 @@ import axios from 'axios'
 function Search() {
     // eslint-disable-next-line no-unused-vars
     const [exercises, setExcercises] = useState([])
+    const [exerciseName, setExerciseName] = useState('')
 
     const options = {
         method: 'GET',
-        url: 'https://exercisedb.p.rapidapi.com/exercises',
+        url: `https://exercisedb.p.rapidapi.com/exercises/name/${exerciseName}`,
         headers: {
             'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
             'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
@@ -26,6 +27,12 @@ function Search() {
             })
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        getEx()
+        console.log(exercises)
+    }
+
     return (
         <main>
             <section className="container mx-auto my-5">
@@ -41,7 +48,17 @@ function Search() {
                             id="search"
                             name="search"
                             placeholder="Enter a exercise name"
+                            onChange={(e) => {
+                                setExerciseName(e.target.value)
+                            }}
                         />
+                        <button
+                            type="submit"
+                            className="btn btn-primary m-1"
+                            onClick={handleSubmit}
+                        >
+                            Search
+                        </button>
                     </div>
                     <div className="col-12">
                         <label htmlFor="selectedWorkoutGroup">Or search for muscle group</label>
