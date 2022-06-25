@@ -20,6 +20,32 @@ Registered Users can login and create, update, read and delete a list aswell as 
 
 The admin roles are like developers, they will check that every new implementaion works on the site that means that they can do what a Registered user can and also Create a new user, Update a User, Read a user and Delete a user.
 
+#Backend
+
+#frontend
+
+## Components
+
+### **Dashboard**
+
+### **Errorpage**
+
+### **ExcercisePage**
+
+### **Footer**
+
+### **Home**
+
+### **Navbar**
+
+### **Search**
+
+### **Signin**
+
+### **Signup**
+
+### **userListPage**
+
 #Futher Work
 
 implement new role:
