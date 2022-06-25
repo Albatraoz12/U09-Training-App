@@ -49,6 +49,36 @@ The admin roles are like developers, they will check that every new implementaio
 | `email`    | `string` | **Required**. user input |
 | `password` | `string` | **Required**. user input |
 
+#### Sign Out
+
+```http
+  GET /user/signout
+```
+
+| Parameter      | Type     | Description                                                                             |
+| :------------- | :------- | :-------------------------------------------------------------------------------------- |
+| `access_token` | `string` | **Required**. takes token from cookies and deletes it. Needs to be send via the headers |
+
+### Protected
+
+```http
+  GET /user/protected
+```
+
+| Parameter      | Type     | Description                                                                                       |
+| :------------- | :------- | :------------------------------------------------------------------------------------------------ |
+| `access_token` | `string` | **Required**. the middleware will decode the token and read the user with help of the decoded id. |
+
+#### Middleware
+
+```http
+  Middleware
+```
+
+| Parameter      | Type     | Description                                                                                                                                 |
+| :------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| `access_token` | `string` | **Required**. will split the header req by the user. the middlewate will save the id decoded by the token to later be used for other routes |
+
 app.use('/userList', listRouter);
 app.use('/userListInfo', listInfoRouter);
 
