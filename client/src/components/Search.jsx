@@ -5,6 +5,7 @@ function Search() {
     // eslint-disable-next-line no-unused-vars
     const [exercises, setExcercises] = useState([])
     const [exerciseName, setExerciseName] = useState('')
+    const [bodyPart, setBodyPart] = useState('')
 
     const options = {
         method: 'GET',
@@ -18,6 +19,27 @@ function Search() {
     const getEx = async () => {
         await axios
             .request(options)
+            .then((response) => {
+                setExcercises(response.data)
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }
+
+    const optionsTwo = {
+        method: 'GET',
+        url: `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart.toLowerCase()}`,
+        headers: {
+            'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
+            'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
+        },
+    }
+
+    const getExTwo = async () => {
+        await axios
+            .request(optionsTwo)
             .then((response) => {
                 setExcercises(response.data)
                 console.log(response.data)
@@ -71,11 +93,20 @@ function Search() {
                             className="form-select form-select-sm mb-3"
                             aria-label=".form-select-lg example"
                             id="selectedWorkoutGroup"
+                            onChange={(e) => {
+                                setBodyPart(e.target.value)
+                                console.log(e.target.value)
+                                getExTwo()
+                            }}
                         >
                             <option defaultValue>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="back">Back</option>
+                            <option value="chest">Chest</option>
+                            <option value="lower%20arms">Lower Arm</option>
+                            <option value="lower%20legs">Lower Legs</option>
+                            <option value="shoulders">Shoulders</option>
+                            <option value="neck">Neck</option>
+                            <option value="cardio">Cardio</option>
                         </select>
                     </div>
                 </form>
