@@ -1,6 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 function Search() {
+    // eslint-disable-next-line no-unused-vars
+    const [exercises, setExcercises] = useState([])
+
+    const options = {
+        method: 'GET',
+        url: 'https://exercisedb.p.rapidapi.com/exercises',
+        headers: {
+            'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
+            'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
+        },
+    }
+
+    const getEx = async () => {
+        await axios
+            .request(options)
+            .then((response) => {
+                setExcercises(response.data)
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }
+
     return (
         <main>
             <section className="container mx-auto my-5">
@@ -35,6 +60,9 @@ function Search() {
             </section>
             <section className="container">
                 <h1 className="text-start">You searched for:</h1>
+                <button type="button" onClick={getEx}>
+                    Testa
+                </button>
                 <div className="row row-cols-1 row-cols-md-3 g-2">
                     <div>
                         <div className="col">
