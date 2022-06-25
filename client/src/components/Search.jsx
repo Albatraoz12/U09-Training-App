@@ -33,6 +33,10 @@ function Search() {
         console.log(exercises)
     }
 
+    const ten = exercises.filter((item, index) => {
+        return index < 10
+    })
+
     return (
         <main>
             <section className="container mx-auto my-5">
@@ -77,83 +81,89 @@ function Search() {
             </section>
             <section className="container">
                 <h1 className="text-start">You searched for:</h1>
-                <button type="button" onClick={getEx}>
-                    Testa
-                </button>
-                <div className="row row-cols-1 row-cols-md-3 g-2">
-                    <div>
-                        <div className="col">
-                            <a href="/exercise/1" className="text-decoration-none">
-                                <div className="card">
-                                    <img
-                                        src="http://d205bpvrqc9yn1.cloudfront.net/1254.gif"
-                                        className="card-img-top"
-                                        alt="exercise-gif"
-                                    />
-                                    <div className="card-body">
-                                        <h2 className="card-title text-dark">Exercise Name</h2>
+                <div className="row row-cols-1 row-cols-md-3 g-2 mx-auto">
+                    {ten.map((exercise) => {
+                        return (
+                            <div className="col" key={exercise.id}>
+                                <a
+                                    href={`/exercise/${exercise.id}`}
+                                    className="text-decoration-none"
+                                >
+                                    <div className="card">
+                                        <img
+                                            src={`${exercise.gifUrl}`}
+                                            className="card-img-top"
+                                            alt="exercise-gif"
+                                        />
+                                        <div className="card-body">
+                                            <h2 className="card-title text-dark">
+                                                {exercise.name}
+                                            </h2>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <a href="/exercise/1" className="text-decoration-none">
-                            <div className="card">
-                                <img
-                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                    className="card-img-top"
-                                    alt="exercise-gif"
-                                />
-                                <div className="card-body">
-                                    <h2 className="card-title text-dark">Exercise Name</h2>
-                                </div>
+                                </a>
                             </div>
-                        </a>
-                    </div>
-                    <div className="col">
-                        <a href="/exercise/1" className="text-decoration-none">
-                            <div className="card">
-                                <img
-                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                    className="card-img-top"
-                                    alt="exercise-gif"
-                                />
-                                <div className="card-body">
-                                    <h2 className="card-title text-dark">Exercise Name</h2>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="col">
-                        <a href="/exercise/1" className="text-decoration-none">
-                            <div className="card">
-                                <img
-                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                    className="card-img-top"
-                                    alt="exercise-gif"
-                                />
-                                <div className="card-body">
-                                    <h2 className="card-title text-dark">Exercise Name</h2>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="col">
-                        <a href="/exercise/1" className="text-decoration-none">
-                            <div className="card">
-                                <img
-                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
-                                    className="card-img-top"
-                                    alt="exercise-gif"
-                                />
-                                <div className="card-body">
-                                    <h2 className="card-title text-dark">Exercise Name</h2>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                        )
+                    })}
                 </div>
+                {/*                     
+                    <div className="col">
+                        <a href="/exercise/1" className="text-decoration-none">
+                            <div className="card">
+                                <img
+                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
+                                    className="card-img-top"
+                                    alt="exercise-gif"
+                                />
+                                <div className="card-body">
+                                    <h2 className="card-title text-dark">Exercise Name</h2>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="col">
+                        <a href="/exercise/1" className="text-decoration-none">
+                            <div className="card">
+                                <img
+                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
+                                    className="card-img-top"
+                                    alt="exercise-gif"
+                                />
+                                <div className="card-body">
+                                    <h2 className="card-title text-dark">Exercise Name</h2>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="col">
+                        <a href="/exercise/1" className="text-decoration-none">
+                            <div className="card">
+                                <img
+                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
+                                    className="card-img-top"
+                                    alt="exercise-gif"
+                                />
+                                <div className="card-body">
+                                    <h2 className="card-title text-dark">Exercise Name</h2>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="col">
+                        <a href="/exercise/1" className="text-decoration-none">
+                            <div className="card">
+                                <img
+                                    src="http://d205bpvrqc9yn1.cloudfront.net/0024.gif"
+                                    className="card-img-top"
+                                    alt="exercise-gif"
+                                />
+                                <div className="card-body">
+                                    <h2 className="card-title text-dark">Exercise Name</h2>
+                                </div>
+                            </div>
+                        </a>
+                    </div> */}
+                {/* </div> */}
             </section>
         </main>
     )
