@@ -1,11 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
 
 function Dashboard() {
+    const user = Cookies.get('access_token')
+    const navigate = useNavigate()
+    const [getUser, setGetUser] = useState({})
+
+    // When dashboard loads, it will fetch the users: Information, Books and loaned books
+    useEffect(() => {
+        const checkUser = async () => {
+            // User sends its access_token in headers to BE to be decoded.
+            await axios
+                .get(`${process.env.REACT_APP_API_URL}user/protected`, {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${user}`,
+                    },
+                })
+                .then((res) => {
+                    if (res.data.user) {
+                        // Stores user info into the state.
+                        setGetUser(res.data.user)
+                    }
+                })
+        }
+        if (!user) {
+            navigate('/')
+        } else {
+            checkUser()
+        }
+    }, [user, navigate])
     return (
         <main className="py-5">
             <div className="container">
                 <section className=" my-5">
-                    <h1>Welcome User</h1>
+                    <h1>Welcome {getUser.firstName}</h1>
                     <p>
                         Hope you have a wonderfull day <br /> Lets the workout start!
                     </p>
