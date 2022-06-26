@@ -52,6 +52,13 @@ function Dashboard() {
         }
     }, [user, navigate, getUser.id])
 
+    const deleteList = async (id) => {
+        await axios.delete(`${process.env.REACT_APP_API_URL}userList/${id}`).then((res) => {
+            if (res) {
+                window.location.reload()
+            }
+        })
+    }
     return (
         <main className="py-5">
             <div className="container">
@@ -109,9 +116,13 @@ function Dashboard() {
                                             aria-label="remove list"
                                         />
                                         <button
-                                            type="button"
+                                            type="submit"
                                             className="bi bi-x-lg btn btn-danger"
                                             aria-label="remove list"
+                                            onClick={() => {
+                                                // eslint-disable-next-line no-underscore-dangle
+                                                deleteList(lists._id)
+                                            }}
                                         />
                                     </li>
                                 )
