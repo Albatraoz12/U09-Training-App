@@ -55,9 +55,9 @@ The admin roles are like developers, they will check that every new implementaio
   GET /user/signout
 ```
 
-| Parameter      | Type     | Description                                                                             |
-| :------------- | :------- | :-------------------------------------------------------------------------------------- |
-| `access_token` | `string` | **Required**. takes token from cookies and deletes it. Needs to be send via the headers |
+| Parameter      | Type     | Description                                                                                                             |
+| :------------- | :------- | :---------------------------------------------------------------------------------------------------------------------- |
+| `access_token` | `string` | **Required**. takes token from cookies and deletes it. Needs to be send via the headers as Authorization 'Bearer token' |
 
 ### Protected
 
