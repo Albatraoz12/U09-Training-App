@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom'
 function Dashboard() {
     const user = Cookies.get('access_token')
     const navigate = useNavigate()
-    const [getUser, setGetUser] = useState({})
+    const [getUser, setGetUser] = useState([])
+    const [getUserList, setGetUserList] = useState([])
 
     // When dashboard loads, it will fetch the users: Information, Books and loaned books
     useEffect(() => {
@@ -26,12 +27,31 @@ function Dashboard() {
                     }
                 })
         }
+        const getLists = async () => {
+            await axios
+                .get(`${process.env.REACT_APP_API_URL}userList/${getUser.id}`, {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${user}`,
+                    },
+                })
+                .then((res) => {
+                    if (res.data.message) {
+                        // Stores user info into the state.
+                        setGetUserList(res.data.message)
+                    }
+                })
+        }
         if (!user) {
             navigate('/')
         } else {
             checkUser()
+            if (getUser.id) {
+                getLists()
+            }
         }
-    }, [user, navigate])
+    }, [user, navigate, getUser.id])
+
     return (
         <main className="py-5">
             <div className="container">
@@ -71,22 +91,33 @@ function Dashboard() {
                     <div>
                         <h2>Your Lists</h2>
                         <ul className="d-flex justify-content-center flex-column list-unstyled gap-1">
-                            <li className="d-flex justify-content-center align-items-center gap-2">
-                                <a className="text-white" href="/userList/1">
-                                    ListName1
-                                </a>
-                                <button
-                                    type="button"
-                                    className="bi bi-pencil-square btn btn-danger"
-                                    aria-label="remove list"
-                                />
-                                <button
-                                    type="button"
-                                    className="bi bi-x-lg btn btn-danger"
-                                    aria-label="remove list"
-                                />
-                            </li>
-                            <li className="d-flex justify-content-center align-items-center gap-2">
+                            {getUserList.map((lists, index) => {
+                                return (
+                                    <li
+                                        className="d-flex justify-content-center align-items-center gap-2"
+                                        // eslint wont accept index as a key. to eliminete the console error
+                                        // I disabled this line
+                                        // eslint-disable-next-line react/no-array-index-key
+                                        key={index}
+                                    >
+                                        <a className="text-white" href="/userList/1">
+                                            {lists.title}
+                                        </a>
+                                        <button
+                                            type="button"
+                                            className="bi bi-pencil-square btn btn-danger"
+                                            aria-label="remove list"
+                                        />
+                                        <button
+                                            type="button"
+                                            className="bi bi-x-lg btn btn-danger"
+                                            aria-label="remove list"
+                                        />
+                                    </li>
+                                )
+                            })}
+
+                            {/* <li className="d-flex justify-content-center align-items-center gap-2">
                                 <a className="text-white" href="/userList/1">
                                     ListName2
                                 </a>
@@ -100,8 +131,8 @@ function Dashboard() {
                                     className="bi bi-x-lg btn btn-danger"
                                     aria-label="remove list"
                                 />
-                            </li>
-                            <li className="d-flex justify-content-center align-items-center gap-2">
+                            </li> */}
+                            {/* <li className="d-flex justify-content-center align-items-center gap-2">
                                 <a className="text-white" href="/userList/1">
                                     ListName3
                                 </a>
@@ -115,7 +146,7 @@ function Dashboard() {
                                     className="bi bi-x-lg btn btn-danger"
                                     aria-label="remove list"
                                 />
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </section>
