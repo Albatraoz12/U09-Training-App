@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 function ExercisePage() {
     const params = useParams()
+    const user = Cookies.get('access_token')
     const [exercise, setExercise] = useState([])
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
+        if (user) {
+            setIsLoggedIn(true)
+        }
         const options = {
             method: 'GET',
             url: `https://exercisedb.p.rapidapi.com/exercises/exercise/${params.id}`,
@@ -45,6 +51,7 @@ function ExercisePage() {
                 <div className="col-12 col-xl-4 mx-auto">
                     <img className="card-img-top" src={exercise.gifUrl} alt="Exercise Gif" />
                 </div>
+                <div>{isLoggedIn ? <h1>helloThere user</h1> : null}</div>
             </section>
         </main>
     )
