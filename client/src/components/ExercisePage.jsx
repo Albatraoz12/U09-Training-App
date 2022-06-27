@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -9,7 +10,9 @@ function ExercisePage() {
     const [exercise, setExercise] = useState([])
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [getUser, setGetUser] = useState([])
+    // eslint-disable-next-line no-unused-vars
     const [getUserList, setGetUserList] = useState([])
+    // eslint-disable-next-line no-unused-vars
     const [getUserSaves, setGetUserSaves] = useState([])
 
     useEffect(() => {
@@ -102,7 +105,30 @@ function ExercisePage() {
                 <div className="col-12 col-xl-4 mx-auto">
                     <img className="card-img-top" src={exercise.gifUrl} alt="Exercise Gif" />
                 </div>
-                <div>{isLoggedIn ? <h1>helloThere user</h1> : null}</div>
+                <section className="my-2">
+                    <h2>Save this Exercise or save it into a list</h2>
+                    {isLoggedIn && exercise.id === getUserSaves.exId ? (
+                        <div className="my-2">
+                            <button
+                                className="bi bi-suit-heart-fill btn btn-light btn-lg"
+                                type="button"
+                                aria-label="Save Exercise"
+                            />
+                        </div>
+                    ) : !isLoggedIn ? (
+                        <div>
+                            <a href="/signin">Logg in to save this exercise</a>
+                        </div>
+                    ) : (
+                        <div>
+                            <button
+                                className="bi bi-suit-heart btn btn-light btn-lg"
+                                type="button"
+                                aria-label="Save Exercise"
+                            />
+                        </div>
+                    )}
+                </section>
             </section>
         </main>
     )
