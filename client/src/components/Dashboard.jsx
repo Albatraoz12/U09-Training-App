@@ -143,7 +143,11 @@ function Dashboard() {
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={index}
                                     >
-                                        <a className="text-white" href="/userList/1">
+                                        <a
+                                            className="text-white"
+                                            // eslint-disable-next-line no-underscore-dangle
+                                            href={`/userList/${lists._id}`}
+                                        >
                                             {lists.title}
                                         </a>
                                         <button
