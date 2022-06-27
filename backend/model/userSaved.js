@@ -21,4 +21,4 @@ const userSavedListSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('UserListInfo', userSavedListSchema);
+module.exports = mongoose.model('UserSavedList', userSavedListSchema);
