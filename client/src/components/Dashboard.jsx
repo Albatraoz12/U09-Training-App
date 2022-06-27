@@ -168,7 +168,7 @@ function Dashboard() {
                                         <a
                                             className="text-white"
                                             // eslint-disable-next-line no-underscore-dangle
-                                            href={`/userList/${lists._id}`}
+                                            href={`/userList/${lists.title}/${lists._id}`}
                                         >
                                             {lists.title}
                                         </a>
