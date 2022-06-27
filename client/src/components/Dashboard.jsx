@@ -80,6 +80,7 @@ function Dashboard() {
         }
 
         createList(userData)
+        window.location.reload()
     }
 
     const deleteList = async (id) => {
