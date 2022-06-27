@@ -5,6 +5,9 @@ import axios from 'axios'
 function UserListPage() {
     const params = useParams()
     const [listInfo, setListInfo] = useState([])
+    const [formData, setFormData] = useState({
+        title: '',
+    })
 
     useEffect(() => {
         const getListInfo = async () => {
@@ -24,6 +27,32 @@ function UserListPage() {
 
         getListInfo()
     }, [params])
+    const { title } = formData
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }))
+    }
+    const updateList = async (userData) => {
+        await axios.put(
+            `${process.env.REACT_APP_API_URL}userList/editList/${params.id}`,
+            userData,
+            {
+                withCredentials: true,
+            }
+        )
+    }
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+        const userData = {
+            title,
+        }
+
+        updateList(userData)
+        window.location.reload()
+    }
 
     const deleteListInfo = async (id) => {
         await axios
@@ -39,6 +68,24 @@ function UserListPage() {
         <main>
             <section className="my-5 py-5 ">
                 <h1>List Title</h1>
+                <form className="d-flex justify-content-center row gap-1 my-3" onSubmit={onSubmit}>
+                    <div className="d-flex align-items-center justify-content-center">
+                        <label htmlFor="title" className="fs-2">
+                            Update List
+                        </label>
+                    </div>
+                    <input
+                        type="text"
+                        className="col-md-6 col-sm-auto rounded form-control-lg"
+                        id="title"
+                        placeholder="Enter a title for your list"
+                        name="title"
+                        onChange={onChange}
+                    />
+                    <button className="btn btn-primary col-md-6 col-sm-auto rounded" type="submit">
+                        Update
+                    </button>
+                </form>
                 <ul className='className="d-flex justify-content-center flex-column list-unstyled gap-2'>
                     {listInfo.map((info, index) => {
                         return (
