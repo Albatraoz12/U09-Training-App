@@ -8,6 +8,9 @@ function Dashboard() {
     const navigate = useNavigate()
     const [getUser, setGetUser] = useState([])
     const [getUserList, setGetUserList] = useState([])
+    const [formData, setFormData] = useState({
+        title: '',
+    })
 
     // When dashboard loads, it will fetch the users: Information, Books and loaned books
     useEffect(() => {
@@ -52,6 +55,33 @@ function Dashboard() {
         }
     }, [user, navigate, getUser.id])
 
+    const { title } = formData
+    const onChange = (e) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }))
+    }
+
+    const createList = async (userData) => {
+        await axios.post(
+            `${process.env.REACT_APP_API_URL}userList/createList/${getUser.id}`,
+            userData,
+            {
+                withCredentials: true,
+            }
+        )
+    }
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+        const userData = {
+            title,
+        }
+
+        createList(userData)
+    }
+
     const deleteList = async (id) => {
         await axios.delete(`${process.env.REACT_APP_API_URL}userList/${id}`).then((res) => {
             if (res) {
@@ -69,9 +99,12 @@ function Dashboard() {
                     </p>
                 </section>
                 <section className="container">
-                    <form className="d-flex justify-content-center row gap-1 my-3">
+                    <form
+                        className="d-flex justify-content-center row gap-1 my-3"
+                        onSubmit={onSubmit}
+                    >
                         <div className="d-flex align-items-center justify-content-center">
-                            <label htmlFor="createList" className="fs-2">
+                            <label htmlFor="title" className="fs-2">
                                 Create List
                             </label>
                             <button
@@ -83,8 +116,10 @@ function Dashboard() {
                         <input
                             type="text"
                             className="col-md-6 col-sm-auto rounded form-control-lg"
-                            id="createList"
+                            id="title"
                             placeholder="Enter a title for your list"
+                            name="title"
+                            onChange={onChange}
                         />
                         <button
                             className="btn btn-primary col-md-6 col-sm-auto rounded"

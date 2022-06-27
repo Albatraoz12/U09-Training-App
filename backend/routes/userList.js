@@ -5,11 +5,12 @@ const dotenv = require('dotenv').config();
 const router = express.Router();
 
 //Crate userList
-router.post('/createList', (req, res) => {
+router.post('/createList/:id', (req, res) => {
   try {
+    const id = req.params.id;
     const newList = new userList({
       title: req.body.title,
-      user: req.body.user,
+      user: id,
     });
     newList
       .save()
