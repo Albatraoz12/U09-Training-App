@@ -22,12 +22,11 @@ router.post('/saveEx/:id', (req, res) => {
     //   res.status(404).json({ message: 'Exercise is already saved' });
     // }
   } catch (error) {
-    // console.log(error);
-    res.status(404).json({ message: 'Exercise is already savededed' });
+    console.log(error);
   }
 });
 
-//Read User Lists Information
+//Read User saved exercises
 router.get('/saves/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -38,4 +37,14 @@ router.get('/saves/:id', async (req, res) => {
   }
 });
 
+//Delete User Saved Exercise
+router.delete('/deletesaved/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    await userSaved.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Saved exercise has now been deleteted!' });
+  } catch (error) {
+    res.status(404).json({ message: 'Invalid Id!' });
+  }
+});
 module.exports = router;
