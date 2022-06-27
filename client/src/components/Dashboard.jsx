@@ -105,6 +105,16 @@ function Dashboard() {
             }
         })
     }
+
+    const deleteSaved = async (id) => {
+        await axios
+            .delete(`${process.env.REACT_APP_API_URL}userSaves/deletesaved/${id}`)
+            .then((res) => {
+                if (res) {
+                    window.location.reload()
+                }
+            })
+    }
     return (
         <main className="py-5">
             <div className="container">
@@ -203,6 +213,10 @@ function Dashboard() {
                                             type="button"
                                             className="bi bi-x-lg btn btn-danger"
                                             aria-label="remove list"
+                                            onClick={() => {
+                                                // eslint-disable-next-line no-underscore-dangle
+                                                deleteSaved(saves._id)
+                                            }}
                                         />
                                     </li>
                                 )
