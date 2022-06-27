@@ -48,9 +48,6 @@ function Dashboard() {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}userSaves/saves/${getUser.id}`, {
                     withCredentials: true,
-                    // headers: {
-                    //     Authorization: `Bearer ${user}`,
-                    // },
                 })
                 .then((res) => {
                     if (res.data.sInfo) {
