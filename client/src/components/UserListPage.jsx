@@ -25,6 +25,16 @@ function UserListPage() {
         getListInfo()
     }, [params])
 
+    const deleteListInfo = async (id) => {
+        await axios
+            .delete(`${process.env.REACT_APP_API_URL}userListInfo/listInfoDelete/${id}`)
+            .then((res) => {
+                if (res) {
+                    window.location.reload()
+                }
+            })
+    }
+
     return (
         <main>
             <section className="my-5 py-5 ">
@@ -44,6 +54,10 @@ function UserListPage() {
                                     type="button"
                                     className="bi bi-x-lg btn btn-danger"
                                     aria-label="remove item"
+                                    onClick={() => {
+                                        // eslint-disable-next-line no-underscore-dangle
+                                        deleteListInfo(info._id)
+                                    }}
                                 />
                             </li>
                         )
