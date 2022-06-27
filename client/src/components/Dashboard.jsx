@@ -221,27 +221,6 @@ function Dashboard() {
                                     </li>
                                 )
                             })}
-
-                            {/* <li className="d-flex justify-content-center align-items-center gap-2">
-                                <a className="text-white" href="/exercise/1">
-                                    Save 2
-                                </a>
-                                <button
-                                    type="button"
-                                    className="bi bi-x-lg btn btn-danger"
-                                    aria-label="remove list"
-                                />
-                            </li>
-                            <li className="d-flex justify-content-center align-items-center gap-2">
-                                <a className="text-white" href="/exercise/1">
-                                    Save 3
-                                </a>
-                                <button
-                                    type="button"
-                                    className="bi bi-x-lg btn btn-danger"
-                                    aria-label="remove list"
-                                />
-                            </li> */}
                         </ul>
                     </div>
                 </section>
