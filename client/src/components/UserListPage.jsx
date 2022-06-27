@@ -12,11 +12,12 @@ function UserListPage() {
                 await axios
                     .get(`${process.env.REACT_APP_API_URL}userListInfo/listInfo/${params.id}`)
                     .then((res) => {
-                        if (res.data.message) {
-                            setListInfo(res.data.message)
+                        if (res.data.lInfo) {
+                            setListInfo(res.data.lInfo)
                         }
                     })
             } catch (error) {
+                // eslint-disable-next-line no-console
                 console.log(error)
             }
         }
