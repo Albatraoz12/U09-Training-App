@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -106,28 +105,77 @@ function ExercisePage() {
                     <img className="card-img-top" src={exercise.gifUrl} alt="Exercise Gif" />
                 </div>
                 <section className="my-2">
-                    <h2>Save this Exercise or save it into a list</h2>
-                    {isLoggedIn && exercise.id === getUserSaves.exId ? (
-                        <div className="my-2">
-                            <button
-                                className="bi bi-suit-heart-fill btn btn-light btn-lg"
-                                type="button"
-                                aria-label="Save Exercise"
-                            />
-                        </div>
-                    ) : !isLoggedIn ? (
-                        <div>
-                            <a href="/signin">Logg in to save this exercise</a>
-                        </div>
+                    {isLoggedIn ? (
+                        <h2>Save this Exercise or save it into a list</h2>
                     ) : (
-                        <div>
-                            <button
-                                className="bi bi-suit-heart btn btn-light btn-lg"
-                                type="button"
-                                aria-label="Save Exercise"
-                            />
-                        </div>
+                        <h2>
+                            <a className="text-white" href="/signin">
+                                {' '}
+                                Log In here
+                            </a>{' '}
+                            to save exercise
+                        </h2>
                     )}
+                    <div className="d-flex justify-content-center gap-2">
+                        {isLoggedIn ? (
+                            <>
+                                <button type="button" className="btn btn-primary">
+                                    Save
+                                </button>
+                                <div className="dropdown">
+                                    <button
+                                        className="btn btn-secondary dropdown-toggle"
+                                        type="button"
+                                        id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        Dropdown button
+                                    </button>
+                                    <ul
+                                        className="dropdown-menu"
+                                        aria-labelledby="dropdownMenuButton1"
+                                    >
+                                        {getUserList.map((list, index) => {
+                                            return (
+                                                // eslint-disable-next-line react/no-array-index-key
+                                                <li key={index}>
+                                                    <button type="button" className="dropdown-item">
+                                                        {list.title}
+                                                    </button>
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
+                            </>
+                        ) : null}
+                        {/* {isLoggedIn ? (
+                            <div className="dropdown">
+                                <button
+                                    className="btn btn-secondary dropdown-toggle"
+                                    type="button"
+                                    id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Dropdown button
+                                </button>
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    {getUserList.map((list, index) => {
+                                        return (
+                                            // eslint-disable-next-line react/no-array-index-key
+                                            <li key={index}>
+                                                <button type="button" className="dropdown-item">
+                                                    {list.title}
+                                                </button>
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                            </div>
+                        ) : null} */}
+                    </div>
                 </section>
             </section>
         </main>
