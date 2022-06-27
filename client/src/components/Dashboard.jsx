@@ -8,6 +8,7 @@ function Dashboard() {
     const navigate = useNavigate()
     const [getUser, setGetUser] = useState([])
     const [getUserList, setGetUserList] = useState([])
+    const [getUserSaves, setGetUserSaves] = useState([])
     const [formData, setFormData] = useState({
         title: '',
     })
@@ -34,14 +35,27 @@ function Dashboard() {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}userList/${getUser.id}`, {
                     withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
                 })
                 .then((res) => {
                     if (res.data.message) {
                         // Stores user info into the state.
                         setGetUserList(res.data.message)
+                    }
+                })
+        }
+
+        const getSaves = async () => {
+            await axios
+                .get(`${process.env.REACT_APP_API_URL}userSaves/saves/${getUser.id}`, {
+                    withCredentials: true,
+                    // headers: {
+                    //     Authorization: `Bearer ${user}`,
+                    // },
+                })
+                .then((res) => {
+                    if (res.data.sInfo) {
+                        // Stores user info into the state.
+                        setGetUserSaves(res.data.sInfo)
                     }
                 })
         }
@@ -51,6 +65,7 @@ function Dashboard() {
             checkUser()
             if (getUser.id) {
                 getLists()
+                getSaves()
             }
         }
     }, [user, navigate, getUser.id])
@@ -174,17 +189,26 @@ function Dashboard() {
                     <h2>Your Saves</h2>
                     <div>
                         <ul className="d-flex justify-content-center flex-column list-unstyled gap-1">
-                            <li className="d-flex justify-content-center align-items-center gap-2">
-                                <a className="text-white" href="/exercise/1">
-                                    Save 1
-                                </a>
-                                <button
-                                    type="button"
-                                    className="bi bi-x-lg btn btn-danger"
-                                    aria-label="remove list"
-                                />
-                            </li>
-                            <li className="d-flex justify-content-center align-items-center gap-2">
+                            {getUserSaves.map((saves, index) => {
+                                return (
+                                    <li
+                                        className="d-flex justify-content-center align-items-center gap-2"
+                                        // eslint-disable-next-line react/no-array-index-key
+                                        key={index}
+                                    >
+                                        <a className="text-white" href="/exercise/1">
+                                            {saves.name}
+                                        </a>
+                                        <button
+                                            type="button"
+                                            className="bi bi-x-lg btn btn-danger"
+                                            aria-label="remove list"
+                                        />
+                                    </li>
+                                )
+                            })}
+
+                            {/* <li className="d-flex justify-content-center align-items-center gap-2">
                                 <a className="text-white" href="/exercise/1">
                                     Save 2
                                 </a>
@@ -203,7 +227,7 @@ function Dashboard() {
                                     className="bi bi-x-lg btn btn-danger"
                                     aria-label="remove list"
                                 />
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </section>
