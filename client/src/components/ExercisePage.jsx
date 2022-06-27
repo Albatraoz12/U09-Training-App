@@ -150,31 +150,6 @@ function ExercisePage() {
                                 </div>
                             </>
                         ) : null}
-                        {/* {isLoggedIn ? (
-                            <div className="dropdown">
-                                <button
-                                    className="btn btn-secondary dropdown-toggle"
-                                    type="button"
-                                    id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    Dropdown button
-                                </button>
-                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    {getUserList.map((list, index) => {
-                                        return (
-                                            // eslint-disable-next-line react/no-array-index-key
-                                            <li key={index}>
-                                                <button type="button" className="dropdown-item">
-                                                    {list.title}
-                                                </button>
-                                            </li>
-                                        )
-                                    })}
-                                </ul>
-                            </div>
-                        ) : null} */}
                     </div>
                 </section>
             </section>
