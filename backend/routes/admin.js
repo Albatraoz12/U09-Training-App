@@ -22,12 +22,11 @@ const authorization = (req, res, next) => {
   }
 };
 
-// Create a user for admins
+//@desc Create a new user as an admin
+//@routes POST /signup
+//@access Private
 router.post('/signup', authorization, async (req, res) => {
   try {
-    const admin = User.findById(req.userId);
-    console.log(req.role);
-    console.log(req.userId);
     if (req.role === 'admin') {
       const user = new User({
         firstName: req.body.firstName,
@@ -51,9 +50,25 @@ router.post('/signup', authorization, async (req, res) => {
   }
 });
 
-//@desc Delete A User
-//@routes Delete /user/:id
-//@access Public
+//@desc Get all user
+//@routes GET /getAllUsers
+//@access Private
+router.get('/getAllUsers', authorization, async (req, res) => {
+  try {
+    if (req.role === 'admin') {
+      const users = await User.find();
+      res.status(200).json({ users });
+    } else {
+      res.status(404).json({ message: 'You are not a jedi' });
+    }
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
+//@desc Delete A User with a userID
+//@routes Delete /deleteUser/:id
+//@access Private
 router.delete('/deleteUser/:id', authorization, async (req, res) => {
   try {
     if (req.role === 'admin') {
