@@ -17,7 +17,9 @@ function ExercisePage() {
         exId: '',
     })
 
+    // Will run all the functions inse useEffect when component mounts.
     useEffect(() => {
+        // function will run if user is logged in to get its data
         const checkUser = async () => {
             // User sends its access_token in headers to BE to be decoded.
             await axios
@@ -34,6 +36,7 @@ function ExercisePage() {
                     }
                 })
         }
+        // function to let users fetch its lists
         const getLists = async () => {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}userList/${getUser.id}`, {
@@ -47,6 +50,7 @@ function ExercisePage() {
                 })
         }
 
+        // function to let users fetch its saved exercises
         const getSaves = async () => {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}userSaves/saves/${getUser.id}`, {
@@ -69,6 +73,7 @@ function ExercisePage() {
             },
         }
 
+        // Fetch exercise with id and later display to the user
         const getExercise = async () => {
             await axios
                 .request(options)
@@ -91,15 +96,16 @@ function ExercisePage() {
         }
 
         getExercise()
+        // if exercise has fetch the name and id valius, it will then store them into the formData
         if (exercise.name && exercise.id) {
             setFormData({
                 name: exercise.name,
                 exId: exercise.id,
             })
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.id, user, getUser.id, exercise.name, exercise.id])
 
+    // function to let user save the exercise
     const saveExercise = async (exData) => {
         await axios
             .post(`${process.env.REACT_APP_API_URL}userSaves/saveEx/${getUser.id}`, exData, {
@@ -110,9 +116,12 @@ function ExercisePage() {
                 console.log(res.data)
             })
     }
+
+    // function will run when user clicks on Like button
     const save = (data) => {
         saveExercise(data)
     }
+
     // function to let user save an exercise into a list
     const exerciseToList = async (exData, id) => {
         await axios
@@ -125,10 +134,12 @@ function ExercisePage() {
                 window.location.reload()
             })
     }
+
     // When user clicks on a list from the dropdown, the exercise will be saved into that list
     const saveList = (id) => {
         exerciseToList(formData, id)
     }
+
     return (
         <main className="my-5">
             <section className="container">
@@ -144,6 +155,7 @@ function ExercisePage() {
                     <img className="card-img-top" src={exercise.gifUrl} alt="Exercise Gif" />
                 </div>
                 <section className="my-2">
+                    {/* Message to display if user is logged in or not */}
                     {isLoggedIn ? (
                         <h2>Save this Exercise or save it into a list</h2>
                     ) : (
@@ -156,6 +168,7 @@ function ExercisePage() {
                         </h2>
                     )}
                     <div className="d-flex justify-content-center gap-2">
+                        {/* if user is logged in then the button and the dropdown will be seen. Otherwise nothing */}
                         {isLoggedIn ? (
                             <>
                                 <button
