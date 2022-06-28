@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 8081;
 const userRouter = require('./routes/user');
 const listRouter = require('./routes/userList');
 const listInfoRouter = require('./routes/userListInfo');
+const userSaved = require('./routes/userSaved');
 const app = express();
 
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use(
 app.use('/user', userRouter);
 app.use('/userList', listRouter);
 app.use('/userListInfo', listInfoRouter);
+app.use('/userSaves', userSaved);
 
 app.get('/', (req, res) => {
   res.send('Hello There! - Obi-Wan, aaahhhh general kanobi!');

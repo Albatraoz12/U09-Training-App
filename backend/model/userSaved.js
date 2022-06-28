@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userListInfoSchema = new mongoose.Schema(
+const userSavedListSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -11,14 +11,15 @@ const userListInfoSchema = new mongoose.Schema(
       type: String,
       required: true,
       max: 50,
+      unique: true,
     },
-    uList: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'UserList',
+      ref: 'User',
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('UserListInfo', userListInfoSchema);
+module.exports = mongoose.model('UserSavedList', userSavedListSchema);
