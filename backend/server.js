@@ -8,6 +8,7 @@ const userRouter = require('./routes/user');
 const listRouter = require('./routes/userList');
 const listInfoRouter = require('./routes/userListInfo');
 const userSaved = require('./routes/userSaved');
+const adminRoutes = require('./routes/admin');
 const app = express();
 
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use('/user', userRouter);
 app.use('/userList', listRouter);
 app.use('/userListInfo', listInfoRouter);
 app.use('/userSaves', userSaved);
+app.use('/admin', adminRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello There! - Obi-Wan, aaahhhh general kanobi!');
