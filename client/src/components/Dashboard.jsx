@@ -76,13 +76,15 @@ function Dashboard() {
     }
 
     const createList = async (userData) => {
-        await axios.post(
-            `${process.env.REACT_APP_API_URL}userList/createList/${getUser.id}`,
-            userData,
-            {
+        await axios
+            .post(`${process.env.REACT_APP_API_URL}userList/createList/${getUser.id}`, userData, {
                 withCredentials: true,
-            }
-        )
+            })
+            .then((res) => {
+                if (res) {
+                    window.location.reload()
+                }
+            })
     }
     const onSubmit = (e) => {
         e.preventDefault()
@@ -92,7 +94,6 @@ function Dashboard() {
         }
 
         createList(userData)
-        window.location.reload()
     }
 
     const deleteList = async (id) => {
