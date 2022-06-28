@@ -9,7 +9,6 @@ function ExercisePage() {
     const [exercise, setExercise] = useState([])
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [getUser, setGetUser] = useState([])
-    // eslint-disable-next-line no-unused-vars
     const [getUserList, setGetUserList] = useState([])
     // eslint-disable-next-line no-unused-vars
     const [getUserSaves, setGetUserSaves] = useState([])
@@ -75,10 +74,6 @@ function ExercisePage() {
                 .request(options)
                 .then((response) => {
                     setExercise(response.data)
-                    setFormData({
-                        name: exercise.name,
-                        exId: exercise.id,
-                    })
                 })
                 .catch((error) => {
                     // eslint-disable-next-line no-console
@@ -96,9 +91,14 @@ function ExercisePage() {
         }
 
         getExercise()
-
+        if (exercise.name && exercise.id) {
+            setFormData({
+                name: exercise.name,
+                exId: exercise.id,
+            })
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params.id, user, getUser.id])
+    }, [params.id, user, getUser.id, exercise.name, exercise.id])
 
     const saveExercise = async (exData) => {
         await axios
@@ -112,6 +112,22 @@ function ExercisePage() {
     }
     const save = (data) => {
         saveExercise(data)
+    }
+    // function to let user save an exercise into a list
+    const exerciseToList = async (exData, id) => {
+        await axios
+            .post(`${process.env.REACT_APP_API_URL}userListInfo/createInfo/${id}`, exData, {
+                withCredentials: true,
+            })
+            .then((res) => {
+                // eslint-disable-next-line no-console
+                console.log(res.data)
+                window.location.reload()
+            })
+    }
+    // When user clicks on a list from the dropdown, the exercise will be saved into that list
+    const saveList = (id) => {
+        exerciseToList(formData, id)
     }
     return (
         <main className="my-5">
@@ -169,7 +185,15 @@ function ExercisePage() {
                                             return (
                                                 // eslint-disable-next-line react/no-array-index-key
                                                 <li key={index}>
-                                                    <button type="button" className="dropdown-item">
+                                                    <button
+                                                        type="button"
+                                                        className="dropdown-item"
+                                                        onClick={() => {
+                                                            // console.log(formData, '', list._id)
+                                                            // eslint-disable-next-line no-underscore-dangle
+                                                            saveList(list._id)
+                                                        }}
+                                                    >
                                                         {list.title}
                                                     </button>
                                                 </li>

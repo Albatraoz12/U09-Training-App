@@ -7,27 +7,7 @@ const userListInfoSchema = new mongoose.Schema(
       required: true,
       max: 50,
     },
-    bodyPart: {
-      type: String,
-      required: true,
-      max: 50,
-    },
-    target: {
-      type: String,
-      required: true,
-      max: 50,
-    },
     exId: {
-      type: String,
-      required: true,
-      max: 50,
-    },
-    gifUrl: {
-      type: String,
-      required: true,
-      max: 50,
-    },
-    equipment: {
       type: String,
       required: true,
       max: 50,
