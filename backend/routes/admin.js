@@ -51,4 +51,24 @@ router.post('/signup', authorization, async (req, res) => {
   }
 });
 
+//@desc Delete A User
+//@routes Delete /user/:id
+//@access Public
+router.delete('/deleteUser/:id', authorization, async (req, res) => {
+  try {
+    if (req.role === 'admin') {
+      const id = req.params.id;
+      const user = await User.findById(id);
+      user.remove();
+      return res
+        .status(200)
+        .json({ message: 'User has been deleted successfully' });
+    } else {
+      return res.status(404).json({ message: 'You are not a jedi' });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;

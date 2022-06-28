@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const userList = require('./userList');
+const userSaves = require('./userSaved');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -29,4 +31,24 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", UserSchema);
+UserSchema.pre('remove', function (next) {
+  userList.deleteMany({ user: this.id }, (err) => {
+    if (err) {
+      next(err);
+    } else {
+      next();
+    }
+  });
+});
+
+UserSchema.pre('remove', function (next) {
+  userSaves.deleteMany({ user: this.id }, (err) => {
+    if (err) {
+      next(err);
+    } else {
+      next();
+    }
+  });
+});
+
+module.exports = mongoose.model('User', UserSchema);
