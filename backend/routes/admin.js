@@ -66,6 +66,23 @@ router.get('/getAllUsers', authorization, async (req, res) => {
   }
 });
 
+//@desc Get an user with its ID
+//@routes GET /getAllUsers
+//@access Private
+router.get('/getUser/:uid', authorization, async (req, res) => {
+  try {
+    if (req.role === 'admin') {
+      const uid = req.params.uid;
+      const userData = await User.findById(uid);
+      res.status(200).json({ userData });
+    } else {
+      res.status(404).json({ message: 'You are not a jedi' });
+    }
+  } catch (error) {
+    res.status(404).json({ message: error });
+  }
+});
+
 //@desc Delete A User with a userID
 //@routes Delete /deleteUser/:id
 //@access Private
