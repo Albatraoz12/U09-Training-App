@@ -13,6 +13,10 @@ function ExercisePage() {
     const [getUserList, setGetUserList] = useState([])
     // eslint-disable-next-line no-unused-vars
     const [getUserSaves, setGetUserSaves] = useState([])
+    const [formData, setFormData] = useState({
+        name: '',
+        exId: '',
+    })
 
     useEffect(() => {
         const checkUser = async () => {
@@ -70,8 +74,11 @@ function ExercisePage() {
             await axios
                 .request(options)
                 .then((response) => {
-                    // console.log(response.data)
                     setExercise(response.data)
+                    setFormData({
+                        name: exercise.name,
+                        exId: exercise.id,
+                    })
                 })
                 .catch((error) => {
                     // eslint-disable-next-line no-console
@@ -89,7 +96,23 @@ function ExercisePage() {
         }
 
         getExercise()
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.id, user, getUser.id])
+
+    const saveExercise = async (exData) => {
+        await axios
+            .post(`${process.env.REACT_APP_API_URL}userSaves/saveEx/${getUser.id}`, exData, {
+                withCredentials: true,
+            })
+            .then((res) => {
+                // eslint-disable-next-line no-console
+                console.log(res.data)
+            })
+    }
+    const save = (data) => {
+        saveExercise(data)
+    }
     return (
         <main className="my-5">
             <section className="container">
@@ -119,7 +142,13 @@ function ExercisePage() {
                     <div className="d-flex justify-content-center gap-2">
                         {isLoggedIn ? (
                             <>
-                                <button type="button" className="btn btn-primary">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={() => {
+                                        save(formData)
+                                    }}
+                                >
                                     Save
                                 </button>
                                 <div className="dropdown">

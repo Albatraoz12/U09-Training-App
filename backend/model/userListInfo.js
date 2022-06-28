@@ -7,11 +7,6 @@ const userListInfoSchema = new mongoose.Schema(
       required: true,
       max: 50,
     },
-    description: {
-      type: String,
-      required: true,
-      max: 150,
-    },
     bodyPart: {
       type: String,
       required: true,
