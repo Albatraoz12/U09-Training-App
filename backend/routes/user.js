@@ -69,7 +69,7 @@ router.post('/signin', async (req, res) => {
 
       return res
         .cookie('access_token', token, {
-          // httpOnly: true,
+          httpOnly: true,
           secure: true,
           sameSite: 'none',
         })
