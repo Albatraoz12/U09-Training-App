@@ -83,6 +83,25 @@ router.get('/getUser/:uid', authorization, async (req, res) => {
   }
 });
 
+//@desc Edit A User Information
+//@routes PUT /user/:id/edit
+//@access Public
+router.put('/editUser/:id/', authorization, async (req, res) => {
+  try {
+    if (req.role === 'admin') {
+      const id = req.params.id;
+      const update = req.body;
+      const options = { new: true };
+      const user = await User.findByIdAndUpdate(id, update, options);
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ message: 'You are not a jedi' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Could not update User' });
+  }
+});
+
 //@desc Delete A User with a userID
 //@routes Delete /deleteUser/:id
 //@access Private
