@@ -203,7 +203,7 @@ function Dashboard() {
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={index}
                                     >
-                                        <a className="text-white" href="/exercise/1">
+                                        <a className="text-white" href={`/exercise/${saves.exId}`}>
                                             {saves.name}
                                         </a>
                                         <button
