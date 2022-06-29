@@ -31,8 +31,22 @@ function FindUsers() {
                 })
         }
 
+        const getUsers = async () => {
+            await axios
+                .get(`${process.env.REACT_APP_API_URL}admin/getAllUsers`, {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${user}`,
+                    },
+                })
+                .then((res) => {
+                    console.log(res.data)
+                })
+        }
+
         if (user) {
             checkUser()
+            getUsers()
         }
     }, [user])
 
