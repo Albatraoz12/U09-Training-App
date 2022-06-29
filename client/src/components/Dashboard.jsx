@@ -7,6 +7,7 @@ function Dashboard() {
     const user = Cookies.get('access_token')
     const navigate = useNavigate()
     const [getUser, setGetUser] = useState([])
+    const [isRole, setIsRole] = useState(Boolean)
     const [getUserList, setGetUserList] = useState([])
     const [getUserSaves, setGetUserSaves] = useState([])
     const [formData, setFormData] = useState({
@@ -28,6 +29,11 @@ function Dashboard() {
                     if (res.data.user) {
                         // Stores user info into the state.
                         setGetUser(res.data.user)
+                        if (res.data.user.role === 'admin') {
+                            setIsRole(true)
+                        } else {
+                            setIsRole(false)
+                        }
                     }
                 })
         }
@@ -118,6 +124,15 @@ function Dashboard() {
             <div className="container">
                 <section className=" my-5">
                     <h1>Welcome {getUser.firstName}</h1>
+                    {isRole ? (
+                        <div>
+                            <h2>{getUser.role}</h2>
+                        </div>
+                    ) : (
+                        <div>
+                            <h2>blablablabla</h2>
+                        </div>
+                    )}
                     <p>
                         Hope you have a wonderfull day <br /> Lets the workout start!
                     </p>
