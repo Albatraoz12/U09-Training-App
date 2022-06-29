@@ -35,13 +35,15 @@ function UserListPage() {
         }))
     }
     const updateList = async (userData) => {
-        await axios.put(
-            `${process.env.REACT_APP_API_URL}userList/editList/${params.id}`,
-            userData,
-            {
+        await axios
+            .put(`${process.env.REACT_APP_API_URL}userList/editList/${params.id}`, userData, {
                 withCredentials: true,
-            }
-        )
+            })
+            .then((res) => {
+                if (res) {
+                    window.location.reload()
+                }
+            })
     }
     const onSubmit = (e) => {
         e.preventDefault()
@@ -51,7 +53,6 @@ function UserListPage() {
         }
 
         updateList(userData)
-        window.location.reload()
     }
 
     const deleteListInfo = async (id) => {

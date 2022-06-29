@@ -7,6 +7,7 @@ function Dashboard() {
     const user = Cookies.get('access_token')
     const navigate = useNavigate()
     const [getUser, setGetUser] = useState([])
+    const [isRole, setIsRole] = useState(Boolean)
     const [getUserList, setGetUserList] = useState([])
     const [getUserSaves, setGetUserSaves] = useState([])
     const [formData, setFormData] = useState({
@@ -28,6 +29,11 @@ function Dashboard() {
                     if (res.data.user) {
                         // Stores user info into the state.
                         setGetUser(res.data.user)
+                        if (res.data.user.role === 'admin') {
+                            setIsRole(true)
+                        } else {
+                            setIsRole(false)
+                        }
                     }
                 })
         }
@@ -121,6 +127,16 @@ function Dashboard() {
                     <p>
                         Hope you have a wonderfull day <br /> Lets the workout start!
                     </p>
+                    {isRole ? (
+                        <div className="d-flex justify-content-center align-items-center gap-3">
+                            <a className="btn btn-primary" href="/createUser">
+                                Create an User
+                            </a>
+                            <a className="btn btn-primary" href="/findUsers">
+                                Find an User
+                            </a>
+                        </div>
+                    ) : null}
                 </section>
                 <section className="container">
                     <form
