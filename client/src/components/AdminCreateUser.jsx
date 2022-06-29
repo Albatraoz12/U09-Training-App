@@ -14,6 +14,7 @@ function AdminCreateUser() {
         firstName: '',
         lastName: '',
         email: '',
+        role: 'user',
         password: '',
         confirmPassword: '',
     })
@@ -44,10 +45,31 @@ function AdminCreateUser() {
                     }
                 })
         }
+
         if (user) {
             checkUser()
         }
-    }, [getUser.role, isRole, navigate, user])
+    }, [error, getUser.role, isRole, navigate, user])
+    useEffect(() => {
+        const signup = async (userData) => {
+            await axios
+                .post(`${process.env.REACT_APP_API_URL}admin/signup`, userData, {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${user}`,
+                    },
+                })
+                .then((res) => {
+                    if (res.data) {
+                        // eslint-disable-next-line no-console
+                        console.log('hejsan')
+                    }
+                })
+        }
+        if (error === false) {
+            signup(formData)
+        }
+    }, [error, formData, user])
     const validate = (values) => {
         // Empty errors object - data is added if the form is not filled out properly
         const errors = {}
@@ -102,30 +124,24 @@ function AdminCreateUser() {
         setFormErrors(validate(formData))
         setSubmitted(true)
     }
-    const signup = async (userData) => {
-        await axios
-            .post(`${process.env.REACT_APP_API_URL}admin/signup`, userData, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${user}`,
-                },
-            })
-            .then((res) => {
-                if (res.data) {
-                    console.log('hejsan')
-                }
-            })
+    const successmessage = () => {
+        // eslint-disable-next-line no-alert
+        alert('Registration successful!')
+        navigate('/dashboard')
     }
     if (isRole) {
         return (
             <main className="my-5">
                 <section className="container my-3">
                     <h1>Sign Up</h1>
+                    {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
+                    {Object.keys(formErrors).length === 0 && submitted ? successmessage() : <></>}
                     <form className="row g-3 mt-2">
                         <div className="col-md-6">
                             <label htmlFor="firstName" className="form-label">
                                 First name
                             </label>
+                            <p>{formErrors.firstName}</p>
                             <input
                                 type="text"
                                 className="form-control"
@@ -133,12 +149,14 @@ function AdminCreateUser() {
                                 name="firstName"
                                 value={firstName}
                                 placeholder="your first name"
+                                onChange={onChange}
                             />
                         </div>
                         <div className="col-md-6">
                             <label htmlFor="lastName" className="form-label">
                                 Last name
                             </label>
+                            <p>{formErrors.lastName}</p>
                             <input
                                 type="text"
                                 className="form-control"
@@ -146,12 +164,14 @@ function AdminCreateUser() {
                                 name="lastName"
                                 value={lastName}
                                 placeholder="your last name"
+                                onChange={onChange}
                             />
                         </div>
                         <div className="col-12">
                             <label htmlFor="email" className="form-label">
                                 Email
                             </label>
+                            <p>{formErrors.email}</p>
                             <input
                                 type="email"
                                 className="form-control"
@@ -159,12 +179,14 @@ function AdminCreateUser() {
                                 id="email"
                                 value={email}
                                 placeholder="example@gmail.com"
+                                onChange={onChange}
                             />
                         </div>
                         <div className="col-md-6">
                             <label htmlFor="password" className="form-label">
                                 Password
                             </label>
+                            <p>{formErrors.password}</p>
                             <input
                                 type="password"
                                 className="form-control"
@@ -172,12 +194,14 @@ function AdminCreateUser() {
                                 name="password"
                                 value={password}
                                 placeholder="Password must be 5"
+                                onChange={onChange}
                             />
                         </div>
                         <div className="col-md-6">
                             <label htmlFor="confirmPassword" className="form-label">
                                 Confirm Password
                             </label>
+                            <p>{formErrors.confirmPassword}</p>
                             <input
                                 type="password"
                                 className="form-control"
@@ -185,24 +209,32 @@ function AdminCreateUser() {
                                 name="confirmPassword"
                                 value={confirmPassword}
                                 placeholder="confirm your password"
+                                onChange={onChange}
                             />
                         </div>
                         <div className="col-md-12 align-self-center">
                             <label htmlFor="role" className="form-label">
                                 Choose a role
                             </label>
+                            <p>{formErrors.role}</p>
                             <select
                                 className="form-select form-select-md"
                                 aria-label=".form-select-sm example"
                                 id="role"
+                                name="role"
                                 value={role}
+                                onChange={onChange}
                             >
                                 <option value="user">User</option>
                                 <option value="admin">Admin</option>
                             </select>
                         </div>
                         <div className="col-12">
-                            <button type="submit" className="btn btn-primary btn-lg">
+                            <button
+                                type="submit"
+                                className="btn btn-primary btn-lg"
+                                onClick={onSubmit}
+                            >
                                 Sign up
                             </button>
                         </div>
