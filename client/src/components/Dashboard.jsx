@@ -124,18 +124,19 @@ function Dashboard() {
             <div className="container">
                 <section className=" my-5">
                     <h1>Welcome {getUser.firstName}</h1>
-                    {isRole ? (
-                        <div>
-                            <h2>{getUser.role}</h2>
-                        </div>
-                    ) : (
-                        <div>
-                            <h2>blablablabla</h2>
-                        </div>
-                    )}
                     <p>
                         Hope you have a wonderfull day <br /> Lets the workout start!
                     </p>
+                    {isRole ? (
+                        <div className="d-flex justify-content-center align-items-center gap-3">
+                            <a className="btn btn-primary" href="/createUser">
+                                Create an User
+                            </a>
+                            <a className="btn btn-primary" href="/findUsers">
+                                Find an User
+                            </a>
+                        </div>
+                    ) : null}
                 </section>
                 <section className="container">
                     <form
