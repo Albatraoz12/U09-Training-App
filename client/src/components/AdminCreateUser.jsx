@@ -17,6 +17,9 @@ function AdminCreateUser() {
         password: '',
         confirmPassword: '',
     })
+    const [formErrors, setFormErrors] = useState({})
+    const [error, setError] = useState(true)
+    const [submitted, setSubmitted] = useState(false)
     const { firstName, lastName, email, role, password, confirmPassword } = formData
 
     useEffect(() => {
@@ -45,7 +48,74 @@ function AdminCreateUser() {
             checkUser()
         }
     }, [getUser.role, isRole, navigate, user])
+    const validate = (values) => {
+        // Empty errors object - data is added if the form is not filled out properly
+        const errors = {}
+        // Regular expression to validate the email format:
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
 
+        // Display error messages if the user submits incorrect data in the form and stop registration from succeeding
+        if (!values.firstName) {
+            errors.firstName = 'First name is required!'
+            setError(true)
+        }
+        if (!values.lastName) {
+            errors.lastName = 'Last name is required!'
+            setError(true)
+        }
+        if (!values.role) {
+            errors.role = 'Role is required!'
+            setError(true)
+        }
+        if (!values.email) {
+            errors.email = 'Email is required!'
+            setError(true)
+        } else if (!regex.test(values.email)) {
+            errors.email = 'Not a valid email format!'
+            setError(true)
+        }
+        if (!values.password) {
+            errors.password = 'Password is required!'
+            setError(true)
+        } else if (values.password.length < 6) {
+            errors.password = 'Password must be more than 6 characters!'
+            setError(true)
+        }
+        if (!values.confirmPassword) {
+            errors.confirmPassword = 'Password confirmation is required!'
+            setError(true)
+        } else if (values.confirmPassword !== values.password) {
+            errors.confirmPassword = 'Must be identical to password!'
+            setError(true)
+        }
+
+        if (Object.keys(errors).length === 0) {
+            setError(false)
+        }
+        return errors
+    }
+    const onChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+    const onSubmit = (e) => {
+        e.preventDefault()
+        setFormErrors(validate(formData))
+        setSubmitted(true)
+    }
+    const signup = async (userData) => {
+        await axios
+            .post(`${process.env.REACT_APP_API_URL}admin/signup`, userData, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
+            })
+            .then((res) => {
+                if (res.data) {
+                    console.log('hejsan')
+                }
+            })
+    }
     if (isRole) {
         return (
             <main className="my-5">
