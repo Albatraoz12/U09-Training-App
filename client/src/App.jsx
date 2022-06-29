@@ -12,6 +12,7 @@ import Footer from './components/Footer'
 import ExercisePage from './components/ExercisePage'
 import UserListPage from './components/UserListPage'
 import AdminCreateUser from './components/AdminCreateUser'
+import FindUsers from './components/FindUsers'
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/search" element={<Search />} />
                 <Route path="/exercise/:id" element={<ExercisePage />} />
                 <Route path="/createUser" element={<AdminCreateUser />} />
+                <Route path="/findUsers" element={<FindUsers />} />
                 <Route path="*" element={<Errorpage />} />
             </Routes>
             <Footer />
