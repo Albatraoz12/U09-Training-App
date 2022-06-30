@@ -74,6 +74,21 @@ function UserPage() {
             })
     }
 
+    const deleteUser = async () => {
+        await axios
+            .delete(`${process.env.REACT_APP_API_URL}admin/deleteUser/${params.id}`, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
+            })
+            .then((res) => {
+                if (res) {
+                    navigate('/findUsers')
+                }
+            })
+    }
+
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
@@ -169,7 +184,7 @@ function UserPage() {
                 </section>
                 <section className="my-5">
                     <h2 className="py-2">Want to Delete the user?</h2>
-                    <button className="btn btn-primary btn-lg" type="submit">
+                    <button className="btn btn-primary btn-lg" type="submit" onClick={deleteUser}>
                         Delete {firstName}
                     </button>
                 </section>
