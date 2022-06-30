@@ -9,7 +9,6 @@ function AdminCreateUser() {
     const user = Cookies.get('access_token')
     const [getUser, setGetUser] = useState([])
     const [isRole, setIsRole] = useState(Boolean)
-    // eslint-disable-next-line no-unused-vars
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
