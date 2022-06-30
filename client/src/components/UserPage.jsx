@@ -9,9 +9,11 @@ function UserPage() {
     const params = useParams()
     const user = Cookies.get('access_token')
     const [getAdmin, setGetAdmin] = useState([])
-    const [getUser, setGetUser] = useState([])
     const [isRole, setIsRole] = useState(Boolean)
+    const [formData, setFormData] = useState({})
+    const { firstName, lastName, email } = formData
 
+    // when component mounts, the functions will run.
     useEffect(() => {
         // Fetching admin info
         const checkAdmin = async () => {
@@ -46,7 +48,7 @@ function UserPage() {
                     },
                 })
                 .then((res) => {
-                    setGetUser(res.data.userData)
+                    setFormData(res.data.userData)
                 })
         }
         // If user is logged in it will run the functions
@@ -57,16 +59,42 @@ function UserPage() {
         }
     }, [getAdmin.role, isRole, navigate, params.id, user])
 
+    // function to let user update an user
+    const updateUser = async (userData) => {
+        await axios
+            .put(`${process.env.REACT_APP_API_URL}admin/editUser/${params.id}`, userData, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
+            })
+            .then((res) => {
+                // eslint-disable-next-line no-console
+                console.log(res.data)
+            })
+    }
+
+    const onChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+    const submit = (e) => {
+        e.preventDefault()
+        updateUser(formData)
+    }
+
     if (isRole) {
         return (
             <main className="my-5">
                 <section className="my-5">
-                    <h1>Want to Update or Delete {getUser.firstName}</h1>
+                    <h1>Want to Update or Delete {firstName}</h1>
                 </section>
                 {/* Section for update the user information */}
                 <section className="container my-5">
-                    <h2>Update USERNAME</h2>
-                    <form className="row g-3 mt-2">
+                    <h2>Update {firstName}</h2>
+                    <form
+                        className="row g-3 mt-2"
+                        // onSubmit={submit}
+                    >
                         <div className="col-md-6">
                             <label htmlFor="firstName" className="form-label">
                                 First name
@@ -77,7 +105,9 @@ function UserPage() {
                                 className="form-control"
                                 id="firstName"
                                 name="firstName"
-                                placeholder="your first name"
+                                placeholder={firstName}
+                                value={firstName || ''}
+                                onChange={onChange}
                             />
                         </div>
                         <div className="col-md-6">
@@ -90,7 +120,9 @@ function UserPage() {
                                 className="form-control"
                                 id="lastName"
                                 name="lastName"
-                                placeholder="your last name"
+                                placeholder={lastName}
+                                value={lastName || ''}
+                                onChange={onChange}
                             />
                         </div>
                         <div className="col-12">
@@ -103,31 +135,9 @@ function UserPage() {
                                 className="form-control"
                                 name="email"
                                 id="email"
-                                placeholder="example@gmail.com"
-                            />
-                        </div>
-                        <div className="col-md-6">
-                            <label htmlFor="password" className="form-label">
-                                Password
-                            </label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="password"
-                                name="password"
-                                placeholder="Password must be 5"
-                            />
-                        </div>
-                        <div className="col-md-6">
-                            <label htmlFor="confirmPassword" className="form-label">
-                                Confirm Password
-                            </label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                placeholder="confirm your password"
+                                placeholder={email || ''}
+                                value={email || ''}
+                                onChange={onChange}
                             />
                         </div>
                         <div className="col-md-12 align-self-center">
@@ -139,14 +149,20 @@ function UserPage() {
                                 aria-label=".form-select-sm example"
                                 id="role"
                                 name="role"
+                                // value={role}
+                                onChange={onChange}
                             >
                                 <option value="user">User</option>
                                 <option value="admin">Admin</option>
                             </select>
                         </div>
                         <div className="col-12">
-                            <button type="submit" className="btn btn-primary btn-lg">
-                                Sign up
+                            <button
+                                type="button"
+                                className="btn btn-primary btn-lg"
+                                onClick={submit}
+                            >
+                                Update {firstName}
                             </button>
                         </div>
                     </form>
@@ -154,7 +170,7 @@ function UserPage() {
                 <section className="my-5">
                     <h2 className="py-2">Want to Delete the user?</h2>
                     <button className="btn btn-primary btn-lg" type="submit">
-                        Delete {getUser.firstName}
+                        Delete {firstName}
                     </button>
                 </section>
             </main>
