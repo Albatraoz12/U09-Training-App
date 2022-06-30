@@ -110,8 +110,8 @@ function Search() {
                     </div>
                 </form>
             </section>
-            <section className="container">
-                <h1 className="text-start">You searched for:</h1>
+            <section className="container my-5">
+                <h1 className="text-start">You searched for: {exerciseName || ''}</h1>
                 <div className="row row-cols-1 row-cols-md-3 g-2 mx-auto">
                     {ten.map((exercise) => {
                         return (
