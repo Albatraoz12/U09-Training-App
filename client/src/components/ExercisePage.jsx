@@ -129,9 +129,14 @@ function ExercisePage() {
                 withCredentials: true,
             })
             .then((res) => {
-                // eslint-disable-next-line no-console
-                console.log(res.data)
-                window.location.reload()
+                if (res.data.errorMessage) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.data.errorMessage)
+                } else {
+                    // eslint-disable-next-line no-console
+                    console.log(res.data)
+                    window.location.reload()
+                }
             })
     }
 
@@ -202,7 +207,6 @@ function ExercisePage() {
                                                         type="button"
                                                         className="dropdown-item"
                                                         onClick={() => {
-                                                            // console.log(formData, '', list._id)
                                                             // eslint-disable-next-line no-underscore-dangle
                                                             saveList(list._id)
                                                         }}

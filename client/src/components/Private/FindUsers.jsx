@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import ErrorPage from './Errorpage'
+import ErrorPage from '../Errorpage'
 
 function FindUsers() {
     const user = Cookies.get('access_token')
@@ -66,7 +66,7 @@ function FindUsers() {
 
     if (isRole) {
         return (
-            <main className="my-5">
+            <main className="my-5 min-vh-60">
                 <section className="container my-5">
                     <h1>Search for a user</h1>
                     <input

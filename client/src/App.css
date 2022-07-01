@@ -12,6 +12,11 @@ body {
     font-family: 'Poppins', sans-serif;
     color: #ffffff;
     background-color: #272848;
+    height: 100vh;
+}
+
+.min-vh-60 {
+    min-height: 60vh;
 }
 
 .btn-primary {
@@ -57,7 +62,6 @@ footer {
     background-color: #6c6d84;
     position: relative;
     bottom: 0;
-    width: 100%;
     /* height: auto; */
 }
 

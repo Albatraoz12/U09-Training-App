@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
     return (
-        <footer className="text-center text-white mt-5">
+        <footer className="footer text-center text-white mt-auto">
             <div className="container">
                 <section className="py-3">
                     {/* Instagram */}

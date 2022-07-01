@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useNavigate, useParams } from 'react-router-dom'
-import ErrorPage from './Errorpage'
+import ErrorPage from '../Errorpage'
 
 function UserPage() {
     const navigate = useNavigate()

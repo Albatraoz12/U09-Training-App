@@ -66,8 +66,8 @@ function UserListPage() {
     }
 
     return (
-        <main>
-            <section className="my-5 py-5 ">
+        <main className="container my-5 p-2">
+            <section className="my-5 py-5 container">
                 <h1>{params.name}</h1>
                 <form className="d-flex justify-content-center row gap-1 my-3" onSubmit={onSubmit}>
                     <div className="d-flex align-items-center justify-content-center">
