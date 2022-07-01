@@ -15,8 +15,8 @@ body {
     height: 100vh;
 }
 
-.min-vh-60 {
-    min-height: 60vh;
+main {
+    min-height: 65vh;
 }
 
 .btn-primary {

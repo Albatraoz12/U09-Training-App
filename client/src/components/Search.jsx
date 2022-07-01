@@ -61,7 +61,7 @@ function Search() {
     })
 
     return (
-        <main>
+        <main className="my-5">
             <section className="container mx-auto my-5">
                 <h1>Search</h1>
                 <form className="row g-3 mt-4">
