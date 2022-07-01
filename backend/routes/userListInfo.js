@@ -24,7 +24,7 @@ router.post('/createInfo/:id', async (req, res) => {
           res.status(200).json({ message: 'Exercise has been added to list' })
         );
     } else {
-      res.status(404).json({ message: 'Exercise is already in list' });
+      res.json({ message: 'Exercise is already in list' });
     }
   } catch (error) {
     res.status(404).json({ message: 'Invalid Information, try again' });

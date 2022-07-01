@@ -21,7 +21,7 @@ router.post('/saveEx/:id', async (req, res) => {
         .save()
         .then(res.status(200).json({ message: 'The Exercise has been saved' }));
     } else {
-      res.status(404).json({ message: 'Exercise is already saved' });
+      res.json({ errorMessage: 'Exercise is already saved' });
     }
   } catch (error) {
     console.log(error);
