@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import ErrorPage from './Errorpage'
+import ErrorPage from '../Errorpage'
 
 function FindUsers() {
     const user = Cookies.get('access_token')

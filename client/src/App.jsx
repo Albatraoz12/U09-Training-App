@@ -11,9 +11,9 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ExercisePage from './components/ExercisePage'
 import UserListPage from './components/UserListPage'
-import AdminCreateUser from './components/AdminCreateUser'
-import FindUsers from './components/FindUsers'
-import UserPage from './components/UserPage'
+import AdminCreateUser from './components/Private/AdminCreateUser'
+import FindUsers from './components/Private/FindUsers'
+import UserPage from './components/Private/UserPage'
 
 function App() {
     return (
