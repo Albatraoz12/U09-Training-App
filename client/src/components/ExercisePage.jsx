@@ -112,6 +112,8 @@ function ExercisePage() {
                 exId: exercise.id,
             })
         }
+        // Disable this line because of not neeeding the dependensis
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.id, user, getUser.id, exercise.name, exercise.id])
 
     // function to let user save the exercise
@@ -139,11 +141,11 @@ function ExercisePage() {
             })
             .then((res) => {
                 if (res.data.errorMessage) {
-                    // eslint-disable-next-line no-console
-                    console.log(res.data.errorMessage)
-                } else {
-                    // eslint-disable-next-line no-console
-                    console.log(res.data)
+                    // eslint-disable-next-line no-alert
+                    alert('This Exercise is already saved into that list!')
+                } else if (res.data.message) {
+                    // eslint-disable-next-line no-alert
+                    alert('This Exercise is now added to the list!')
                     window.location.reload()
                 }
             })
