@@ -10,8 +10,9 @@ function ExercisePage() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [getUser, setGetUser] = useState([])
     const [getUserList, setGetUserList] = useState([])
-    // eslint-disable-next-line no-unused-vars
     const [getUserSaves, setGetUserSaves] = useState([])
+    // eslint-disable-next-line no-unused-vars
+    const [isSaved, setIsSaved] = useState(false)
     const [formData, setFormData] = useState({
         name: '',
         exId: '',
@@ -60,6 +61,17 @@ function ExercisePage() {
                     if (res.data.sInfo) {
                         // Stores user info into the state.
                         setGetUserSaves(res.data.sInfo)
+                        console.log(res.data.sInfo.exId)
+                        const alreadySaved = getUserSaves.map((saved) => {
+                            if (saved.exId === params.id) {
+                                return true
+                            }
+                            return false
+                        })
+                        if (alreadySaved) {
+                            setIsSaved(true)
+                            console.log(isSaved)
+                        }
                     }
                 })
         }
@@ -176,15 +188,27 @@ function ExercisePage() {
                         {/* if user is logged in then the button and the dropdown will be seen. Otherwise nothing */}
                         {isLoggedIn ? (
                             <>
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    onClick={() => {
-                                        save(formData)
-                                    }}
-                                >
-                                    Save
-                                </button>
+                                {!isSaved ? (
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                            save(formData)
+                                        }}
+                                    >
+                                        Save
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                            save(formData)
+                                        }}
+                                    >
+                                        Unsave
+                                    </button>
+                                )}
                                 <div className="dropdown">
                                     <button
                                         className="btn btn-secondary dropdown-toggle"
