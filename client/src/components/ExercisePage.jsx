@@ -10,8 +10,9 @@ function ExercisePage() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [getUser, setGetUser] = useState([])
     const [getUserList, setGetUserList] = useState([])
-    // eslint-disable-next-line no-unused-vars
     const [getUserSaves, setGetUserSaves] = useState([])
+    // eslint-disable-next-line no-unused-vars
+    const [isSaved, setIsSaved] = useState(false)
     const [formData, setFormData] = useState({
         name: '',
         exId: '',
@@ -60,6 +61,14 @@ function ExercisePage() {
                     if (res.data.sInfo) {
                         // Stores user info into the state.
                         setGetUserSaves(res.data.sInfo)
+                        getUserSaves.map((saved) => {
+                            if (saved.exId === params.id) {
+                                setIsSaved(true)
+                            } else {
+                                setIsSaved(false)
+                            }
+                            return saved
+                        })
                     }
                 })
         }
@@ -103,6 +112,8 @@ function ExercisePage() {
                 exId: exercise.id,
             })
         }
+        // Disable this line because of not neeeding the dependensis
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.id, user, getUser.id, exercise.name, exercise.id])
 
     // function to let user save the exercise
@@ -130,11 +141,11 @@ function ExercisePage() {
             })
             .then((res) => {
                 if (res.data.errorMessage) {
-                    // eslint-disable-next-line no-console
-                    console.log(res.data.errorMessage)
-                } else {
-                    // eslint-disable-next-line no-console
-                    console.log(res.data)
+                    // eslint-disable-next-line no-alert
+                    alert('This Exercise is already saved into that list!')
+                } else if (res.data.message) {
+                    // eslint-disable-next-line no-alert
+                    alert('This Exercise is now added to the list!')
                     window.location.reload()
                 }
             })
@@ -143,6 +154,19 @@ function ExercisePage() {
     // When user clicks on a list from the dropdown, the exercise will be saved into that list
     const saveList = (id) => {
         exerciseToList(formData, id)
+    }
+
+    // Deleting Saved exercise from ExercisePage
+    const deleteSaved = async () => {
+        await axios
+            .delete(
+                `${process.env.REACT_APP_API_URL}userSaves/deletesaved/${getUser.id}/${params.id}`
+            )
+            .then((res) => {
+                if (res) {
+                    window.location.reload()
+                }
+            })
     }
 
     return (
@@ -176,15 +200,27 @@ function ExercisePage() {
                         {/* if user is logged in then the button and the dropdown will be seen. Otherwise nothing */}
                         {isLoggedIn ? (
                             <>
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    onClick={() => {
-                                        save(formData)
-                                    }}
-                                >
-                                    Save
-                                </button>
+                                {isSaved ? (
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                            deleteSaved(formData)
+                                        }}
+                                    >
+                                        Unsave
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                            save(formData)
+                                        }}
+                                    >
+                                        Save
+                                    </button>
+                                )}
                                 <div className="dropdown">
                                     <button
                                         className="btn btn-secondary dropdown-toggle"
