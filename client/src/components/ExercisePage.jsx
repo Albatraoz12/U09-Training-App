@@ -61,17 +61,14 @@ function ExercisePage() {
                     if (res.data.sInfo) {
                         // Stores user info into the state.
                         setGetUserSaves(res.data.sInfo)
-                        console.log(res.data.sInfo.exId)
-                        const alreadySaved = getUserSaves.map((saved) => {
+                        getUserSaves.map((saved) => {
                             if (saved.exId === params.id) {
-                                return true
+                                setIsSaved(true)
+                            } else {
+                                setIsSaved(false)
                             }
-                            return false
+                            return saved
                         })
-                        if (alreadySaved) {
-                            setIsSaved(true)
-                            console.log(isSaved)
-                        }
                     }
                 })
         }
@@ -157,6 +154,19 @@ function ExercisePage() {
         exerciseToList(formData, id)
     }
 
+    // Deleting Saved exercise from ExercisePage
+    const deleteSaved = async () => {
+        await axios
+            .delete(
+                `${process.env.REACT_APP_API_URL}userSaves/deletesaved/${getUser.id}/${params.id}`
+            )
+            .then((res) => {
+                if (res) {
+                    window.location.reload()
+                }
+            })
+    }
+
     return (
         <main className="my-5">
             <section className="container">
@@ -188,15 +198,15 @@ function ExercisePage() {
                         {/* if user is logged in then the button and the dropdown will be seen. Otherwise nothing */}
                         {isLoggedIn ? (
                             <>
-                                {!isSaved ? (
+                                {isSaved ? (
                                     <button
                                         type="button"
                                         className="btn btn-primary"
                                         onClick={() => {
-                                            save(formData)
+                                            deleteSaved(formData)
                                         }}
                                     >
-                                        Save
+                                        Unsave
                                     </button>
                                 ) : (
                                     <button
@@ -206,7 +216,7 @@ function ExercisePage() {
                                             save(formData)
                                         }}
                                     >
-                                        Unsave
+                                        Save
                                     </button>
                                 )}
                                 <div className="dropdown">

@@ -3,7 +3,7 @@ const userSaved = require('../model/userSaved');
 const dotenv = require('dotenv').config();
 const router = express.Router();
 
-//Crate userList
+// Save exercise
 router.post('/saveEx/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -39,11 +39,24 @@ router.get('/saves/:id', async (req, res) => {
   }
 });
 
-//Delete User Saved Exercise
+//Delete User Saved Exercise from Dashboard
 router.delete('/deletesaved/:id', async (req, res) => {
   try {
     const id = req.params.id;
     await userSaved.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Saved exercise has now been deleteted!' });
+  } catch (error) {
+    res.status(404).json({ message: 'Invalid Id!' });
+  }
+});
+
+// Route to let users unlike from ExercisePage
+router.delete('/deletesaved/:uid/:eid', async (req, res) => {
+  try {
+    const uid = req.params.uid;
+    const eid = req.params.eid;
+    const user = await userSaved.findOne({ user: uid, exId: eid });
+    await userSaved.deleteOne(user);
     res.status(200).json({ message: 'Saved exercise has now been deleteted!' });
   } catch (error) {
     res.status(404).json({ message: 'Invalid Id!' });
