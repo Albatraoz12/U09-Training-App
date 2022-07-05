@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 function UserListPage() {
+    const navigate = useNavigate()
     const params = useParams()
     const [listInfo, setListInfo] = useState([])
     const [formData, setFormData] = useState({
@@ -41,6 +42,7 @@ function UserListPage() {
             })
             .then((res) => {
                 if (res) {
+                    navigate(`/userList/${title}/${params.id}`)
                     window.location.reload()
                 }
             })
