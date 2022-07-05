@@ -77,20 +77,25 @@ function FindUsers() {
                             setSearchTerm(event.target.value)
                         }}
                     />
-                    <div className="my-5">
-                        <ul>
-                            {filteredUsers.map((userData, key) => {
-                                return (
+                    {/* <div className="my-5"> */}
+                    <div className="d-flex justify-content-center flex-column gap-1 container my-5 custom-list rounded">
+                        {filteredUsers.map((userData, key) => {
+                            return (
+                                <ul
+                                    className="mb-0"
                                     // eslint-disable-next-line react/no-array-index-key
-                                    <li className="nav-link fw-bolder text-white" key={key}>
+                                    key={key}
+                                >
+                                    <li className="list-unstyled d-flex justify-content-center align-items-center px-3 py-2">
                                         <a className="text-white" href={`getUser/${userData._id}`}>
                                             {userData.firstName}
                                         </a>
                                     </li>
-                                )
-                            })}
-                        </ul>
+                                </ul>
+                            )
+                        })}
                     </div>
+                    {/* </div> */}
                 </section>
             </main>
         )
