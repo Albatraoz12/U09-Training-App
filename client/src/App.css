@@ -27,7 +27,7 @@ main {
 .btn-primary:hover {
     background-color: #272848;
     border-color: #6c6d84;
-    border: 3px solid white;
+    border: 1px solid white;
 }
 
 .btn-light {
@@ -62,7 +62,6 @@ footer {
     background-color: #6c6d84;
     position: relative;
     bottom: 0;
-    /* height: auto; */
 }
 
 .container-fluid a {
@@ -72,4 +71,8 @@ footer {
 .hidden {
     display: none;
     visibility: hidden;
+}
+
+.custom-list {
+    background-color: #6c6d84;
 }

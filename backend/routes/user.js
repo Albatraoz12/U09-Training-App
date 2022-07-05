@@ -70,7 +70,8 @@ router.post('/signin', async (req, res) => {
 
       return res
         .cookie('access_token', token, {
-          httpOnly: true,
+          // httpOnly: true,
+          httpOnly: process.env.NODE_ENV == 'production' ? true : false,
           secure: true,
           sameSite: 'none',
         })
