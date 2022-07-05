@@ -143,70 +143,65 @@ function Dashboard() {
                         className="d-flex justify-content-center row gap-1 my-3"
                         onSubmit={onSubmit}
                     >
-                        <div className="d-flex align-items-center justify-content-center">
+                        <div className="d-flex flex-column align-items-center justify-content-center gap-2">
                             <label htmlFor="title" className="fs-2">
                                 Create List
                             </label>
-                            <button
-                                className="bi bi-plus-circle btn btn-light btn-lg"
-                                type="button"
-                                aria-label="Create list"
+                            <input
+                                type="text"
+                                className="col-md-6 col-sm-auto rounded form-control-lg"
+                                id="title"
+                                placeholder="Enter a title for your list"
+                                name="title"
+                                onChange={onChange}
                             />
+                            <button
+                                className="btn btn-primary col-md-6 col-sm-auto rounded"
+                                type="submit"
+                            >
+                                Create
+                            </button>
                         </div>
-                        <input
-                            type="text"
-                            className="col-md-6 col-sm-auto rounded form-control-lg"
-                            id="title"
-                            placeholder="Enter a title for your list"
-                            name="title"
-                            onChange={onChange}
-                        />
-                        <button
-                            className="btn btn-primary col-md-6 col-sm-auto rounded"
-                            type="submit"
-                        >
-                            Create
-                        </button>
                     </form>
                 </section>
-                <section>
+                <section className="container mb-3">
                     <div>
                         <h2>Your Lists</h2>
-                        <ul className="d-flex justify-content-center flex-column list-unstyled gap-1">
+
+                        <div className="d-flex justify-content-center flex-column gap-1 container">
                             {getUserList.map((lists, index) => {
                                 return (
-                                    <li
-                                        className="d-flex justify-content-center align-items-center gap-2"
-                                        // eslint wont accept index as a key. to eliminete the console error
-                                        // I disabled this line
+                                    // eslint wont accept index as a key. to eliminete the console error
+                                    // I disabled this line
+                                    <div
+                                        className="custom-list rounded"
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={index}
                                     >
-                                        <a
-                                            className="text-white"
-                                            // eslint-disable-next-line no-underscore-dangle
-                                            href={`/userList/${lists.title}/${lists._id}`}
-                                        >
-                                            {lists.title}
-                                        </a>
-                                        <button
-                                            type="button"
-                                            className="bi bi-pencil-square btn btn-danger"
-                                            aria-label="remove list"
-                                        />
-                                        <button
-                                            type="submit"
-                                            className="bi bi-x-lg btn btn-danger"
-                                            aria-label="remove list"
-                                            onClick={() => {
-                                                // eslint-disable-next-line no-underscore-dangle
-                                                deleteList(lists._id)
-                                            }}
-                                        />
-                                    </li>
+                                        <ul className="mb-0">
+                                            <li className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2">
+                                                <a
+                                                    className="text-white"
+                                                    // eslint-disable-next-line no-underscore-dangle
+                                                    href={`/userList/${lists.title}/${lists._id}`}
+                                                >
+                                                    {lists.title}
+                                                </a>
+                                                <button
+                                                    type="submit"
+                                                    className="bi bi-x-lg btn btn-danger"
+                                                    aria-label="remove list"
+                                                    onClick={() => {
+                                                        // eslint-disable-next-line no-underscore-dangle
+                                                        deleteList(lists._id)
+                                                    }}
+                                                />
+                                            </li>
+                                        </ul>
+                                    </div>
                                 )
                             })}
-                        </ul>
+                        </div>
                     </div>
                 </section>
                 <section>
