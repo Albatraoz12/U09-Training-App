@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 function UserListPage() {
+    const navigate = useNavigate()
     const params = useParams()
     const [listInfo, setListInfo] = useState([])
     const [formData, setFormData] = useState({
@@ -41,6 +42,7 @@ function UserListPage() {
             })
             .then((res) => {
                 if (res) {
+                    navigate(`/userList/${title}/${params.id}`)
                     window.location.reload()
                 }
             })
@@ -66,7 +68,7 @@ function UserListPage() {
     }
 
     return (
-        <main className="container my-5 p-2">
+        <main className="my-5 p-2">
             <section className="my-5 py-5 container">
                 <h1>{params.name}</h1>
                 <form className="d-flex justify-content-center row gap-1 my-3" onSubmit={onSubmit}>
@@ -87,30 +89,36 @@ function UserListPage() {
                         Update
                     </button>
                 </form>
-                <ul className='className="d-flex justify-content-center flex-column list-unstyled gap-2'>
-                    {listInfo.map((info, index) => {
-                        return (
-                            <li
-                                className="d-flex justify-content-center align-items-center gap-2"
-                                // eslint-disable-next-line react/no-array-index-key
-                                key={index}
-                            >
-                                <a className="text-white" href={`/exercise/${info.exId}`}>
-                                    {info.name}
-                                </a>
-                                <button
-                                    type="button"
-                                    className="bi bi-x-lg btn btn-danger"
-                                    aria-label="remove item"
-                                    onClick={() => {
-                                        // eslint-disable-next-line no-underscore-dangle
-                                        deleteListInfo(info._id)
-                                    }}
-                                />
-                            </li>
-                        )
-                    })}
-                </ul>
+                <div className="d-flex justify-content-center flex-column gap-1 container">
+                    <ul
+                        className="mb-0"
+                        // eslint-disable-next-line react/no-array-index-key
+                        // key={index}
+                    >
+                        {listInfo.map((info, index) => {
+                            return (
+                                <li
+                                    className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2"
+                                    // eslint-disable-next-line react/no-array-index-key
+                                    key={index}
+                                >
+                                    <a className="text-white" href={`/exercise/${info.exId}`}>
+                                        {info.name}
+                                    </a>
+                                    <button
+                                        type="submit"
+                                        className="bi bi-x-lg btn btn-danger"
+                                        aria-label="remove item"
+                                        onClick={() => {
+                                            // eslint-disable-next-line no-underscore-dangle
+                                            deleteListInfo(info._id)
+                                        }}
+                                    />
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </div>
             </section>
         </main>
     )
