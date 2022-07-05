@@ -149,14 +149,14 @@ function Dashboard() {
                             </label>
                             <input
                                 type="text"
-                                className="col-md-6 col-sm-auto rounded form-control-lg"
+                                className="col-md-8 col-sm-auto rounded form-control-lg"
                                 id="title"
                                 placeholder="Enter a title for your list"
                                 name="title"
                                 onChange={onChange}
                             />
                             <button
-                                className="btn btn-primary col-md-6 col-sm-auto rounded"
+                                className="btn btn-primary col-md-3 col-sm-auto rounded"
                                 type="submit"
                             >
                                 Create
@@ -171,10 +171,10 @@ function Dashboard() {
                         <div className="d-flex justify-content-center flex-column gap-1 container">
                             {getUserList.map((lists, index) => {
                                 return (
-                                    // eslint wont accept index as a key. to eliminete the console error
-                                    // I disabled this line
                                     <div
                                         className="custom-list rounded"
+                                        // eslint wont accept index as a key. to eliminete the console error
+                                        // I disabled this line
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={index}
                                     >
@@ -207,30 +207,35 @@ function Dashboard() {
                 <section>
                     <h2>Your Saves</h2>
                     <div>
-                        <ul className="d-flex justify-content-center flex-column list-unstyled gap-1">
+                        <div className="d-flex justify-content-center flex-column gap-1 container">
                             {getUserSaves.map((saves, index) => {
                                 return (
-                                    <li
-                                        className="d-flex justify-content-center align-items-center gap-2"
+                                    <ul
+                                        className="mb-0"
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={index}
                                     >
-                                        <a className="text-white" href={`/exercise/${saves.exId}`}>
-                                            {saves.name}
-                                        </a>
-                                        <button
-                                            type="button"
-                                            className="bi bi-x-lg btn btn-danger"
-                                            aria-label="remove list"
-                                            onClick={() => {
-                                                // eslint-disable-next-line no-underscore-dangle
-                                                deleteSaved(saves._id)
-                                            }}
-                                        />
-                                    </li>
+                                        <li className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2">
+                                            <a
+                                                className="text-white"
+                                                href={`/exercise/${saves.exId}`}
+                                            >
+                                                {saves.name}
+                                            </a>
+                                            <button
+                                                type="submit"
+                                                className="bi bi-x-lg btn btn-danger"
+                                                aria-label="remove saved exercise"
+                                                onClick={() => {
+                                                    // eslint-disable-next-line no-underscore-dangle
+                                                    deleteSaved(saves._id)
+                                                }}
+                                            />
+                                        </li>
+                                    </ul>
                                 )
                             })}
-                        </ul>
+                        </div>
                     </div>
                 </section>
             </div>
