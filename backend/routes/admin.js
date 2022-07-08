@@ -7,8 +7,8 @@ const jwt = require('jsonwebtoken');
 
 //Middleweare, authorize users token
 const authorization = (req, res, next) => {
-  //const token = req.cookies.access_token;
-  const token = req.headers.authorization.split(' ')[1];
+  const token = req.cookies.access_token;
+  // const token = req.headers.authorization.split(' ')[1];
   if (!token) {
     return res.status(403).json({ message: 'You are not Authorized!' });
   }
