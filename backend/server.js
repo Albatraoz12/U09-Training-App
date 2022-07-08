@@ -11,14 +11,14 @@ const userSaved = require('./routes/userSaved');
 const adminRoutes = require('./routes/admin');
 const app = express();
 
-app.use(express.json());
-app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
     origin: process.env.REQUEST_URL,
   })
 );
+app.use(express.json());
+app.use(cookieParser());
 
 app.use('/user', userRouter);
 app.use('/userList', listRouter);

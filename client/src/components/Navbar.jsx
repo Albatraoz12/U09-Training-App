@@ -13,9 +13,9 @@ function Navbar() {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}user/signout`, {
                     withCredentials: true,
-                    // headers: {
-                    //     Authorization: `Bearer ${user}`,
-                    // },
+                    headers: {
+                        Authorization: `Bearer ${user}`,
+                    },
                 })
                 .then((res) => {
                     if (res) {
