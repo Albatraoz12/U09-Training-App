@@ -71,10 +71,10 @@ To be able to access the procted route which is frontends dashboard, the user mu
 | :------------- | :------- | :------------------------------------------------------------------------------------------------ |
 | `access_token` | `string` | **Required**. the middleware will decode the token and read the user with help of the decoded id. |
 
-#### Middleware
+## UserList
 
 ```http
-  Middleware
+  Post /userList/:id
 ```
 
 | Parameter | Type     | Description                                                    |
