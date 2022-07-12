@@ -71,28 +71,52 @@ To be able to access the procted route which is frontends dashboard, the user mu
 | :------------- | :------- | :------------------------------------------------------------------------------------------------ |
 | `access_token` | `string` | **Required**. the middleware will decode the token and read the user with help of the decoded id. |
 
+#### Middleware
+
+```http
+  Middleware
+```
+
+| Parameter      | Type     | Description                                                                                       |
+| :------------- | :------- | :------------------------------------------------------------------------------------------------ |
+| `access_token` | `string` | **Required**. the middleware will decode the token and read the user with help of the decoded id. |
+
 ## UserList
 
 ```http
-  Post /userList/:id
+  POST /userList/:id
 ```
 
-| Parameter | Type     | Description                                                    |
-| :-------- | :------- | :------------------------------------------------------------- |
-| `id`      | `string` | **Required**. Users id, so the list can be linked to that user |
-| `title`   | `string` | **Required**. A title of the list                              |
-
-#### UserList
+| Parameter | Type     | Description                                                                                    |
+| :-------- | :------- | :--------------------------------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. The backend will use the id sent to it to later connect the new list to the user |
+| `title`   | `string` | **Required**. User must send an title for an list via formdata                                 |
 
 ```http
-  Get UserLis
+  GET /userList/:id
 ```
 
-| Parameter      | Type     | Description                                                                                                                                 |
-| :------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
-| `access_token` | `string` | **Required**. will split the header req by the user. the middlewate will save the id decoded by the token to later be used for other routes |
+| Parameter | Type     | Description                                                                                                      |
+| :-------- | :------- | :--------------------------------------------------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. With the ID send to the backend, the backend will then send back that user with that ID its lists. |
 
-app.use('/userList', listRouter);
+```http
+  PUT /userList/:id
+```
+
+| Parameter | Type     | Description                                                              |
+| :-------- | :------- | :----------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. ID must be validated to be able to update an specifik list |
+| `title`   | `string` | **Required**. User send a new title name with JSON data.                 |
+
+```http
+  DELETE /userList/:id
+```
+
+| Parameter | Type     | Description                                                                  |
+| :-------- | :------- | :--------------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. Will delete a list with that ID which is being send to backend |
+
 app.use('/userListInfo', listInfoRouter);
 
 ## **Api Routes**
