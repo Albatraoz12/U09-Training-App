@@ -61,6 +61,8 @@ The admin roles are like developers, they will check that every new implementaio
 
 ### Protected
 
+To be able to access the procted route which is frontends dashboard, the user must send its token in the header as Authorization: Bearer $token so that the backend can decode it.
+
 ```http
   GET /user/protected
 ```
