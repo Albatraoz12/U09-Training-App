@@ -117,7 +117,33 @@ To be able to access the procted route which is frontends dashboard, the user mu
 | :-------- | :------- | :--------------------------------------------------------------------------- |
 | `id`      | `string` | **Required**. Will delete a list with that ID which is being send to backend |
 
-app.use('/userListInfo', listInfoRouter);
+## UserListInfo
+
+```http
+  POST /userListInfo/createInfo/:id
+```
+
+| Parameter | Type     | Description                                                                                           |
+| :-------- | :------- | :---------------------------------------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. The backend will use the id sent to it to later connect the new listinfo to the List id |
+| `title`   | `string` | **Required**. Title of the exercise which the user wants to save.                                     |
+| `exId`    | `string` | **Required**. exId is the id of an exercise, which will be used to link to that specific exercise.    |
+
+```http
+  GET /userListInfo/listInfo/
+```
+
+| Parameter | Type     | Description                                                     |
+| :-------- | :------- | :-------------------------------------------------------------- |
+| `id`      | `string` | **Required**. Will fetch all listinfo with is linked to that id |
+
+```http
+  DELETE /userList/:id
+```
+
+| Parameter | Type     | Description                                                                      |
+| :-------- | :------- | :------------------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. Will delete a listInfo with that ID which is being send to backend |
 
 ## **Api Routes**
 
