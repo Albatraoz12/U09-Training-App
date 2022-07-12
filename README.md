@@ -77,6 +77,17 @@ To be able to access the procted route which is frontends dashboard, the user mu
   Middleware
 ```
 
+| Parameter | Type     | Description                                                    |
+| :-------- | :------- | :------------------------------------------------------------- |
+| `id`      | `string` | **Required**. Users id, so the list can be linked to that user |
+| `title`   | `string` | **Required**. A title of the list                              |
+
+#### UserList
+
+```http
+  Get UserLis
+```
+
 | Parameter      | Type     | Description                                                                                                                                 |
 | :------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
 | `access_token` | `string` | **Required**. will split the header req by the user. the middlewate will save the id decoded by the token to later be used for other routes |
@@ -86,7 +97,7 @@ app.use('/userListInfo', listInfoRouter);
 
 ## **Api Routes**
 
-# frontend
+# Frontend
 
 ## Components
 
