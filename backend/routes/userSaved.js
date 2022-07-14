@@ -83,7 +83,9 @@ router.get('/saves/:id', authorization, async (req, res) => {
   }
 });
 
-//Delete User Saved Exercise from Dashboard
+// @desc Delete an savedex ID and before deletion, the user must be validated to match params.id.user
+// @routes DELETE /userSaves/deletesaved/:id
+// @access Private
 router.delete('/deletesaved/:id', authorization, async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.userId });
