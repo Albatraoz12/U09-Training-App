@@ -65,14 +65,19 @@ router.get('/:uid', authorization, async (req, res) => {
 });
 
 //Edit user list with userId
-router.put('/editList/:id', async (req, res) => {
+router.put('/editList/:lid', authorization, async (req, res) => {
   try {
-    const id = req.params.id;
-    const options = { new: true };
-    const editList = await userList.findByIdAndUpdate(id, req.body, options);
-    res
-      .status(200)
-      .json({ message: 'book with ID ' + id + ' has now been updated!' });
+    const validUser = User.findOne({ _id: req.userId });
+    const id = req.params.lid;
+    if (validUser) {
+      const options = { new: true };
+      const editList = await userList.findByIdAndUpdate(id, req.body, options);
+      res
+        .status(200)
+        .json({ message: 'List with ID ' + id + ' has now been updated!' });
+    } else {
+      res.status(404).json({ ErrorMessage: 'You are not an user!' });
+    }
   } catch (error) {
     res.status(404).json({ message: 'No List with that ID' });
   }
