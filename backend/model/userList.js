@@ -13,6 +13,10 @@ const userListSchema = new mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    listRole: {
+      type: String,
+      max: 20,
+    },
   },
   { timestamps: true }
 );
