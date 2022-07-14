@@ -33,7 +33,7 @@ function UserListPage() {
         }
 
         getListInfo()
-    }, [params])
+    }, [params, user])
     const { title } = formData
     const onChange = (e) => {
         setFormData((prevState) => ({
