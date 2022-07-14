@@ -93,12 +93,25 @@ router.put('/editList/:lid', authorization, async (req, res) => {
 });
 
 //Delete userList by Id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authorization, async (req, res) => {
   try {
     const id = req.params.id;
-    const list = await userList.findById(id);
-    list.remove();
-    res.status(200).json({ message: 'User List has now been deletet!' });
+    const user = await User.find({ _id: req.userId });
+    console.log(id);
+    console.log(user);
+    if (user) {
+      const list = await userList.findById(id);
+      if (list.user == req.userId) {
+        list.remove();
+        res
+          .status(200)
+          .json({ message: list.title + ' has now been deletet!' });
+      } else {
+        res
+          .status(404)
+          .json({ ErrorMessage: 'You are not the owner of this list!' });
+      }
+    }
   } catch (error) {
     res.status(404).json({ message: 'Invalid Id!' });
   }
