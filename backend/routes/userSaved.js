@@ -2,6 +2,23 @@ const express = require('express');
 const userSaved = require('../model/userSaved');
 const dotenv = require('dotenv').config();
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+
+//Middleweare, authorize users token
+const authorization = (req, res, next) => {
+  // const token = req.cookies.access_token;
+  const token = req.headers.authorization.split(' ')[1];
+  if (!token) {
+    return res.status(403).json({ message: 'You are not Authorized!' });
+  }
+  try {
+    const data = jwt.verify(token, process.env.SECRET);
+    req.userId = data.id;
+    return next();
+  } catch {
+    return res.status(403).json({ message: 'You have no valid token' });
+  }
+};
 
 // Save exercise
 router.post('/saveEx/:id', async (req, res) => {
