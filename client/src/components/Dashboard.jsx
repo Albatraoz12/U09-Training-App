@@ -41,6 +41,9 @@ function Dashboard() {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}userList/${getUser.id}`, {
                     withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${user}`,
+                    },
                 })
                 .then((res) => {
                     if (res.data.message) {
@@ -54,6 +57,9 @@ function Dashboard() {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}userSaves/saves/${getUser.id}`, {
                     withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${user}`,
+                    },
                 })
                 .then((res) => {
                     if (res.data.sInfo) {
@@ -85,6 +91,9 @@ function Dashboard() {
         await axios
             .post(`${process.env.REACT_APP_API_URL}userList/createList/${getUser.id}`, userData, {
                 withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
             })
             .then((res) => {
                 if (res) {
@@ -103,16 +112,26 @@ function Dashboard() {
     }
 
     const deleteList = async (id) => {
-        await axios.delete(`${process.env.REACT_APP_API_URL}userList/${id}`).then((res) => {
-            if (res) {
-                window.location.reload()
-            }
-        })
+        await axios
+            .delete(`${process.env.REACT_APP_API_URL}userList/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
+            })
+            .then((res) => {
+                if (res) {
+                    window.location.reload()
+                }
+            })
     }
 
     const deleteSaved = async (id) => {
         await axios
-            .delete(`${process.env.REACT_APP_API_URL}userSaves/deletesaved/${id}`)
+            .delete(`${process.env.REACT_APP_API_URL}userSaves/deletesaved/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
+            })
             .then((res) => {
                 if (res) {
                     window.location.reload()

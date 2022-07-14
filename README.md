@@ -61,6 +61,8 @@ The admin roles are like developers, they will check that every new implementaio
 
 ### Protected
 
+To be able to access the procted route which is frontends dashboard, the user must send its token in the header as Authorization: Bearer $token so that the backend can decode it.
+
 ```http
   GET /user/protected
 ```
@@ -75,16 +77,77 @@ The admin roles are like developers, they will check that every new implementaio
   Middleware
 ```
 
-| Parameter      | Type     | Description                                                                                                                                 |
-| :------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
-| `access_token` | `string` | **Required**. will split the header req by the user. the middlewate will save the id decoded by the token to later be used for other routes |
+| Parameter      | Type     | Description                                                                                       |
+| :------------- | :------- | :------------------------------------------------------------------------------------------------ |
+| `access_token` | `string` | **Required**. the middleware will decode the token and read the user with help of the decoded id. |
 
-app.use('/userList', listRouter);
-app.use('/userListInfo', listInfoRouter);
+## UserList
+
+```http
+  POST /userList/:id
+```
+
+| Parameter | Type     | Description                                                                                    |
+| :-------- | :------- | :--------------------------------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. The backend will use the id sent to it to later connect the new list to the user |
+| `title`   | `string` | **Required**. User must send an title for an list via formdata                                 |
+
+```http
+  GET /userList/:id
+```
+
+| Parameter | Type     | Description                                                                                                      |
+| :-------- | :------- | :--------------------------------------------------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. With the ID send to the backend, the backend will then send back that user with that ID its lists. |
+
+```http
+  PUT /userList/:id
+```
+
+| Parameter | Type     | Description                                                              |
+| :-------- | :------- | :----------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. ID must be validated to be able to update an specifik list |
+| `title`   | `string` | **Required**. User send a new title name with JSON data.                 |
+
+```http
+  DELETE /userList/:id
+```
+
+| Parameter | Type     | Description                                                                  |
+| :-------- | :------- | :--------------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. Will delete a list with that ID which is being send to backend |
+
+## UserListInfo
+
+```http
+  POST /userListInfo/createInfo/:id
+```
+
+| Parameter | Type     | Description                                                                                           |
+| :-------- | :------- | :---------------------------------------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. The backend will use the id sent to it to later connect the new listinfo to the List id |
+| `title`   | `string` | **Required**. Title of the exercise which the user wants to save.                                     |
+| `exId`    | `string` | **Required**. exId is the id of an exercise, which will be used to link to that specific exercise.    |
+
+```http
+  GET /userListInfo/listInfo/
+```
+
+| Parameter | Type     | Description                                                     |
+| :-------- | :------- | :-------------------------------------------------------------- |
+| `id`      | `string` | **Required**. Will fetch all listinfo with is linked to that id |
+
+```http
+  DELETE /userList/:id
+```
+
+| Parameter | Type     | Description                                                                      |
+| :-------- | :------- | :------------------------------------------------------------------------------- |
+| `id`      | `string` | **Required**. Will delete a listInfo with that ID which is being send to backend |
 
 ## **Api Routes**
 
-# frontend
+# Frontend
 
 ## Components
 
