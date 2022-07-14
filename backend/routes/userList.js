@@ -67,14 +67,23 @@ router.get('/:uid', authorization, async (req, res) => {
 //Edit user list with userId
 router.put('/editList/:lid', authorization, async (req, res) => {
   try {
-    const validUser = User.findOne({ _id: req.userId });
+    const validUser = await User.findOne({ _id: req.userId });
     const id = req.params.lid;
     if (validUser) {
-      const options = { new: true };
-      const editList = await userList.findByIdAndUpdate(id, req.body, options);
-      res
-        .status(200)
-        .json({ message: 'List with ID ' + id + ' has now been updated!' });
+      const list = await userList.findOne({ _id: id });
+      if (list.user == validUser.id) {
+        const options = { new: true };
+        const editList = await userList.findByIdAndUpdate(
+          id,
+          req.body,
+          options
+        );
+        res
+          .status(200)
+          .json({ message: 'List with ID ' + id + ' has now been updated!' });
+      } else {
+        res.status(404).json({ ErrorMessage: 'You are not the owner!' });
+      }
     } else {
       res.status(404).json({ ErrorMessage: 'You are not an user!' });
     }
