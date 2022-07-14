@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 
 //Middleweare, authorize users token
 const authorization = (req, res, next) => {
-  // const token = req.cookies.access_token;
   const token = req.headers.authorization.split(' ')[1];
   if (!token) {
     return res.status(403).json({ message: 'You are not Authorized!' });
@@ -21,7 +20,10 @@ const authorization = (req, res, next) => {
     return res.status(403).json({ message: 'You have no valid token' });
   }
 };
-//Crate userList
+
+//@desc Creates a list for a user
+//@routes POST /userList/createList/:id
+//@access Private
 router.post('/createList/:uid', authorization, (req, res) => {
   try {
     const uid = req.params.uid;
@@ -44,7 +46,9 @@ router.post('/createList/:uid', authorization, (req, res) => {
   }
 });
 
-//Get userlists by userID
+//@desc Gets all list for the userId
+//@routes GET /userList/createList/:id
+//@access Private
 router.get('/:uid', authorization, async (req, res) => {
   try {
     const user = User.findOne({ _id: req.userId });
@@ -64,7 +68,9 @@ router.get('/:uid', authorization, async (req, res) => {
   }
 });
 
-//Edit user list with userId
+//@desc Validates if users ID from token == list.user and then updates the list, if it is true
+//@routes PUT /userList/editList/:lid
+//@access Private
 router.put('/editList/:lid', authorization, async (req, res) => {
   try {
     const validUser = await User.findOne({ _id: req.userId });
@@ -92,7 +98,9 @@ router.put('/editList/:lid', authorization, async (req, res) => {
   }
 });
 
-//Delete userList by Id
+//@desc Validates if users ID from token == list.user and then deletes it
+//@routes Delete /userList/:id
+//@access Private
 router.delete('/:id', authorization, async (req, res) => {
   try {
     const id = req.params.id;
