@@ -1,5 +1,6 @@
 const express = require('express');
 const userSaved = require('../model/userSaved');
+const User = require('../model/user');
 const dotenv = require('dotenv').config();
 const router = express.Router();
 const jwt = require('jsonwebtoken');
@@ -14,31 +15,45 @@ const authorization = (req, res, next) => {
   try {
     const data = jwt.verify(token, process.env.SECRET);
     req.userId = data.id;
+    req.role = data.role;
     return next();
   } catch {
     return res.status(403).json({ message: 'You have no valid token' });
   }
 };
 
-// Save exercise
-router.post('/saveEx/:id', async (req, res) => {
+// @desc User must send in title and exId to the user ID
+// @routes POST /userSaves/saveEx/:id
+// @access Private
+router.post('/saveEx/:id', authorization, async (req, res) => {
   try {
-    const id = req.params.id;
-    const exist = await userSaved.findOne({
-      user: id,
-      exId: req.body.exId,
-    });
-    if (exist === null) {
-      const newSave = new userSaved({
-        name: req.body.name,
-        exId: req.body.exId,
-        user: id,
-      });
-      newSave
-        .save()
-        .then(res.status(200).json({ message: 'The Exercise has been saved' }));
+    const user = await User.findOne({ _id: req.userId });
+    if (user) {
+      const id = req.params.id;
+      if (req.userId == id) {
+        const exist = await userSaved.findOne({
+          user: id,
+          exId: req.body.exId,
+        });
+        if (exist === null) {
+          const newSave = new userSaved({
+            name: req.body.name,
+            exId: req.body.exId,
+            user: id,
+          });
+          newSave
+            .save()
+            .then(
+              res.status(200).json({ message: 'The Exercise has been saved' })
+            );
+        } else {
+          res.json({ errorMessage: 'Exercise is already saved' });
+        }
+      } else {
+        res.status(404).json({ errorMessage: 'You are not the user!' });
+      }
     } else {
-      res.json({ errorMessage: 'Exercise is already saved' });
+      res.status(404).json({ errorMessage: 'You are not an valid user!' });
     }
   } catch (error) {
     console.log(error);
