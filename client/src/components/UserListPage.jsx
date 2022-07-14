@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 import axios from 'axios'
 
 function UserListPage() {
     const navigate = useNavigate()
     const params = useParams()
+    const user = Cookies.get('access_token')
     const [listInfo, setListInfo] = useState([])
     const [formData, setFormData] = useState({
         title: '',
@@ -14,7 +16,11 @@ function UserListPage() {
         const getListInfo = async () => {
             try {
                 await axios
-                    .get(`${process.env.REACT_APP_API_URL}userListInfo/listInfo/${params.id}`)
+                    .get(`${process.env.REACT_APP_API_URL}userListInfo/listInfo/${params.id}`, {
+                        headers: {
+                            Authorization: `Bearer ${user}`,
+                        },
+                    })
                     .then((res) => {
                         if (res.data.lInfo) {
                             setListInfo(res.data.lInfo)
@@ -39,6 +45,9 @@ function UserListPage() {
         await axios
             .put(`${process.env.REACT_APP_API_URL}userList/editList/${params.id}`, userData, {
                 withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
             })
             .then((res) => {
                 if (res) {
