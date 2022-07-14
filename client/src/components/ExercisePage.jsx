@@ -42,6 +42,9 @@ function ExercisePage() {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}userList/${getUser.id}`, {
                     withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${user}`,
+                    },
                 })
                 .then((res) => {
                     if (res.data.message) {
@@ -56,6 +59,9 @@ function ExercisePage() {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}userSaves/saves/${getUser.id}`, {
                     withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${user}`,
+                    },
                 })
                 .then((res) => {
                     if (res.data.sInfo) {
@@ -121,6 +127,9 @@ function ExercisePage() {
         await axios
             .post(`${process.env.REACT_APP_API_URL}userSaves/saveEx/${getUser.id}`, exData, {
                 withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
             })
             .then((res) => {
                 // eslint-disable-next-line no-console
@@ -138,6 +147,9 @@ function ExercisePage() {
         await axios
             .post(`${process.env.REACT_APP_API_URL}userListInfo/createInfo/${id}`, exData, {
                 withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${user}`,
+                },
             })
             .then((res) => {
                 if (res.data.errorMessage) {
@@ -161,6 +173,11 @@ function ExercisePage() {
         await axios
             .delete(
                 `${process.env.REACT_APP_API_URL}userSaves/deletesaved/${getUser.id}/${params.id}`
+                // {
+                //     headers: {
+                //         Authorization: `Bearer ${user}`,
+                //     },
+                // }
             )
             .then((res) => {
                 if (res) {
