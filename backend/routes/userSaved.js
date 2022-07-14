@@ -84,11 +84,24 @@ router.get('/saves/:id', authorization, async (req, res) => {
 });
 
 //Delete User Saved Exercise from Dashboard
-router.delete('/deletesaved/:id', async (req, res) => {
+router.delete('/deletesaved/:id', authorization, async (req, res) => {
   try {
-    const id = req.params.id;
-    await userSaved.findByIdAndDelete(id);
-    res.status(200).json({ message: 'Saved exercise has now been deleteted!' });
+    const user = await User.findOne({ _id: req.userId });
+
+    if (user) {
+      const id = req.params.id;
+      const list = await userSaved.findOne({ _id: id });
+      if (req.userId == list.user) {
+        await userSaved.findByIdAndDelete(id);
+        res
+          .status(200)
+          .json({ message: 'Saved exercise has now been deleteted!' });
+      } else {
+        res.status(404).json({ errorMessage: 'You are not the user' });
+      }
+    } else {
+      res.status(404).json({ errorMessage: 'You are not an valid user!' });
+    }
   } catch (error) {
     res.status(404).json({ message: 'Invalid Id!' });
   }
