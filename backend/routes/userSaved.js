@@ -60,12 +60,24 @@ router.post('/saveEx/:id', authorization, async (req, res) => {
   }
 });
 
-//Read User saved exercises
-router.get('/saves/:id', async (req, res) => {
+// @desc User must send token which contains its ID to be able to see its saved exercise.
+// @routes GET /userSaves/saves/:id
+// @access Private
+router.get('/saves/:id', authorization, async (req, res) => {
   try {
-    const id = req.params.id;
-    const sInfo = await userSaved.find({ user: id });
-    res.status(200).json({ sInfo });
+    const user = await User.findOne({ _id: req.userId });
+
+    if (user) {
+      const id = req.params.id;
+      if (req.userId == id) {
+        const sInfo = await userSaved.find({ user: id });
+        res.status(200).json({ sInfo });
+      } else {
+        res.status(404).json({ errorMessage: 'You are not the user' });
+      }
+    } else {
+      res.status(404).json({ errorMessage: 'You are not an valid user!' });
+    }
   } catch (error) {
     res.status(404).json({ message: error });
   }
