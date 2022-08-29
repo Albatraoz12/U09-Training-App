@@ -1,6 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -62,6 +60,7 @@ function FindUsers() {
         if (val.firstName.toLowerCase().includes(searchTerms.toLowerCase())) {
             return val
         }
+        return null
     })
 
     if (isRole) {
