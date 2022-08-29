@@ -2,9 +2,13 @@
 
 # **Introduction**
 
-Welcome to my fullstack application. This is a Traning/exercise app where you can search for exercises be able to crud a list and save exercises. There are restrictions depending on which role a user have.
+Welcome to my fullstack application. This is a Traning/exercise app where you can search for exercises and If you are an Registerd User you will be able to:  
+ Create a List  
+ Update the name of that list  
+ Read the List with exercises in them  
+ Delete the list or exercises inside that list.
 
-The **roles** are as followed:
+You will also be able to save exercises for late use.
 
 # None-Admin Roles
 
