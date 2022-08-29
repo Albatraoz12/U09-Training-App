@@ -24,7 +24,9 @@ Cd into client or backend and run npm install. !note you have to do this on both
 
 After your have installed all your dependencys you can cd into backend and client and run npm start to start your Mongodb server and webbaplication.
 
-# None-Admin Roles
+# **Roles**
+
+These are the roles and what they represent. Each role has their limits and authorization. To be an administrator you need to speak with me and I will make you one :). Anyways the role are as follow:
 
 ## **Guests**
 
@@ -32,7 +34,7 @@ May only be able to search gym exercises but will not be able to save them nor c
 
 ## **Registered User**
 
-Registered Users can login and create, update, read and delete a list aswell as save exercises.
+Registered Users can make a list, delete a list, read a lits infor and save exercises into them as well as uppdating its name.
 
 ## **Admin**
 
