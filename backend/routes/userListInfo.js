@@ -24,7 +24,7 @@ router.post('/createInfo/:id', async (req, res) => {
           res.status(200).json({ message: 'Exercise has been added to list' })
         );
     } else {
-      res.json({ errorMessage: 'Exercise is already in list' });
+      res.status(400).json({ errorMessage: 'Exercise is already in list' });
     }
   } catch (error) {
     res.status(404).json({ message: 'Invalid Information, try again' });
@@ -39,7 +39,7 @@ router.get('/listInfo/:id', async (req, res) => {
     const lInfo = await userListInfo.find({ uList: id });
     res.status(200).json({ lInfo });
   } catch (error) {
-    res.status(404).json({ message: error });
+    res.status(500).json({ message: error });
   }
 });
 
@@ -52,7 +52,7 @@ router.delete('/listInfoDelete/:id', async (req, res) => {
       .status(200)
       .json({ message: 'Exercise has now been deletet from list!' });
   } catch (error) {
-    res.status(404).json({ message: 'Invalid Id!' });
+    res.status(500).json({ message: 'Invalid Id!' });
   }
 });
 
