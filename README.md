@@ -10,6 +10,20 @@ Welcome to my fullstack application. This is a Traning/exercise app where you ca
 
 You will also be able to save exercises for late use.
 
+# **How to install**
+
+Here is the guide on how to install the application on your local machin and use your localhost to serve the app.
+
+Before we start you need to have MongoDb and node installed on your computer and I recomend that you use Compass to handle the database. Follow these links bellow to get started on downloading [Nodejs](https://nodejs.org/en/download/) and [MongoDB:](https://www.mongodb.com/try/download/community).
+
+## **Stepts**
+
+Git clone this reposetory to your desire destination and after you have clone it, open it on VS code or any other code edditor.
+
+Cd into client or backend and run npm install. !note you have to do this on both the files.
+
+After your have installed all your dependencys you can cd into backend and client and run npm start to start your Mongodb server and webbaplication.
+
 # None-Admin Roles
 
 ## **Guests**
