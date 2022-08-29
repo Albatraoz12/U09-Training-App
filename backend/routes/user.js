@@ -10,14 +10,14 @@ const authorization = (req, res, next) => {
   // const token = req.cookies.access_token;
   const token = req.headers.authorization.split(' ')[1];
   if (!token) {
-    return res.status(403).json({ message: 'You are not Authorized!' });
+    return res.status(500).json({ message: 'You are not Authorized!' });
   }
   try {
     const data = jwt.verify(token, process.env.SECRET);
     req.userId = data.id;
     return next();
   } catch {
-    return res.status(403).json({ message: 'You have no valid token' });
+    return res.status(500).json({ message: 'You have no valid token' });
   }
 };
 //@desc Authorized a user
@@ -28,7 +28,7 @@ router.get('/protected', authorization, async (req, res) => {
     const user = await User.findById(req.userId);
 
     if (user === null) {
-      res.status(404);
+      res.status(400);
       return;
     }
 
@@ -81,10 +81,10 @@ router.post('/signin', async (req, res) => {
           token: token,
         });
     } else if (!passwordMatch) {
-      res.json({ message: 'Wrong Password, try again' });
+      res.status(400).json({ message: 'Wrong Password, try again' });
     }
   } else {
-    res.json({ message: 'sorry, could not login' });
+    res.status(400).json({ message: 'sorry, could not login' });
   }
 });
 
@@ -105,10 +105,10 @@ router.post('/signup', async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
 
     user.save().then(() => {
-      res.status(200).json({ message: 'New user has been created!' });
+      res.status(201).json({ message: 'New user has been created!' });
     });
   } catch (error) {
-    res.status(404).json({ message: error });
+    res.status(500).json({ message: error });
   }
 });
 

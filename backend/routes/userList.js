@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 const authorization = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
   if (!token) {
-    return res.status(403).json({ message: 'You are not Authorized!' });
+    return res.status(401).json({ message: 'You are not Authorized!' });
   }
   try {
     const data = jwt.verify(token, process.env.SECRET);
@@ -17,7 +17,7 @@ const authorization = (req, res, next) => {
     req.role = data.role;
     return next();
   } catch {
-    return res.status(403).json({ message: 'You have no valid token' });
+    return res.status(500).json({ message: 'You have no valid token' });
   }
 };
 
@@ -39,7 +39,7 @@ router.post('/createList/:uid', authorization, (req, res) => {
         .save()
         .then(res.status(200).json({ message: 'new list has been created' }));
     } else {
-      res.status(404).json({ ErrorMessage: 'wrong userId' });
+      res.status(400).json({ ErrorMessage: 'wrong userId' });
     }
   } catch (error) {
     console.log(error);
@@ -58,7 +58,7 @@ router.get('/:uid', authorization, async (req, res) => {
         const list = await userList.find({ user: uid });
         res.status(200).json({ message: list });
       } else {
-        res.status(404).json({ ErrorMessage: 'Wrong crediantials!' });
+        res.status(401).json({ ErrorMessage: 'Wrong crediantials!' });
       }
     } else {
       res.status(404).json({ ErrorMessage: 'You are not an user!' });
@@ -88,13 +88,13 @@ router.put('/editList/:lid', authorization, async (req, res) => {
           .status(200)
           .json({ message: 'List with ID ' + id + ' has now been updated!' });
       } else {
-        res.status(404).json({ ErrorMessage: 'You are not the owner!' });
+        res.status(403).json({ ErrorMessage: 'You are not the owner!' });
       }
     } else {
-      res.status(404).json({ ErrorMessage: 'You are not an user!' });
+      res.status(400).json({ ErrorMessage: 'You are not an user!' });
     }
   } catch (error) {
-    res.status(404).json({ message: 'No List with that ID' });
+    res.status(500).json({ message: 'No List with that ID' });
   }
 });
 
@@ -116,7 +116,7 @@ router.delete('/:id', authorization, async (req, res) => {
           .json({ message: list.title + ' has now been deletet!' });
       } else {
         res
-          .status(404)
+          .status(403)
           .json({ ErrorMessage: 'You are not the owner of this list!' });
       }
     }

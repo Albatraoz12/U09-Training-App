@@ -2,11 +2,31 @@
 
 # **Introduction**
 
-Welcome to my fullstack application. This is a Traning/exercise app where you can search for exercises be able to crud a list and save exercises. There are restrictions depending on which role a user have.
+Welcome to my fullstack application. This is a Traning/exercise app where you can search for exercises and If you are an Registerd User you will be able to:  
+ Create a List  
+ Update the name of that list  
+ Read the List with exercises in them  
+ Delete the list or exercises inside that list.
 
-The **roles** are as followed:
+You will also be able to save exercises for late use.
 
-# None-Admin Roles
+# **How to install**
+
+Here is the guide on how to install the application on your local machin and use your localhost to serve the app.
+
+Before we start you need to have MongoDb and node installed on your computer and I recomend that you use Compass to handle the database. Follow these links bellow to get started on downloading [Nodejs](https://nodejs.org/en/download/) and [MongoDB:](https://www.mongodb.com/try/download/community).
+
+## **Stepts**
+
+Git clone this reposetory to your desire destination and after you have clone it, open it on VS code or any other code edditor.
+
+Cd into client or backend and run npm install. !note you have to do this on both the files.
+
+After your have installed all your dependencys you can cd into backend and client and run npm start to start your Mongodb server and webbaplication.
+
+# **Roles**
+
+These are the roles and what they represent. Each role has their limits and authorization. To be an administrator you need to speak with me and I will make you one :). Anyways the role are as follow:
 
 ## **Guests**
 
@@ -14,7 +34,7 @@ May only be able to search gym exercises but will not be able to save them nor c
 
 ## **Registered User**
 
-Registered Users can login and create, update, read and delete a list aswell as save exercises.
+Registered Users can make a list, delete a list, read a lits infor and save exercises into them as well as uppdating its name.
 
 ## **Admin**
 

@@ -10,7 +10,7 @@ const authorization = (req, res, next) => {
   // const token = req.cookies.access_token;
   const token = req.headers.authorization.split(' ')[1];
   if (!token) {
-    return res.status(403).json({ message: 'You are not Authorized!' });
+    return res.status(401).json({ message: 'You are not Authorized!' });
   }
   try {
     const data = jwt.verify(token, process.env.SECRET);
@@ -18,7 +18,7 @@ const authorization = (req, res, next) => {
     req.role = data.role;
     return next();
   } catch {
-    return res.status(403).json({ message: 'You have no valid token' });
+    return res.status(500).json({ message: 'You have no valid token' });
   }
 };
 
@@ -47,13 +47,13 @@ router.post('/saveEx/:id', authorization, async (req, res) => {
               res.status(200).json({ message: 'The Exercise has been saved' })
             );
         } else {
-          res.json({ errorMessage: 'Exercise is already saved' });
+          res.status(400).json({ errorMessage: 'Exercise is already saved' });
         }
       } else {
-        res.status(404).json({ errorMessage: 'You are not the user!' });
+        res.status(400).json({ errorMessage: 'You are not the user!' });
       }
     } else {
-      res.status(404).json({ errorMessage: 'You are not an valid user!' });
+      res.status(403).json({ errorMessage: 'You are not an valid user!' });
     }
   } catch (error) {
     console.log(error);
@@ -73,13 +73,13 @@ router.get('/saves/:id', authorization, async (req, res) => {
         const sInfo = await userSaved.find({ user: id });
         res.status(200).json({ sInfo });
       } else {
-        res.status(404).json({ errorMessage: 'You are not the user' });
+        res.status(400).json({ errorMessage: 'You are not the user' });
       }
     } else {
-      res.status(404).json({ errorMessage: 'You are not an valid user!' });
+      res.status(403).json({ errorMessage: 'You are not an valid user!' });
     }
   } catch (error) {
-    res.status(404).json({ message: error });
+    res.status(500).json({ message: error });
   }
 });
 
@@ -99,13 +99,13 @@ router.delete('/deletesaved/:id', authorization, async (req, res) => {
           .status(200)
           .json({ message: 'Saved exercise has now been deleteted!' });
       } else {
-        res.status(404).json({ errorMessage: 'You are not the user' });
+        res.status(400).json({ errorMessage: 'You are not the user' });
       }
     } else {
-      res.status(404).json({ errorMessage: 'You are not an valid user!' });
+      res.status(403).json({ errorMessage: 'You are not an valid user!' });
     }
   } catch (error) {
-    res.status(404).json({ message: 'Invalid Id!' });
+    res.status(500).json({ message: 'Invalid Id!' });
   }
 });
 
@@ -118,7 +118,7 @@ router.delete('/deletesaved/:uid/:eid', async (req, res) => {
     await userSaved.deleteOne(user);
     res.status(200).json({ message: 'Saved exercise has now been deleteted!' });
   } catch (error) {
-    res.status(404).json({ message: 'Invalid Id!' });
+    res.status(500).json({ message: 'Invalid Id!' });
   }
 });
 module.exports = router;

@@ -1,6 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -57,11 +55,11 @@ function FindUsers() {
     }, [user])
 
     // Function to filer the getAllUsers array to better search for the user the admin wants to find
-    // Disabled EsLint here because of error. ask for help!
     const filteredUsers = getAllUsers.filter((val) => {
         if (val.firstName.toLowerCase().includes(searchTerms.toLowerCase())) {
             return val
         }
+        return null
     })
 
     if (isRole) {
