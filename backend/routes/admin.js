@@ -10,7 +10,7 @@ const authorization = (req, res, next) => {
   // const token = req.cookies.access_token;
   const token = req.headers.authorization.split(' ')[1];
   if (!token) {
-    return res.status(403).json({ message: 'You are not Authorized!' });
+    return res.status(401).json({ message: 'You are not Authorized!' });
   }
   try {
     const data = jwt.verify(token, process.env.SECRET);
@@ -18,7 +18,7 @@ const authorization = (req, res, next) => {
     req.role = data.role;
     return next();
   } catch {
-    return res.status(403).json({ message: 'You have no valid token' });
+    return res.status(401).json({ message: 'You have no valid token' });
   }
 };
 
@@ -43,10 +43,10 @@ router.post('/signup', authorization, async (req, res) => {
         res.status(200).json({ message: 'New user has been created!' });
       });
     } else {
-      res.status(404).json({ message: 'You are not a jedi' });
+      res.status(401).json({ message: 'You are not a jedi' });
     }
   } catch (error) {
-    res.status(404).json({ message: error });
+    res.status(500).json({ message: error });
   }
 });
 
@@ -59,10 +59,10 @@ router.get('/getAllUsers', authorization, async (req, res) => {
       const users = await User.find();
       res.status(200).json({ users });
     } else {
-      res.status(404).json({ message: 'You are not a jedi' });
+      res.status(401).json({ message: 'You are not a jedi' });
     }
   } catch (error) {
-    res.status(404).json({ message: error });
+    res.status(500).json({ message: error });
   }
 });
 
@@ -76,10 +76,10 @@ router.get('/getUser/:uid', authorization, async (req, res) => {
       const userData = await User.findById(uid);
       res.status(200).json({ userData });
     } else {
-      res.status(404).json({ message: 'You are not a jedi' });
+      res.status(401).json({ message: 'You are not a jedi' });
     }
   } catch (error) {
-    res.status(404).json({ message: error });
+    res.status(500).json({ message: error });
   }
 });
 
@@ -95,7 +95,7 @@ router.put('/editUser/:id/', authorization, async (req, res) => {
       const user = await User.findByIdAndUpdate(id, update, options);
       res.status(200).json(user);
     } else {
-      res.status(404).json({ message: 'You are not a jedi' });
+      res.status(401).json({ message: 'You are not a jedi' });
     }
   } catch (error) {
     res.status(500).json({ message: 'Could not update User' });
@@ -115,10 +115,11 @@ router.delete('/deleteUser/:id', authorization, async (req, res) => {
         .status(200)
         .json({ message: 'User has been deleted successfully' });
     } else {
-      return res.status(404).json({ message: 'You are not a jedi' });
+      return res.status(401).json({ message: 'You are not a jedi' });
     }
   } catch (error) {
     console.log(error);
+    res.status(500).json({ message: error });
   }
 });
 
