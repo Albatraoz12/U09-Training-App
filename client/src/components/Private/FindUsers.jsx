@@ -55,7 +55,6 @@ function FindUsers() {
     }, [user])
 
     // Function to filer the getAllUsers array to better search for the user the admin wants to find
-    // Disabled EsLint here because of error. ask for help!
     const filteredUsers = getAllUsers.filter((val) => {
         if (val.firstName.toLowerCase().includes(searchTerms.toLowerCase())) {
             return val
