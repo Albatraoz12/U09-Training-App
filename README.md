@@ -21,9 +21,20 @@ You also need an Rapid API Key which you can get by signing up [here](https://ra
 ## **Stepts**
 
 Git clone this reposetory to your desire destination and after you have clone it, open it on VS code or any other code edditor.
+Create an .env file for both client and backend folders and add this information:
+
+**Backend**  
+ PORT = 8080 : 8081
+SECRET = 'Your_Secret'
+DATABASE_URL = mongodb://localhost/{your db name}
+REQUEST_URL = http://localhost:3000
+**Client**
+
+REACT_APP_API_URL = http://localhost:8081/
+REACT_APP_X_RapidAPI_Key = "Your API Key from Rapid API"
+REACT_APP_X_RapidAPI_Host = exercisedb.p.rapidapi.com
 
 Cd into client or backend and run npm install. !note you have to do this on both the files.
-
 After your have installed all your dependencys you can cd into backend and client and run npm start to start your Mongodb server and webbaplication.
 
 # **Roles**
