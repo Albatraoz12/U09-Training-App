@@ -16,6 +16,8 @@ Here is the guide on how to install the application on your local machin and use
 
 Before we start you need to have MongoDb and node installed on your computer and I recomend that you use Compass to handle the database. Follow these links bellow to get started on downloading [Nodejs](https://nodejs.org/en/download/) and [MongoDB:](https://www.mongodb.com/try/download/community).
 
+You also need an Rapid API Key which you can get by signing up [here](https://rapidapi.com/)
+
 ## **Stepts**
 
 Git clone this reposetory to your desire destination and after you have clone it, open it on VS code or any other code edditor.
