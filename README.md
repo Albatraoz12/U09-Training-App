@@ -57,128 +57,181 @@ The admin roles are like developers, they will check that every new implementaio
 
 ## User Api Routes
 
-#### Sign up
+I will demostrate how to use the backend api, in this demonstartion i will use Insomia but you can use Postman if you want.
+After creating a api request in insomia via the + sign, we then need to change the body type to JSON to send our data.
 
-```http
-  POST /user/signup
-```
+### Sign Up route
 
-| Parameter   | Type     | Description                             |
-| :---------- | :------- | :-------------------------------------- |
-| `firstName` | `string` | **Required**. User input                |
-| `lastName`  | `string` | **Required**. User input                |
-| `role`      | `string` | **Required**. will be user as default   |
-| `email`     | `string` | **Required**. User input                |
-| `password`  | `string` | **Required**. User input, will be hased |
+Create a user with POST
+Post to: http://localhost:8081/user/signup
+JSON:
+{
+"firstName": "John",
+"lastName":"Doe",
+"role": "Optional but will be user as default !even if you send in as admin!"
+"email": "John.Doe@gmail.com",
+"password": "JohnDoe123"
+}
 
-#### Sign in
+### Sign In route
 
-```http
-  POST /user/signin
-```
+Sign in a user with POST
+Post to: http://localhost:8081/user/signin
+JSON:
+{
+"email": "John.Doe@gmail.com",
+"password": "JohnDoe123"
+}
+Notis that we get an token and a success message as an respond. The token will be stored in the Cookies tab, left side of the route. Copy the token because we are going to be needing that to send it in the header.
 
-| Parameter  | Type     | Description              |
-| :--------- | :------- | :----------------------- |
-| `email`    | `string` | **Required**. user input |
-| `password` | `string` | **Required**. user input |
+### Protected route
 
-#### Sign Out
+This route is to identify the user with its Token with GET.
+Get to: http://localhost:8081/user/protected
+Only in Headers:
+Content-Type: application/json
+Authorization: Bearer {Paste your token here, starts with ey}
+If successfull, you will get the response of your user.
 
-```http
-  GET /user/signout
-```
+### Sign Out route
 
-| Parameter      | Type     | Description                                                                                                             |
-| :------------- | :------- | :---------------------------------------------------------------------------------------------------------------------- |
-| `access_token` | `string` | **Required**. takes token from cookies and deletes it. Needs to be send via the headers as Authorization 'Bearer token' |
+The logout route is not working as intended in the insomia/postman due to how the backend is programmed. In the whole application the frontend will be responsible to remove the token and sign out the user. This is how it will look like with insomia:
+Get to: http://localhost:8081/user/signout
+Headers:
+Authorization: Bearer {Token}
 
-### Protected
+## Create lists
 
-To be able to access the procted route which is frontends dashboard, the user must send its token in the header as Authorization: Bearer $token so that the backend can decode it.
+### Create a list
 
-```http
-  GET /user/protected
-```
+Create a list with POST-Method
+POST to: http://localhost:8081/userList/createList/{User.ID "632af075d9a2a731da81f971"}
+Headers:
+Authorization: Bearer {Token}
+You need to send the users token to make sure to identify the user and not an other.
 
-| Parameter      | Type     | Description                                                                                       |
-| :------------- | :------- | :------------------------------------------------------------------------------------------------ |
-| `access_token` | `string` | **Required**. the middleware will decode the token and read the user with help of the decoded id. |
+### Read users list
 
-#### Middleware
+GET to: http://localhost:8081/userList/{User Id}
+Headers:
+Authorization: Bearer {Token}
+Let the user read its own lists.
 
-```http
-  Middleware
-```
+### Update a list by name
 
-| Parameter      | Type     | Description                                                                                       |
-| :------------- | :------- | :------------------------------------------------------------------------------------------------ |
-| `access_token` | `string` | **Required**. the middleware will decode the token and read the user with help of the decoded id. |
+PUT to: http://localhost:8081/userList/editList/{List Id}
+JSON:
+{
+"title": "New list name"
+}
+Headers:
+Authorization: Bearer {Token}
+PUT to the lists id and change the title off the list to any disire title name.
 
-## UserList
+### Delete a list
 
-```http
-  POST /userList/:id
-```
+DELETE to: http://localhost:8081/userList/{List Id}
+Headers:
+Authorization: Bearer {Token}
 
-| Parameter | Type     | Description                                                                                    |
-| :-------- | :------- | :--------------------------------------------------------------------------------------------- |
-| `id`      | `string` | **Required**. The backend will use the id sent to it to later connect the new list to the user |
-| `title`   | `string` | **Required**. User must send an title for an list via formdata                                 |
+## Save info into a list api
 
-```http
-  GET /userList/:id
-```
+### Save info
 
-| Parameter | Type     | Description                                                                                                      |
-| :-------- | :------- | :--------------------------------------------------------------------------------------------------------------- |
-| `id`      | `string` | **Required**. With the ID send to the backend, the backend will then send back that user with that ID its lists. |
+POST to: http://localhost:8081/userListInfo/createInfo/{list Id}
+JSON:
+{
+"name": "Title1",
+"exId": "1"
+}
+This will save an exercise into the list with id {list id}
 
-```http
-  PUT /userList/:id
-```
+### Read all list information
 
-| Parameter | Type     | Description                                                              |
-| :-------- | :------- | :----------------------------------------------------------------------- |
-| `id`      | `string` | **Required**. ID must be validated to be able to update an specifik list |
-| `title`   | `string` | **Required**. User send a new title name with JSON data.                 |
+GET to: http://localhost:8081/userListInfo/listInfo/{list Id}
+This route will let the user read its list information with exercises.
 
-```http
-  DELETE /userList/:id
-```
+### Delete a list info
 
-| Parameter | Type     | Description                                                                  |
-| :-------- | :------- | :--------------------------------------------------------------------------- |
-| `id`      | `string` | **Required**. Will delete a list with that ID which is being send to backend |
+http://localhost:8081/userListInfo/listInfoDelete/{List info id}
+Will remove the exercise form the list with id {list info id}
 
-## UserListInfo
+## UserSaved Api
 
-```http
-  POST /userListInfo/createInfo/:id
-```
+users can also save an exercise outside off a list to easier have access to one
 
-| Parameter | Type     | Description                                                                                           |
-| :-------- | :------- | :---------------------------------------------------------------------------------------------------- |
-| `id`      | `string` | **Required**. The backend will use the id sent to it to later connect the new listinfo to the List id |
-| `title`   | `string` | **Required**. Title of the exercise which the user wants to save.                                     |
-| `exId`    | `string` | **Required**. exId is the id of an exercise, which will be used to link to that specific exercise.    |
+### Let user save an exercise
 
-```http
-  GET /userListInfo/listInfo/
-```
+POST to: http://localhost:8081/userSaves/saveEx/{User id}
+Headers:
+Authorization: Bearer {Token}
+JSON:
+{
+"name": "Exercise1",
+"exId": "1"
+}
 
-| Parameter | Type     | Description                                                     |
-| :-------- | :------- | :-------------------------------------------------------------- |
-| `id`      | `string` | **Required**. Will fetch all listinfo with is linked to that id |
+### Read User saved exercise
 
-```http
-  DELETE /userList/:id
-```
+GET to: http://localhost:8081/userSaves/saves/{user id}
+Headers:
+Authorization: Bearer {Token}
 
-| Parameter | Type     | Description                                                                      |
-| :-------- | :------- | :------------------------------------------------------------------------------- |
-| `id`      | `string` | **Required**. Will delete a listInfo with that ID which is being send to backend |
+### Delete Saved exercise
 
-## **Api Routes**
+DELETE to: http://localhost:8081/userSaves/deletesaved/{exercise id (Let user save an exercise)}
+Headers:
+Authorization: Bearer {Token}
+
+## Admin routes API
+
+Admin is the onlyone to create a user from dashboard and update/delete a user. When the admin routes are being used it will then check the token (in the header) if the user is an admin or not. If the user is not an Admin then he not going to be able to use those routes.
+
+### Get all Users
+
+GET to: http://localhost:8081/admin/getAllUsers
+Headers:
+Authorization: Bearer {Token}
+
+### Get an user
+
+GET to: http://localhost:8081/admin/getUser/{user id}
+Headers:
+Authorization: Bearer {Token}
+
+### Delete an user
+
+DELETE to: http://localhost:8081/admin/deleteUser/{user id}
+Headers:
+Authorization: Bearer {Token}
+
+### Create a new user
+
+POST to: http://localhost:8081/admin/signup
+Headers:
+Authorization: Bearer {Token}
+JSON:
+{
+"firstName": "",
+"lastName":"",
+"role": "", !Note, an admin can choose if the new user should have a role off User or Admin
+"email": "",
+"password": ""
+}
+
+### update a user
+
+PUT to: http://localhost:8081/admin/editUser/{User Id}
+Headers:
+Authorization: Bearer {Token}
+JSON:
+{
+"firstName": "",
+"lastName":"",
+"role": "",
+"email": "",
+"password": ""
+}
 
 # Frontend
 
