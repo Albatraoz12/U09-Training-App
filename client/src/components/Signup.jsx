@@ -17,13 +17,11 @@ function Signup() {
     const [error, setError] = useState(true)
     const [submitted, setSubmitted] = useState(false)
     const { firstName, lastName, email, password, confirmPassword } = formData
-
     const validate = (values) => {
         // Empty errors object - data is added if the form is not filled out properly
         const errors = {}
         // Regular expression to validate the email format:
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
-
         // Display error messages if the user submits incorrect data in the form and stop registration from succeeding
         if (!values.firstName) {
             errors.firstName = 'First name is required!'
@@ -54,7 +52,6 @@ function Signup() {
             errors.confirmPassword = 'Must be identical to password!'
             setError(true)
         }
-
         if (Object.keys(errors).length === 0) {
             setError(false)
         }
@@ -63,7 +60,6 @@ function Signup() {
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
-
     const onSubmit = (e) => {
         e.preventDefault()
         setFormErrors(validate(formData))
@@ -76,7 +72,6 @@ function Signup() {
             }
         })
     }
-
     useEffect(() => {
         if (error === false) {
             signup(formData)
@@ -87,8 +82,8 @@ function Signup() {
         navigate('/signin')
     }
     return (
-        <main className="container my-5">
-            <section className="my-3">
+        <main className="my-5">
+            <section className="container my-3">
                 <h1>Sign Up</h1>
                 {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
                 {Object.keys(formErrors).length === 0 && submitted ? successmessage() : <></>}
@@ -112,7 +107,7 @@ function Signup() {
                         <label htmlFor="lastName" className="form-label">
                             Last name
                         </label>
-                        <p>{formErrors.firstName}</p>
+                        <p>{formErrors.lastName}</p>
                         <input
                             type="text"
                             className="form-control"
@@ -127,7 +122,7 @@ function Signup() {
                         <label htmlFor="email" className="form-label">
                             Email
                         </label>
-                        <p>{formErrors.firstName}</p>
+                        <p>{formErrors.email}</p>
                         <input
                             type="email"
                             className="form-control"
@@ -142,7 +137,7 @@ function Signup() {
                         <label htmlFor="password" className="form-label">
                             Password
                         </label>
-                        <p>{formErrors.firstName}</p>
+                        <p>{formErrors.password}</p>
                         <input
                             type="password"
                             className="form-control"
@@ -157,7 +152,7 @@ function Signup() {
                         <label htmlFor="confirmPassword" className="form-label">
                             Confirm Password
                         </label>
-                        <p>{formErrors.firstName}</p>
+                        <p>{formErrors.confirmPassword}</p>
                         <input
                             type="password"
                             className="form-control"
@@ -178,5 +173,4 @@ function Signup() {
         </main>
     )
 }
-
 export default Signup
