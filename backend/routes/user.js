@@ -91,27 +91,31 @@ router.post('/signin', async (req, res) => {
 //@desc Register A User
 //@routes POST /user/register
 //@access Public
-router.post('/signup', async (req, res) => {
+router.post('/signup', (req, res) => {
   try {
-    const user = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      role: 'user',
-      email: req.body.email,
-      password: req.body.password,
-    });
-
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
-
-    user.save().then(() => {
-      res.status(201).json({ message: 'New user has been created!' });
+    const { firstName, lastName, email, password } = req.body;
+    User.findOne({ email: email }, (err, user) => {
+      if (user) {
+        res.status(406).json({ message: 'user already exist' });
+      } else {
+        const newUser = new User({
+          firstName: firstName,
+          lastName: lastName,
+          role: 'user',
+          email: email,
+          password: password,
+        });
+        newUser.save().then(() => {
+          res.status(201).json({
+            message: 'New user has been created!',
+          });
+        });
+      }
     });
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(404).json({ message: error });
   }
 });
-
 //@desc Logout A User
 //@routes Get /user/logout
 //@access Public
