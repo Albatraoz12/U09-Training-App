@@ -7,6 +7,7 @@ function Search() {
     const [exerciseName, setExerciseName] = useState('')
     const [bodyPart, setBodyPart] = useState('')
 
+    // options(getEx) will search for an exercise muscle group with user input
     const options = {
         method: 'GET',
         url: `https://exercisedb.p.rapidapi.com/exercises/name/${exerciseName.toLowerCase()}`,
@@ -29,6 +30,7 @@ function Search() {
             })
     }
 
+    // OptionTwo(getExTwo), will search one targeted muscle groups with dropdown instead of user input.
     const optionsTwo = {
         method: 'GET',
         url: `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart.toLowerCase()}`,
@@ -55,7 +57,8 @@ function Search() {
         e.preventDefault()
         getEx()
     }
-
+    // Only display 10 exercises for better experiance, atlest for this project.
+    // Can be deleted/commented out, user exercises variable instead then.
     const ten = exercises.filter((item, index) => {
         return index < 10
     })

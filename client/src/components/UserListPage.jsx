@@ -4,13 +4,13 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 
 function UserListPage() {
-    const navigate = useNavigate()
-    const params = useParams()
+    const navigate = useNavigate() // navigate user twords an destination
+    const params = useParams() // let developers get access to params
     const user = Cookies.get('access_token')
-    const [listInfo, setListInfo] = useState([])
+    const [listInfo, setListInfo] = useState([]) // stores all the saved exercises assosiated with list id (from params)
     const [formData, setFormData] = useState({
         title: '',
-    })
+    }) // Formdata to update list title/name
 
     useEffect(() => {
         const getListInfo = async () => {
@@ -34,6 +34,8 @@ function UserListPage() {
 
         getListInfo()
     }, [params, user])
+
+    // Function to update a list by title/name
     const { title } = formData
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -41,6 +43,7 @@ function UserListPage() {
             [e.target.name]: e.target.value,
         }))
     }
+
     const updateList = async (userData) => {
         await axios
             .put(`${process.env.REACT_APP_API_URL}userList/editList/${params.id}`, userData, {

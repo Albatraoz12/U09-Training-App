@@ -17,6 +17,8 @@ function Signup() {
     const [error, setError] = useState(true)
     const [submitted, setSubmitted] = useState(false)
     const { firstName, lastName, email, password, confirmPassword } = formData
+    // Before signing up, the validate function will validate that the user has filled in
+    // all the feilds with correct information.
     const validate = (values) => {
         // Empty errors object - data is added if the form is not filled out properly
         const errors = {}
