@@ -1,5 +1,7 @@
 import React from 'react'
 
+// This page is just if the user inputs url that dosen't exists
+
 function Errorpage() {
     return (
         <main className="container my-5">
