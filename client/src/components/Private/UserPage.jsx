@@ -8,8 +8,8 @@ function UserPage() {
     const navigate = useNavigate()
     const params = useParams()
     const user = Cookies.get('access_token')
-    const [getAdmin, setGetAdmin] = useState([])
-    const [isRole, setIsRole] = useState(Boolean)
+    const [getAdmin, setGetAdmin] = useState([]) // Stores the admins information and verify that it is an admin on this page
+    const [isRole, setIsRole] = useState(Boolean) // checks if the user has the role of admin
     const [formData, setFormData] = useState({})
     const { firstName, lastName, email } = formData
 
@@ -97,6 +97,7 @@ function UserPage() {
         updateUser(formData)
     }
 
+    // if the user has the roll of Admin, he/she will have access to the page otherwise the errorPage.jsx will show.
     if (isRole) {
         return (
             <main className="my-5">

@@ -7,8 +7,8 @@ import ErrorPage from '../Errorpage'
 function AdminCreateUser() {
     const navigate = useNavigate()
     const user = Cookies.get('access_token')
-    const [getUser, setGetUser] = useState([])
-    const [isRole, setIsRole] = useState(Boolean)
+    const [getUser, setGetUser] = useState([]) // Stores the admins information and verify that it is an admin on this page
+    const [isRole, setIsRole] = useState(Boolean) // checks if the user has the role of admin
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -22,6 +22,7 @@ function AdminCreateUser() {
     const [submitted, setSubmitted] = useState(false)
     const { firstName, lastName, email, role, password, confirmPassword } = formData
 
+    // When component mounts, this code will execute first to check the user
     useEffect(() => {
         const checkUser = async () => {
             // User sends its access_token in headers to BE to be decoded.
@@ -69,6 +70,9 @@ function AdminCreateUser() {
             signup(formData)
         }
     }, [error, formData, user])
+
+    // Before signing up an new user, the validate function will validate that the admin has filled in
+    // all the feilds with correct information.
     const validate = (values) => {
         // Empty errors object - data is added if the form is not filled out properly
         const errors = {}
@@ -128,6 +132,8 @@ function AdminCreateUser() {
         alert('Registration successful!')
         navigate('/dashboard')
     }
+
+    // if the user has the roll of Admin, he/she will have access to the page otherwise the errorPage.jsx will show.
     if (isRole) {
         return (
             <main className="my-5">
