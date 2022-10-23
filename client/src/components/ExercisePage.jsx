@@ -188,6 +188,16 @@ function ExercisePage() {
 
     return (
         <main className="my-5">
+            <div className="d-flex align-self-start ms-5">
+                <a
+                    href="/search"
+                    role="button"
+                    className="btn btn-primary btn-sm"
+                    rel="noopener noreferrer"
+                >
+                    Go back
+                </a>
+            </div>
             <section className="container">
                 <h1>{exercise.name}</h1>
                 <article className="px-5">
