@@ -17,6 +17,8 @@ function Signup() {
     const [error, setError] = useState(true)
     const [submitted, setSubmitted] = useState(false)
     const { firstName, lastName, email, password, confirmPassword } = formData
+    // Before signing up, the validate function will validate that the user has filled in
+    // all the feilds with correct information.
     const validate = (values) => {
         // Empty errors object - data is added if the form is not filled out properly
         const errors = {}
@@ -65,21 +67,28 @@ function Signup() {
         setFormErrors(validate(formData))
         setSubmitted(true)
     }
-    const signup = async (userData) => {
-        await axios.post(`${process.env.REACT_APP_API_URL}user/signup`, userData).then((res) => {
-            if (res.data) {
-                console.log('hejsan')
-            }
-        })
-    }
+
     useEffect(() => {
+        const signup = async (userData) => {
+            await axios
+                .post(`${process.env.REACT_APP_API_URL}user/signup`, userData)
+                .then((res) => {
+                    console.log(res)
+                    if (res.data.message) {
+                        console.log(res)
+                        navigate('/signin')
+                    } else if (res.data.failedMessage) {
+                        alert('Email is already in user, Try an otherOne')
+                        window.location.reload()
+                    }
+                })
+        }
         if (error === false) {
             signup(formData)
         }
-    }, [error, formData])
+    }, [error, formData, navigate])
     const successmessage = () => {
-        // alert('Registration successful!')
-        navigate('/signin')
+        console.log('Registration no errors')
     }
     return (
         <main className="my-5">

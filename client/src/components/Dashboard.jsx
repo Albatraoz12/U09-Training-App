@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom'
 function Dashboard() {
     const user = Cookies.get('access_token')
     const navigate = useNavigate()
-    const [getUser, setGetUser] = useState([])
-    const [isRole, setIsRole] = useState(Boolean)
-    const [getUserList, setGetUserList] = useState([])
-    const [getUserSaves, setGetUserSaves] = useState([])
+    const [getUser, setGetUser] = useState([]) // Stores user information
+    const [isRole, setIsRole] = useState(Boolean) // if set to true, the user is a Admin else User
+    const [getUserList, setGetUserList] = useState([]) // Stores users lists
+    const [getUserSaves, setGetUserSaves] = useState([]) // Stores all the users saved/liked exercises
     const [formData, setFormData] = useState({
         title: '',
-    })
+    }) // Formdata for creating a user list
 
     // When dashboard loads, it will fetch the users: Information, Books and loaned books
     useEffect(() => {
@@ -68,6 +68,7 @@ function Dashboard() {
                     }
                 })
         }
+        // If there is no access token, the user will be redirected to homepage else fetch all the user data.
         if (!user) {
             navigate('/')
         } else {
@@ -101,6 +102,7 @@ function Dashboard() {
                 }
             })
     }
+    // Function to create a user list
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -146,6 +148,7 @@ function Dashboard() {
                     <p>
                         Hope you have a wonderfull day <br /> Lets the workout start!
                     </p>
+                    {/* If User is an admin, the two buttons bellow will appear otherwise null */}
                     {isRole ? (
                         <div className="d-flex justify-content-center align-items-center gap-3">
                             <a className="btn btn-primary" href="/createUser">

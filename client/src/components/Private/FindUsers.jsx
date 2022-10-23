@@ -7,10 +7,10 @@ import ErrorPage from '../Errorpage'
 function FindUsers() {
     const user = Cookies.get('access_token')
     // eslint-disable-next-line no-unused-vars
-    const [getUser, setGetUser] = useState([])
-    const [getAllUsers, setGetAllUsers] = useState([])
-    const [searchTerms, setSearchTerm] = useState('')
-    const [isRole, setIsRole] = useState(Boolean)
+    const [getUser, setGetUser] = useState([]) // Stores the admins information and verify that it is an admin on this page
+    const [getAllUsers, setGetAllUsers] = useState([]) // Stores all the users
+    const [searchTerms, setSearchTerm] = useState('') // Stores the admin input
+    const [isRole, setIsRole] = useState(Boolean) // Checks if the role is admin
 
     useEffect(() => {
         const checkUser = async () => {
@@ -61,10 +61,20 @@ function FindUsers() {
         }
         return null
     })
-
+    // if the user has the roll of Admin, he/she will have access to the page otherwise the errorPage.jsx will show.
     if (isRole) {
         return (
             <main className="my-5 min-vh-60">
+                <div className="d-flex align-self-start ms-5">
+                    <a
+                        href="/dashboard"
+                        role="button"
+                        className="btn btn-primary btn-sm"
+                        rel="noopener noreferrer"
+                    >
+                        Go back
+                    </a>
+                </div>
                 <section className="container my-5">
                     <h1>Search for a user</h1>
                     <input

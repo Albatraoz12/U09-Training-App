@@ -4,15 +4,15 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 
 function ExercisePage() {
-    const params = useParams()
+    const params = useParams() // Let developers get access to params
     const user = Cookies.get('access_token')
-    const [exercise, setExercise] = useState([])
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [getUser, setGetUser] = useState([])
-    const [getUserList, setGetUserList] = useState([])
-    const [getUserSaves, setGetUserSaves] = useState([])
+    const [exercise, setExercise] = useState([]) // Stores the exercise data
+    const [isLoggedIn, setIsLoggedIn] = useState(false) // checks if the user is logged in or not
+    const [getUser, setGetUser] = useState([]) // Stores the user information
+    const [getUserList, setGetUserList] = useState([]) // Stores the users lists to let user save exercise into a list
+    const [getUserSaves, setGetUserSaves] = useState([]) // Stores the users likes/saved to let user like/save exercise
     // eslint-disable-next-line no-unused-vars
-    const [isSaved, setIsSaved] = useState(false)
+    const [isSaved, setIsSaved] = useState(false) // If set to true, the user has then already liked/saved it
     const [formData, setFormData] = useState({
         name: '',
         exId: '',
@@ -78,7 +78,7 @@ function ExercisePage() {
                     }
                 })
         }
-
+        // Function to get the exercise byt id from external API
         const options = {
             method: 'GET',
             url: `https://exercisedb.p.rapidapi.com/exercises/exercise/${params.id}`,
@@ -188,6 +188,16 @@ function ExercisePage() {
 
     return (
         <main className="my-5">
+            <div className="d-flex align-self-start ms-5">
+                <a
+                    href="/search"
+                    role="button"
+                    className="btn btn-primary btn-sm"
+                    rel="noopener noreferrer"
+                >
+                    Go back
+                </a>
+            </div>
             <section className="container">
                 <h1>{exercise.name}</h1>
                 <article className="px-5">

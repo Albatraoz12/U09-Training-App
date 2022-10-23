@@ -7,8 +7,8 @@ import ErrorPage from '../Errorpage'
 function AdminCreateUser() {
     const navigate = useNavigate()
     const user = Cookies.get('access_token')
-    const [getUser, setGetUser] = useState([])
-    const [isRole, setIsRole] = useState(Boolean)
+    const [getUser, setGetUser] = useState([]) // Stores the admins information and verify that it is an admin on this page
+    const [isRole, setIsRole] = useState(Boolean) // checks if the user has the role of admin
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -22,6 +22,7 @@ function AdminCreateUser() {
     const [submitted, setSubmitted] = useState(false)
     const { firstName, lastName, email, role, password, confirmPassword } = formData
 
+    // When component mounts, this code will execute first to check the user
     useEffect(() => {
         const checkUser = async () => {
             // User sends its access_token in headers to BE to be decoded.
@@ -59,19 +60,29 @@ function AdminCreateUser() {
                     },
                 })
                 .then((res) => {
-                    if (res.data) {
+                    if (res.data.message) {
                         // eslint-disable-next-line no-console
-                        console.log('hejsan')
+                        console.log(res)
+                        navigate('/dashboard')
+                    } else {
+                        // eslint-disable-next-line no-alert
+                        alert('Email is already in user, Try an otherOne')
+                        window.location.reload()
                     }
                 })
         }
         if (error === false) {
             signup(formData)
         }
-    }, [error, formData, user])
+    }, [error, formData, user, navigate])
+
+    // Before signing up an new user, the validate function will validate that the admin has filled in
+    // all the feilds with correct information.
+
     const validate = (values) => {
         // Empty errors object - data is added if the form is not filled out properly
         const errors = {}
+
         // Regular expression to validate the email format:
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
 
@@ -115,22 +126,42 @@ function AdminCreateUser() {
         }
         return errors
     }
+
+    // Saves users input into formData variabel
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+
+    // When the form is subbmitted, it will go through the validation and if errors.length is 0,
+    // Then the signup will post the information to the backend
     const onSubmit = (e) => {
         e.preventDefault()
         setFormErrors(validate(formData))
         setSubmitted(true)
     }
+
+    // this will log if there is no errors when user hits sign up.
     const successmessage = () => {
-        // eslint-disable-next-line no-alert
-        alert('Registration successful!')
-        navigate('/dashboard')
+        // eslint-disable-next-line no-console
+        console.log('Registration no errors')
     }
+
+    // if the user has the roll of Admin, he/she will have access to the page otherwise the errorPage.jsx will show.
     if (isRole) {
         return (
             <main className="my-5">
+                <div className="d-flex align-self-start ms-5">
+                    {/* <button type="button" className="btn btn-secondary btn-sm"> */}
+                    <a
+                        href="/dashboard"
+                        role="button"
+                        className="btn btn-primary btn-sm"
+                        rel="noopener noreferrer"
+                    >
+                        Go back
+                    </a>
+                    {/* </button> */}
+                </div>
                 <section className="container my-3">
                     <h1>Sign Up</h1>
                     {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
