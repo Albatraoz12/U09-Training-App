@@ -60,22 +60,29 @@ function AdminCreateUser() {
                     },
                 })
                 .then((res) => {
-                    if (res.data) {
+                    if (res.data.message) {
                         // eslint-disable-next-line no-console
-                        console.log('hejsan')
+                        console.log(res)
+                        navigate('/dashboard')
+                    } else {
+                        // eslint-disable-next-line no-alert
+                        alert('Email is already in user, Try an otherOne')
+                        window.location.reload()
                     }
                 })
         }
         if (error === false) {
             signup(formData)
         }
-    }, [error, formData, user])
+    }, [error, formData, user, navigate])
 
     // Before signing up an new user, the validate function will validate that the admin has filled in
     // all the feilds with correct information.
+
     const validate = (values) => {
         // Empty errors object - data is added if the form is not filled out properly
         const errors = {}
+
         // Regular expression to validate the email format:
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
 
@@ -119,18 +126,24 @@ function AdminCreateUser() {
         }
         return errors
     }
+
+    // Saves users input into formData variabel
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+
+    // When the form is subbmitted, it will go through the validation and if errors.length is 0,
+    // Then the signup will post the information to the backend
     const onSubmit = (e) => {
         e.preventDefault()
         setFormErrors(validate(formData))
         setSubmitted(true)
     }
+
+    // this will log if there is no errors when user hits sign up.
     const successmessage = () => {
-        // eslint-disable-next-line no-alert
-        alert('Registration successful!')
-        navigate('/dashboard')
+        // eslint-disable-next-line no-console
+        console.log('Registration no errors')
     }
 
     // if the user has the roll of Admin, he/she will have access to the page otherwise the errorPage.jsx will show.
