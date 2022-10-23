@@ -28,19 +28,32 @@ const authorization = (req, res, next) => {
 router.post('/signup', authorization, async (req, res) => {
 	try {
 		if (req.role === 'admin') {
-			const user = new User({
-				firstName: req.body.firstName,
-				lastName: req.body.lastName,
-				role: req.body.role,
-				email: req.body.email,
-				password: req.body.password,
-			});
+			const { firstName, lastName, email, password } = req.body;
+			User.findOne({ email: email }, async (err, user) => {
+				if (user) {
+					res.status(201).json({
+						failedMessage: 'user already exist',
+					});
+				} else {
+					const newUser = new User({
+						firstName: firstName,
+						lastName: lastName,
+						role: 'user',
+						email: email,
+						password: password,
+					});
+					const salt = await bcrypt.genSalt(10);
+					newUser.password = await bcrypt.hash(
+						newUser.password,
+						salt
+					);
 
-			const salt = await bcrypt.genSalt(10);
-			user.password = await bcrypt.hash(user.password, salt);
-
-			user.save().then(() => {
-				res.status(200).json({ message: 'New user has been created!' });
+					newUser.save().then(() => {
+						res.status(201).json({
+							message: 'New user has been created!',
+						});
+					});
+				}
 			});
 		} else {
 			res.status(401).json({ message: 'You are not a jedi' });

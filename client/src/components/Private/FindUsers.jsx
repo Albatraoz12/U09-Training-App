@@ -65,6 +65,16 @@ function FindUsers() {
     if (isRole) {
         return (
             <main className="my-5 min-vh-60">
+                <div className="d-flex align-self-start ms-5">
+                    <a
+                        href="/dashboard"
+                        role="button"
+                        className="btn btn-primary btn-sm"
+                        rel="noopener noreferrer"
+                    >
+                        Go back
+                    </a>
+                </div>
                 <section className="container my-5">
                     <h1>Search for a user</h1>
                     <input
