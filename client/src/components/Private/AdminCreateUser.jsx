@@ -150,6 +150,18 @@ function AdminCreateUser() {
     if (isRole) {
         return (
             <main className="my-5">
+                <div className="d-flex align-self-start ms-5">
+                    {/* <button type="button" className="btn btn-secondary btn-sm"> */}
+                    <a
+                        href="/dashboard"
+                        role="button"
+                        className="btn btn-primary btn-sm"
+                        rel="noopener noreferrer"
+                    >
+                        Go back
+                    </a>
+                    {/* </button> */}
+                </div>
                 <section className="container my-3">
                     <h1>Sign Up</h1>
                     {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
