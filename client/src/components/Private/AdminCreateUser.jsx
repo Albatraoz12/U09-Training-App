@@ -20,7 +20,7 @@ function AdminCreateUser() {
     const [formErrors, setFormErrors] = useState({})
     const [error, setError] = useState(true)
     const [submitted, setSubmitted] = useState(false)
-    const { firstName, lastName, email, role, password, confirmPassword } = formData
+    const { firstName, lastName, email, password, confirmPassword } = formData
 
     // When component mounts, this code will execute first to check the user
     useEffect(() => {
@@ -130,6 +130,7 @@ function AdminCreateUser() {
     // Saves users input into formData variabel
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
+        console.log(formData)
     }
 
     // When the form is subbmitted, it will go through the validation and if errors.length is 0,
@@ -151,7 +152,6 @@ function AdminCreateUser() {
         return (
             <main className="my-5">
                 <div className="d-flex align-self-start ms-5">
-                    {/* <button type="button" className="btn btn-secondary btn-sm"> */}
                     <a
                         href="/dashboard"
                         role="button"
@@ -160,10 +160,9 @@ function AdminCreateUser() {
                     >
                         Go back
                     </a>
-                    {/* </button> */}
                 </div>
                 <section className="container my-3">
-                    <h1>Sign Up</h1>
+                    <h1>Create User</h1>
                     {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
                     {Object.keys(formErrors).length === 0 && submitted ? successmessage() : <></>}
                     <form className="row g-3 mt-2">
@@ -241,23 +240,6 @@ function AdminCreateUser() {
                                 placeholder="confirm your password"
                                 onChange={onChange}
                             />
-                        </div>
-                        <div className="col-md-12 align-self-center">
-                            <label htmlFor="role" className="form-label">
-                                Choose a role
-                            </label>
-                            <p>{formErrors.role}</p>
-                            <select
-                                className="form-select form-select-md"
-                                aria-label=".form-select-sm example"
-                                id="role"
-                                name="role"
-                                value={role}
-                                onChange={onChange}
-                            >
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
-                            </select>
                         </div>
                         <div className="col-12">
                             <button
