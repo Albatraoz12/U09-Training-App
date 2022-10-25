@@ -2,63 +2,50 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 function Search() {
-    // eslint-disable-next-line no-unused-vars
-    const [exercises, setExcercises] = useState([])
-    const [exerciseName, setExerciseName] = useState('')
-    const [bodyPart, setBodyPart] = useState('')
+    const [exercises, setExcercises] = useState([]) // Stores exercises into an arry
+    const [exerciseName, setExerciseName] = useState('') // Stores user input value
 
-    // options(getEx) will search for an exercise muscle group with user input
-    const options = {
-        method: 'GET',
-        url: `https://exercisedb.p.rapidapi.com/exercises/name/${exerciseName.toLowerCase()}`,
-        headers: {
-            'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
-            'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
-        },
-    }
-
-    const getEx = async () => {
+    // Function to let users serach by input with a value
+    const getExerciseByName = async () => {
         await axios
-            .request(options)
-            .then((response) => {
-                setExcercises(response.data)
-                // console.log(response.data)
+            .get(`https://exercisedb.p.rapidapi.com/exercises/name/${exerciseName.toLowerCase()}`, {
+                headers: {
+                    'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
+                    'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
+                },
             })
-            .catch((error) => {
-                // eslint-disable-next-line no-console
-                console.error(error)
+            .then((res) => {
+                setExcercises(res.data)
             })
     }
 
-    // OptionTwo(getExTwo), will search one targeted muscle groups with dropdown instead of user input.
-    const optionsTwo = {
-        method: 'GET',
-        url: `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart.toLowerCase()}`,
-        headers: {
-            'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
-            'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
-        },
-    }
-
-    const getExTwo = async () => {
+    // Function to let user search exercises by body part direcly instead of typing.
+    const getBodypartEx = async (bodypart) => {
         await axios
-            .request(optionsTwo)
-            .then((response) => {
-                setExcercises(response.data)
-                // console.log(response.data)
+            .get(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodypart.toLowerCase()}`, {
+                headers: {
+                    'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
+                    'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
+                },
             })
-            .catch((error) => {
-                // eslint-disable-next-line no-console
-                console.error(error)
+            .then((res) => {
+                setExcercises(res.data)
             })
     }
 
+    // When user click on dropdown menu to find exercises by bodypar
+    const onChangeBP = (e) => {
+        getBodypartEx(e.target.value)
+    }
+
+    // When user sumbits an exercise with input
     const handleSubmit = (e) => {
         e.preventDefault()
-        getEx()
+        getExerciseByName()
     }
+
     // Only display 10 exercises for better experiance, atlest for this project.
-    // Can be deleted/commented out, user exercises variable instead then.
+    // Can be deleted/commented out, use exercises variable instead then.
     const ten = exercises.filter((item, index) => {
         return index < 10
     })
@@ -96,10 +83,8 @@ function Search() {
                             className="form-select form-select-sm mb-3"
                             aria-label=".form-select-lg example"
                             id="selectedWorkoutGroup"
-                            onChange={(e) => {
-                                setBodyPart(e.target.value)
-                                getExTwo()
-                            }}
+                            name="bodyPart"
+                            onChange={onChangeBP}
                         >
                             <option defaultValue>Get Excersises by clicking on a bodypart</option>
                             <option value="back">Back</option>

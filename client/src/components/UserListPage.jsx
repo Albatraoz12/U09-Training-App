@@ -82,6 +82,16 @@ function UserListPage() {
     return (
         <main className="my-5 p-2">
             <section className="my-5 py-5 container">
+                <div className="d-flex align-self-start ms-5">
+                    <a
+                        href="/dashboard"
+                        role="button"
+                        className="btn btn-primary btn-sm"
+                        rel="noopener noreferrer"
+                    >
+                        Go back
+                    </a>
+                </div>
                 <h1>{params.name}</h1>
                 <form className="d-flex justify-content-center row gap-1 my-3" onSubmit={onSubmit}>
                     <div className="d-flex align-items-center justify-content-center">
