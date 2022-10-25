@@ -129,7 +129,6 @@ function AdminCreateUser() {
 
     // Saves users input into formData variabel
     const onChange = (e) => {
-        console.log(formData)
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 

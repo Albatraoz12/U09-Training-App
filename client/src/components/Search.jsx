@@ -35,7 +35,6 @@ function Search() {
 
     // When user click on dropdown menu to find exercises by bodypar
     const onChangeBP = (e) => {
-        console.log(e.target.value)
         getBodypartEx(e.target.value)
     }
 
