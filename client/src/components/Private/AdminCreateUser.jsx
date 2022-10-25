@@ -20,7 +20,7 @@ function AdminCreateUser() {
     const [formErrors, setFormErrors] = useState({})
     const [error, setError] = useState(true)
     const [submitted, setSubmitted] = useState(false)
-    const { firstName, lastName, email, role, password, confirmPassword } = formData
+    const { firstName, lastName, email, password, confirmPassword } = formData
 
     // When component mounts, this code will execute first to check the user
     useEffect(() => {
@@ -129,6 +129,7 @@ function AdminCreateUser() {
 
     // Saves users input into formData variabel
     const onChange = (e) => {
+        console.log(formData)
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
@@ -151,7 +152,6 @@ function AdminCreateUser() {
         return (
             <main className="my-5">
                 <div className="d-flex align-self-start ms-5">
-                    {/* <button type="button" className="btn btn-secondary btn-sm"> */}
                     <a
                         href="/dashboard"
                         role="button"
@@ -160,7 +160,6 @@ function AdminCreateUser() {
                     >
                         Go back
                     </a>
-                    {/* </button> */}
                 </div>
                 <section className="container my-3">
                     <h1>Sign Up</h1>
@@ -252,11 +251,11 @@ function AdminCreateUser() {
                                 aria-label=".form-select-sm example"
                                 id="role"
                                 name="role"
-                                value={role}
+                                // value={role}
                                 onChange={onChange}
                             >
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
+                                <option value="user">Admin</option>
+                                <option value="admin">User</option>
                             </select>
                         </div>
                         <div className="col-12">
