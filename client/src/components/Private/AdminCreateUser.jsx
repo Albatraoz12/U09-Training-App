@@ -162,7 +162,7 @@ function AdminCreateUser() {
                     </a>
                 </div>
                 <section className="container my-3">
-                    <h1>Sign Up</h1>
+                    <h1>Create User</h1>
                     {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
                     {Object.keys(formErrors).length === 0 && submitted ? successmessage() : <></>}
                     <form className="row g-3 mt-2">
@@ -241,23 +241,6 @@ function AdminCreateUser() {
                                 onChange={onChange}
                             />
                         </div>
-                        {/* <div className="col-md-12 align-self-center">
-                            <label htmlFor="role" className="form-label">
-                                Choose a role
-                            </label>
-                            <p>{formErrors.role}</p>
-                            <select
-                                className="form-select form-select-md"
-                                aria-label=".form-select-sm example"
-                                id="role"
-                                name="role"
-                                // value={role}
-                                onChange={onChange}
-                            >
-                                <option value="user">Admin</option>
-                                <option value="admin">User</option>
-                            </select>
-                        </div> */}
                         <div className="col-12">
                             <button
                                 type="submit"
