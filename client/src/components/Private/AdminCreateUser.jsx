@@ -130,6 +130,7 @@ function AdminCreateUser() {
     // Saves users input into formData variabel
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
+        console.log(formData)
     }
 
     // When the form is subbmitted, it will go through the validation and if errors.length is 0,
@@ -240,7 +241,7 @@ function AdminCreateUser() {
                                 onChange={onChange}
                             />
                         </div>
-                        <div className="col-md-12 align-self-center">
+                        {/* <div className="col-md-12 align-self-center">
                             <label htmlFor="role" className="form-label">
                                 Choose a role
                             </label>
@@ -256,7 +257,7 @@ function AdminCreateUser() {
                                 <option value="user">Admin</option>
                                 <option value="admin">User</option>
                             </select>
-                        </div>
+                        </div> */}
                         <div className="col-12">
                             <button
                                 type="submit"
