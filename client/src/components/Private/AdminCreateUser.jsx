@@ -130,7 +130,6 @@ function AdminCreateUser() {
     // Saves users input into formData variabel
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
-        console.log(formData)
     }
 
     // When the form is subbmitted, it will go through the validation and if errors.length is 0,
