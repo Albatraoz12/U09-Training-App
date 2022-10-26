@@ -3,9 +3,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import ErrorModal from './modal/ErrorModal'
 
 function Signup() {
     const navigate = useNavigate()
+    const [errorModal, setErrorModal] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -76,8 +79,8 @@ function Signup() {
                     if (res.data.message) navigate('/signin')
                 })
                 .catch(() => {
-                    alert('Email is already in user, Try an otherOne')
-                    window.location.reload()
+                    setErrorMessage('Email is already in use, Try an other one')
+                    setErrorModal(true)
                 })
         }
         if (error === false) {
@@ -94,6 +97,11 @@ function Signup() {
                 <h1>Sign Up</h1>
                 {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
                 {Object.keys(formErrors).length === 0 && submitted ? successmessage() : <></>}
+                <div className="d-flex align-items-center justify-content-center">
+                    {errorModal && (
+                        <ErrorModal setErrorModal={setErrorModal} setErrorMessage={errorMessage} />
+                    )}
+                </div>
                 <form className="row g-3 mt-2">
                     <div className="col-md-6">
                         <label htmlFor="firstName" className="form-label">
@@ -170,11 +178,17 @@ function Signup() {
                             onChange={onChange}
                         />
                     </div>
-                    <div className="col-12">
-                        <button type="submit" className="btn btn-primary btn-lg" onClick={onSubmit}>
-                            Sign up
-                        </button>
-                    </div>
+                    {!errorModal && (
+                        <div className="col-12">
+                            <button
+                                type="submit"
+                                className="btn btn-primary btn-lg"
+                                onClick={onSubmit}
+                            >
+                                Sign up
+                            </button>
+                        </div>
+                    )}
                 </form>
             </section>
         </main>

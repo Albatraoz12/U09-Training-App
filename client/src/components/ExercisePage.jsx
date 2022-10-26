@@ -4,16 +4,18 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import ErrorModal from './modal/ErrorModal'
 
 function ExercisePage() {
     const params = useParams() // Let developers get access to params
     const user = Cookies.get('access_token')
+    const [errorModal, setErrorModal] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [exercise, setExercise] = useState([]) // Stores the exercise data
     const [isLoggedIn, setIsLoggedIn] = useState(false) // checks if the user is logged in or not
     const [getUser, setGetUser] = useState([]) // Stores the user information
     const [getUserList, setGetUserList] = useState([]) // Stores the users lists to let user save exercise into a list
     const [getUserSaves, setGetUserSaves] = useState([]) // Stores the users likes/saved to let user like/save exercise
-    // eslint-disable-next-line no-unused-vars
     const [isSaved, setIsSaved] = useState(false) // If set to true, the user has then already liked/saved it
     const [formData, setFormData] = useState({
         name: '',
@@ -150,14 +152,15 @@ function ExercisePage() {
                 },
             })
             .then((res) => {
-                if (res.data.errorMessage) {
-                    // eslint-disable-next-line no-alert
-                    alert('This Exercise is already saved into that list!')
-                } else if (res.data.message) {
+                if (res.data.message) {
                     // eslint-disable-next-line no-alert
                     alert('This Exercise is now added to the list!')
                     window.location.reload()
                 }
+            })
+            .catch(() => {
+                setErrorModal(true)
+                setErrorMessage('This Exercise is already saved into that list!')
             })
     }
 
@@ -201,6 +204,11 @@ function ExercisePage() {
                 <div className="col-12 col-xl-4 mx-auto">
                     <img className="card-img-top" src={exercise.gifUrl} alt="Exercise Gif" />
                 </div>
+                {errorModal && (
+                    <div className="d-flex align-items-center justify-content-center">
+                        <ErrorModal setErrorModal={setErrorModal} setErrorMessage={errorMessage} />
+                    </div>
+                )}
                 <section className="my-2">
                     {/* Message to display if user is logged in or not */}
                     {isLoggedIn ? (
