@@ -48,7 +48,7 @@ router.post('/createList/:uid', authorization, (req, res) => {
 			res.status(400).json({ ErrorMessage: 'wrong userId' });
 		}
 	} catch (error) {
-		console.log(error);
+		res.status(500).json({ message: error });
 	}
 });
 
@@ -70,7 +70,7 @@ router.get('/:uid', authorization, async (req, res) => {
 			res.status(404).json({ ErrorMessage: 'You are not an user!' });
 		}
 	} catch (error) {
-		res.status(404).json({ message: 'There is no user in the system' });
+		res.status(500).json({ message: error });
 	}
 });
 
@@ -102,7 +102,7 @@ router.put('/editList/:lid', authorization, async (req, res) => {
 			res.status(400).json({ ErrorMessage: 'You are not an user!' });
 		}
 	} catch (error) {
-		res.status(500).json({ message: 'No List with that ID' });
+		res.status(500).json({ message: error });
 	}
 });
 
