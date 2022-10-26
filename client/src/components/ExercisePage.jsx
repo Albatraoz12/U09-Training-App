@@ -21,9 +21,9 @@ function ExercisePage() {
     // Will run all the functions inse useEffect when component mounts.
     useEffect(() => {
         // function will run if user is logged in to get its data
-        const checkUser = async () => {
+        const checkUser = () => {
             // User sends its access_token in headers to BE to be decoded.
-            await axios
+            axios
                 .get(`${process.env.REACT_APP_API_URL}user/protected`, {
                     withCredentials: true,
                     headers: {
@@ -36,10 +36,13 @@ function ExercisePage() {
                         setGetUser(res.data.user)
                     }
                 })
+                .catch((err) => {
+                    console.log(err)
+                })
         }
         // function to let users fetch its lists
-        const getLists = async () => {
-            await axios
+        const getLists = () => {
+            axios
                 .get(`${process.env.REACT_APP_API_URL}userList/${getUser.id}`, {
                     withCredentials: true,
                     headers: {
@@ -48,15 +51,14 @@ function ExercisePage() {
                 })
                 .then((res) => {
                     if (res.data.message) {
-                        // Stores user info into the state.
-                        setGetUserList(res.data.message)
+                        setGetUserList(res.data.message) // Stores user info into the state.
                     }
                 })
         }
 
         // function to let users fetch its saved exercises
-        const getSaves = async () => {
-            await axios
+        const getSaves = () => {
+            axios
                 .get(`${process.env.REACT_APP_API_URL}userSaves/saves/${getUser.id}`, {
                     withCredentials: true,
                     headers: {
@@ -65,8 +67,7 @@ function ExercisePage() {
                 })
                 .then((res) => {
                     if (res.data.sInfo) {
-                        // Stores user info into the state.
-                        setGetUserSaves(res.data.sInfo)
+                        setGetUserSaves(res.data.sInfo) // Stores user info into the state.
                         getUserSaves.map((saved) => {
                             if (saved.exId === params.id) {
                                 setIsSaved(true)
@@ -78,20 +79,16 @@ function ExercisePage() {
                     }
                 })
         }
-        // Function to get the exercise byt id from external API
-        const options = {
-            method: 'GET',
-            url: `https://exercisedb.p.rapidapi.com/exercises/exercise/${params.id}`,
-            headers: {
-                'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
-                'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
-            },
-        }
 
         // Fetch exercise with id and later display to the user
-        const getExercise = async () => {
-            await axios
-                .request(options)
+        const getExercise = () => {
+            axios
+                .get(`https://exercisedb.p.rapidapi.com/exercises/exercise/${params.id}`, {
+                    headers: {
+                        'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
+                        'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
+                    },
+                })
                 .then((response) => {
                     setExercise(response.data)
                 })
@@ -111,7 +108,7 @@ function ExercisePage() {
         }
 
         getExercise()
-        // if exercise has fetch the name and id valius, it will then store them into the formData
+        // if exercise has fetch the name and id values, it will then store them into the formData
         if (exercise.name && exercise.id) {
             setFormData({
                 name: exercise.name,
@@ -123,8 +120,8 @@ function ExercisePage() {
     }, [params.id, user, getUser.id, exercise.name, exercise.id])
 
     // function to let user save the exercise
-    const saveExercise = async (exData) => {
-        await axios
+    const saveExercise = (exData) => {
+        axios
             .post(`${process.env.REACT_APP_API_URL}userSaves/saveEx/${getUser.id}`, exData, {
                 withCredentials: true,
                 headers: {
@@ -132,8 +129,7 @@ function ExercisePage() {
                 },
             })
             .then((res) => {
-                // eslint-disable-next-line no-console
-                console.log(res.data)
+                if (res) window.location.reload()
             })
     }
 
@@ -143,8 +139,8 @@ function ExercisePage() {
     }
 
     // function to let user save an exercise into a list
-    const exerciseToList = async (exData, id) => {
-        await axios
+    const exerciseToList = (exData, id) => {
+        axios
             .post(`${process.env.REACT_APP_API_URL}userListInfo/createInfo/${id}`, exData, {
                 withCredentials: true,
                 headers: {
@@ -169,20 +165,13 @@ function ExercisePage() {
     }
 
     // Deleting Saved exercise from ExercisePage
-    const deleteSaved = async () => {
-        await axios
+    const deleteSaved = () => {
+        axios
             .delete(
                 `${process.env.REACT_APP_API_URL}userSaves/deletesaved/${getUser.id}/${params.id}`
-                // {
-                //     headers: {
-                //         Authorization: `Bearer ${user}`,
-                //     },
-                // }
             )
             .then((res) => {
-                if (res) {
-                    window.location.reload()
-                }
+                if (res) window.location.reload()
             })
     }
 
