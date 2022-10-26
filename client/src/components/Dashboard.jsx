@@ -19,9 +19,9 @@ function Dashboard() {
 
     // When dashboard loads, it will fetch the user, its lists and its saved exercises
     useEffect(() => {
-        const checkUser = async () => {
+        const checkUser = () => {
             // User sends its access_token in headers to BE to be decoded.
-            await axios
+            axios
                 .get(`${process.env.REACT_APP_API_URL}user/protected`, {
                     withCredentials: true,
                     headers: {
@@ -39,10 +39,13 @@ function Dashboard() {
                         }
                     }
                 })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
         // Fetch users lists
-        const getLists = async () => {
-            await axios
+        const getLists = () => {
+            axios
                 .get(`${process.env.REACT_APP_API_URL}userList/${getUser.id}`, {
                     withCredentials: true,
                     headers: {
@@ -51,15 +54,14 @@ function Dashboard() {
                 })
                 .then((res) => {
                     if (res.data.message) {
-                        // Stores user info into the state.
-                        setGetUserList(res.data.message)
+                        setGetUserList(res.data.message) // Stores user info into the state.
                     }
                 })
         }
 
         // fetch all the usesr saved exercises
-        const getSaves = async () => {
-            await axios
+        const getSaves = () => {
+            axios
                 .get(`${process.env.REACT_APP_API_URL}userSaves/saves/${getUser.id}`, {
                     withCredentials: true,
                     headers: {
@@ -68,8 +70,7 @@ function Dashboard() {
                 })
                 .then((res) => {
                     if (res.data.sInfo) {
-                        // Stores user info into the state.
-                        setGetUserSaves(res.data.sInfo)
+                        setGetUserSaves(res.data.sInfo) // Stores user info into the state.
                     }
                 })
         }
@@ -120,8 +121,8 @@ function Dashboard() {
         createList(userData)
     }
 
-    const deleteList = async (id) => {
-        await axios
+    const deleteList = (id) => {
+        axios
             .delete(`${process.env.REACT_APP_API_URL}userList/${id}`, {
                 headers: {
                     Authorization: `Bearer ${user}`,
@@ -134,8 +135,8 @@ function Dashboard() {
             })
     }
 
-    const deleteSaved = async (id) => {
-        await axios
+    const deleteSaved = (id) => {
+        axios
             .delete(`${process.env.REACT_APP_API_URL}userSaves/deletesaved/${id}`, {
                 headers: {
                     Authorization: `Bearer ${user}`,
