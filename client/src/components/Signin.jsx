@@ -12,20 +12,21 @@ function Signin() {
     const { email, password } = formData
 
     // Login function
-    const login = async (userData) => {
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}user/signin`, userData, {
-            withCredentials: true,
-        })
-        if (response.data.token) {
-            // eslint-disable-next-line no-console
-            console.log(response.data.token)
-            Cookies.set('access_token', response.data.token)
-            navigate('/dashboard')
-            // window.location.reload()
-        } else {
-            // eslint-disable-next-line no-alert
-            alert('Email or password incorrect')
-        }
+    const login = (userData) => {
+        axios
+            .post(`${process.env.REACT_APP_API_URL}user/signin`, userData, {
+                withCredentials: true,
+            })
+            .then((res) => {
+                if (res) {
+                    Cookies.set('access_token', res.data.token)
+                    navigate('/dashboard')
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                alert('Email or password incorrect')
+            })
     }
 
     const onChange = (e) => {

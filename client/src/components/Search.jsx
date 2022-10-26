@@ -6,8 +6,8 @@ function Search() {
     const [exerciseName, setExerciseName] = useState('') // Stores user input value
 
     // Function to let users serach by input with a value
-    const getExerciseByName = async () => {
-        await axios
+    const getExerciseByName = () => {
+        axios
             .get(`https://exercisedb.p.rapidapi.com/exercises/name/${exerciseName.toLowerCase()}`, {
                 headers: {
                     'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
@@ -20,8 +20,8 @@ function Search() {
     }
 
     // Function to let user search exercises by body part direcly instead of typing.
-    const getBodypartEx = async (bodypart) => {
-        await axios
+    const getBodypartEx = (bodypart) => {
+        axios
             .get(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodypart.toLowerCase()}`, {
                 headers: {
                     'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
