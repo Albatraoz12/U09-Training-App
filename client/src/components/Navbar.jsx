@@ -7,10 +7,10 @@ import logo from '../assets/logo-test.png'
 function Navbar() {
     const navigate = useNavigate()
     const user = Cookies.get('access_token')
-    const onLogout = async () => {
+    const onLogout = () => {
         try {
             // Send token info in headers to backend to let user logout. Backend will remove HTTPOnly cookies
-            await axios
+            axios
                 .get(`${process.env.REACT_APP_API_URL}user/signout`, {
                     withCredentials: true,
                     headers: {
@@ -19,12 +19,9 @@ function Navbar() {
                 })
                 .then((res) => {
                     if (res) {
-                        // FrontEnd removed access_token from cookies("localstorage").
-                        Cookies.remove('access_token')
+                        Cookies.remove('access_token') // FrontEnd removed access_token from cookies("localstorage").
                         navigate('/signin')
                         window.location.reload()
-                        // eslint-disable-next-line no-console
-                        console.log('Success: successfully Logged Out!')
                     }
                 })
         } catch (error) {

@@ -13,18 +13,16 @@ function UserListPage() {
     }) // Formdata to update list title/name
 
     useEffect(() => {
-        const getListInfo = async () => {
+        const getListInfo = () => {
             try {
-                await axios
+                axios
                     .get(`${process.env.REACT_APP_API_URL}userListInfo/listInfo/${params.id}`, {
                         headers: {
                             Authorization: `Bearer ${user}`,
                         },
                     })
                     .then((res) => {
-                        if (res.data.lInfo) {
-                            setListInfo(res.data.lInfo)
-                        }
+                        if (res.data.lInfo) setListInfo(res.data.lInfo)
                     })
             } catch (error) {
                 // eslint-disable-next-line no-console
@@ -44,8 +42,8 @@ function UserListPage() {
         }))
     }
 
-    const updateList = async (userData) => {
-        await axios
+    const updateList = (userData) => {
+        axios
             .put(`${process.env.REACT_APP_API_URL}userList/editList/${params.id}`, userData, {
                 withCredentials: true,
                 headers: {
@@ -69,13 +67,11 @@ function UserListPage() {
         updateList(userData)
     }
 
-    const deleteListInfo = async (id) => {
-        await axios
+    const deleteListInfo = (id) => {
+        axios
             .delete(`${process.env.REACT_APP_API_URL}userListInfo/listInfoDelete/${id}`)
             .then((res) => {
-                if (res) {
-                    window.location.reload()
-                }
+                if (res) window.location.reload()
             })
     }
 
@@ -112,11 +108,7 @@ function UserListPage() {
                     </button>
                 </form>
                 <div className="d-flex justify-content-center flex-column gap-1 container">
-                    <ul
-                        className="mb-0"
-                        // eslint-disable-next-line react/no-array-index-key
-                        // key={index}
-                    >
+                    <ul className="mb-0">
                         {listInfo.map((info, index) => {
                             return (
                                 <li
