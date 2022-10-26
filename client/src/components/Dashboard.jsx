@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
+import Modal from './modal/Modal'
 
 function Dashboard() {
     const user = Cookies.get('access_token')
@@ -11,10 +12,12 @@ function Dashboard() {
     const [getUserList, setGetUserList] = useState([]) // Stores users lists
     const [getUserSaves, setGetUserSaves] = useState([]) // Stores all the users saved/liked exercises
     const [formData, setFormData] = useState({
+        // Formdata for creating a user list
         title: '',
-    }) // Formdata for creating a user list
+    })
+    const [modalOpen, setModalOpen] = useState(false) // Checks if modal is open or not
 
-    // When dashboard loads, it will fetch the users: Information, Books and loaned books
+    // When dashboard loads, it will fetch the user, its lists and its saved exercises
     useEffect(() => {
         const checkUser = async () => {
             // User sends its access_token in headers to BE to be decoded.
@@ -37,6 +40,7 @@ function Dashboard() {
                     }
                 })
         }
+        // Fetch users lists
         const getLists = async () => {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}userList/${getUser.id}`, {
@@ -53,6 +57,7 @@ function Dashboard() {
                 })
         }
 
+        // fetch all the usesr saved exercises
         const getSaves = async () => {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}userSaves/saves/${getUser.id}`, {
@@ -68,6 +73,7 @@ function Dashboard() {
                     }
                 })
         }
+
         // If there is no access token, the user will be redirected to homepage else fetch all the user data.
         if (!user) {
             navigate('/')
@@ -80,6 +86,7 @@ function Dashboard() {
         }
     }, [user, navigate, getUser.id])
 
+    // variable and function to create a list
     const { title } = formData
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -88,8 +95,9 @@ function Dashboard() {
         }))
     }
 
-    const createList = async (userData) => {
-        await axios
+    // Function to create a user list
+    const createList = (userData) => {
+        axios
             .post(`${process.env.REACT_APP_API_URL}userList/createList/${getUser.id}`, userData, {
                 withCredentials: true,
                 headers: {
@@ -97,19 +105,18 @@ function Dashboard() {
                 },
             })
             .then((res) => {
-                if (res) {
-                    window.location.reload()
-                }
+                if (res) setModalOpen(true)
+            })
+            .catch(() => {
+                alert('Please put in a title')
             })
     }
-    // Function to create a user list
     const onSubmit = (e) => {
         e.preventDefault()
 
         const userData = {
             title,
         }
-
         createList(userData)
     }
 
@@ -146,7 +153,7 @@ function Dashboard() {
                 <section className=" my-5">
                     <h1>Welcome {getUser.firstName}</h1>
                     <p>
-                        Hope you have a wonderfull day <br /> Lets the workout start!
+                        Hope you have a wonderfull day <br /> Let the workout start!
                     </p>
                     {/* If User is an admin, the two buttons bellow will appear otherwise null */}
                     {isRole ? (
@@ -158,20 +165,23 @@ function Dashboard() {
                                 Find an User
                             </a>
                         </div>
-                    ) : null}
+                    ) : (
+                        ''
+                    )}
                 </section>
                 <section className="container">
                     <form
-                        className="d-flex justify-content-center row gap-1 my-3"
+                        className="d-flex justify-content-center row gap-1 my-3 col-12"
                         onSubmit={onSubmit}
                     >
                         <div className="d-flex flex-column align-items-center justify-content-center gap-2">
                             <label htmlFor="title" className="fs-2">
                                 Create List
                             </label>
+
                             <input
                                 type="text"
-                                className="col-md-8 col-sm-auto rounded form-control-lg"
+                                className="col-md-6 rounded form-control-lg"
                                 id="title"
                                 placeholder="Enter a title for your list"
                                 name="title"
@@ -187,6 +197,9 @@ function Dashboard() {
                     </form>
                 </section>
                 <section className="container mb-3">
+                    <div className="d-flex align-items-center justify-content-center">
+                        {modalOpen && <Modal setOpenModal={setModalOpen} />}
+                    </div>
                     <div>
                         <h2>Your Lists</h2>
 
