@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -30,8 +32,7 @@ function Dashboard() {
                 })
                 .then((res) => {
                     if (res.data.user) {
-                        // Stores user info into the state.
-                        setGetUser(res.data.user)
+                        setGetUser(res.data.user) // Stores user info into the state.
                         if (res.data.user.role === 'admin') {
                             setIsRole(true)
                         } else {

@@ -20,10 +20,10 @@ function Modal({ setOpenModal }) {
                     </button>
                 </div>
                 <div className="title">
-                    <h3>Are You Sure You Want to Continue?</h3>
+                    <h3>List has been created!</h3>
                 </div>
                 <div className="body">
-                    <p>The next page looks amazing. Hope you want to go there!</p>
+                    <p>Press continue to start searching for exercises or press cancel to return</p>
                 </div>
                 <div className="footer">
                     <button
