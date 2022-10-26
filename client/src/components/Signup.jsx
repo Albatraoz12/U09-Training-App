@@ -13,8 +13,8 @@ function Signup() {
         password: '',
         confirmPassword: '',
     })
-    const [formErrors, setFormErrors] = useState({})
-    const [error, setError] = useState(true)
+    const [formErrors, setFormErrors] = useState({}) // stores the errors in array if accured
+    const [error, setError] = useState(true) // errors are true beacause all feilds are empy on mount, will not display anything
     const [submitted, setSubmitted] = useState(false)
     const { firstName, lastName, email, password, confirmPassword } = formData
     // Before signing up, the validate function will validate that the user has filled in
@@ -69,24 +69,22 @@ function Signup() {
     }
 
     useEffect(() => {
-        const signup = async (userData) => {
-            await axios
+        const signup = (userData) => {
+            axios
                 .post(`${process.env.REACT_APP_API_URL}user/signup`, userData)
                 .then((res) => {
-                    console.log(res)
-                    if (res.data.message) {
-                        console.log(res)
-                        navigate('/signin')
-                    } else if (res.data.failedMessage) {
-                        alert('Email is already in user, Try an otherOne')
-                        window.location.reload()
-                    }
+                    if (res.data.message) navigate('/signin')
+                })
+                .catch(() => {
+                    alert('Email is already in user, Try an otherOne')
+                    window.location.reload()
                 })
         }
         if (error === false) {
             signup(formData)
         }
     }, [error, formData, navigate])
+
     const successmessage = () => {
         console.log('Registration no errors')
     }
