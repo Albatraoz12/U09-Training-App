@@ -4,9 +4,12 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import ErrorModal from './modal/ErrorModal'
 
 function Signin() {
     const navigate = useNavigate()
+    const [errorModal, setErrorModal] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -26,8 +29,9 @@ function Signin() {
                 }
             })
             .catch((error) => {
+                setErrorModal(true)
+                setErrorMessage('Email or password incorrect')
                 console.log(error)
-                alert('Email or password incorrect')
             })
     }
 
@@ -87,6 +91,11 @@ function Signin() {
                         </button>
                     </div>
                 </form>
+                {errorModal && (
+                    <div className="d-flex align-items-center justify-content-center">
+                        <ErrorModal setErrorModal={setErrorModal} setErrorMessage={errorMessage} />
+                    </div>
+                )}
             </section>
         </main>
     )
