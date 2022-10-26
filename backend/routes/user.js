@@ -70,7 +70,6 @@ router.post('/signin', async (req, res) => {
 
 			return res
 				.cookie('access_token', token, {
-					// httpOnly: true,
 					httpOnly:
 						process.env.NODE_ENV == 'production' ? true : false,
 					secure: true,
@@ -95,29 +94,28 @@ router.post('/signin', async (req, res) => {
 router.post('/signup', (req, res) => {
 	try {
 		const { firstName, lastName, email, password } = req.body;
-		User.findOne({ email: email }, async (err, user) => {
+		User.findOne({ email: email }, (err, user) => {
 			if (user) {
-				res.status(201).json({ failedMessage: 'user already exist' });
-			} else {
-				const newUser = new User({
-					firstName: firstName,
-					lastName: lastName,
-					role: 'user',
-					email: email,
-					password: password,
-				});
-				const salt = await bcrypt.genSalt(10);
-				newUser.password = await bcrypt.hash(newUser.password, salt);
-
-				newUser.save().then(() => {
-					res.status(201).json({
-						message: 'New user has been created!',
-					});
-				});
+				return res
+					.status(400)
+					.json({ failedMessage: 'user already exist' });
 			}
+			const newUser = new User({
+				firstName: firstName,
+				lastName: lastName,
+				role: 'user',
+				email: email,
+				password: password,
+			});
+			newUser.password = bcrypt.hashSync(newUser.password, 10);
+			newUser.save().then(() => {
+				res.status(201).json({
+					message: 'New user has been created!',
+				});
+			});
 		});
 	} catch (error) {
-		res.status(404).json({ message: error });
+		res.status(500).json({ message: error });
 	}
 });
 //@desc Logout A User

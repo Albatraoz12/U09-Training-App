@@ -25,35 +25,29 @@ const authorization = (req, res, next) => {
 //@desc Create a new user as an admin, checks if req.id has role of admin
 //@routes POST /signup
 //@access Private
-router.post('/signup', authorization, async (req, res) => {
+router.post('/signup', authorization, (req, res) => {
 	try {
 		if (req.role === 'admin') {
 			const { firstName, lastName, email, password } = req.body;
-			User.findOne({ email: email }, async (err, user) => {
+			User.findOne({ email: email }, (err, user) => {
 				if (user) {
 					res.status(201).json({
 						failedMessage: 'user already exist',
 					});
-				} else {
-					const newUser = new User({
-						firstName: firstName,
-						lastName: lastName,
-						role: 'user',
-						email: email,
-						password: password,
-					});
-					const salt = await bcrypt.genSalt(10);
-					newUser.password = await bcrypt.hash(
-						newUser.password,
-						salt
-					);
-
-					newUser.save().then(() => {
-						res.status(201).json({
-							message: 'New user has been created!',
-						});
-					});
 				}
+				const newUser = new User({
+					firstName: firstName,
+					lastName: lastName,
+					role: 'user',
+					email: email,
+					password: password,
+				});
+				newUser.password = bcrypt.hashSync(newUser.password, 10);
+				newUser.save().then(() => {
+					res.status(201).json({
+						message: 'New user has been created!',
+					});
+				});
 			});
 		} else {
 			res.status(401).json({ message: 'You are not a jedi' });

@@ -11,7 +11,7 @@ function UserPage() {
     const [getAdmin, setGetAdmin] = useState([]) // Stores the admins information and verify that it is an admin on this page
     const [isRole, setIsRole] = useState(Boolean) // checks if the user has the role of admin
     const [formData, setFormData] = useState({})
-    const { firstName, lastName, email } = formData
+    const { firstName, lastName, email, role } = formData
 
     // when component mounts, the functions will run.
     useEffect(() => {
@@ -175,7 +175,7 @@ function UserPage() {
                                 aria-label=".form-select-sm example"
                                 id="role"
                                 name="role"
-                                // value={role}
+                                value={role}
                                 onChange={onChange}
                             >
                                 <option value="user">User</option>
