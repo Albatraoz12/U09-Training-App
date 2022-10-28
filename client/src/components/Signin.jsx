@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
-/* eslint-disable no-alert */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Cookies from 'js-cookie'
@@ -8,6 +6,7 @@ import ErrorModal from './modal/ErrorModal'
 
 function Signin() {
     const navigate = useNavigate()
+    const token = Cookies.get('access_token')
     const [errorModal, setErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [formData, setFormData] = useState({
@@ -28,10 +27,9 @@ function Signin() {
                     navigate('/dashboard')
                 }
             })
-            .catch((error) => {
+            .catch(() => {
                 setErrorModal(true)
                 setErrorMessage('Email or password incorrect')
-                console.log(error)
             })
     }
 
@@ -52,6 +50,10 @@ function Signin() {
 
         login(userData)
     }
+    useEffect(() => {
+        if (token) navigate('/')
+    }, [token, navigate])
+
     return (
         <main className="container my-5">
             <section className="my-5 pb-1">
