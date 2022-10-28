@@ -1,10 +1,10 @@
-/* eslint-disable no-console */
-/* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 import Modal from './modal/Modal'
+import ErrorModal from './modal/ErrorModal'
+import * as api from './utils'
 
 function Dashboard() {
     const user = Cookies.get('access_token')
@@ -14,10 +14,11 @@ function Dashboard() {
     const [getUserList, setGetUserList] = useState([]) // Stores users lists
     const [getUserSaves, setGetUserSaves] = useState([]) // Stores all the users saved/liked exercises
     const [formData, setFormData] = useState({
-        // Formdata for creating a user list
         title: '',
     })
     const [modalOpen, setModalOpen] = useState(false) // Checks if modal is open or not
+    const [errorModal, setErrorModal] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
 
     // When dashboard loads, it will fetch the user, its lists and its saved exercises
     useEffect(() => {
@@ -33,15 +34,12 @@ function Dashboard() {
                 .then((res) => {
                     if (res.data.user) {
                         setGetUser(res.data.user) // Stores user info into the state.
-                        if (res.data.user.role === 'admin') {
-                            setIsRole(true)
-                        } else {
-                            setIsRole(false)
-                        }
+                        if (res.data.user.role === 'admin') setIsRole(true)
                     }
                 })
-                .catch((error) => {
-                    console.log(error)
+                .catch(() => {
+                    setErrorModal(true)
+                    setErrorMessage('Danger, Danger!')
                 })
         }
         // Fetch users lists
@@ -54,12 +52,9 @@ function Dashboard() {
                     },
                 })
                 .then((res) => {
-                    if (res.data.message) {
-                        setGetUserList(res.data.message) // Stores user info into the state.
-                    }
+                    if (res.data.message) setGetUserList(res.data.message) // Stores user info into the state.
                 })
         }
-
         // fetch all the usesr saved exercises
         const getSaves = () => {
             axios
@@ -70,12 +65,9 @@ function Dashboard() {
                     },
                 })
                 .then((res) => {
-                    if (res.data.sInfo) {
-                        setGetUserSaves(res.data.sInfo) // Stores user info into the state.
-                    }
+                    if (res.data.sInfo) setGetUserSaves(res.data.sInfo) // Stores user info into the state.
                 })
         }
-
         // If there is no access token, the user will be redirected to homepage else fetch all the user data.
         if (!user) {
             navigate('/')
@@ -96,7 +88,6 @@ function Dashboard() {
             [e.target.name]: e.target.value,
         }))
     }
-
     // Function to create a user list
     const createList = (userData) => {
         axios
@@ -110,45 +101,18 @@ function Dashboard() {
                 if (res) setModalOpen(true)
             })
             .catch(() => {
-                alert('Please put in a title')
+                setErrorModal(true)
+                setErrorMessage('Please put in a title')
             })
     }
     const onSubmit = (e) => {
         e.preventDefault()
-
         const userData = {
             title,
         }
         createList(userData)
     }
 
-    const deleteList = (id) => {
-        axios
-            .delete(`${process.env.REACT_APP_API_URL}userList/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${user}`,
-                },
-            })
-            .then((res) => {
-                if (res) {
-                    window.location.reload()
-                }
-            })
-    }
-
-    const deleteSaved = (id) => {
-        axios
-            .delete(`${process.env.REACT_APP_API_URL}userSaves/deletesaved/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${user}`,
-                },
-            })
-            .then((res) => {
-                if (res) {
-                    window.location.reload()
-                }
-            })
-    }
     return (
         <main className="py-5">
             <div className="container">
@@ -201,6 +165,12 @@ function Dashboard() {
                 <section className="container mb-3">
                     <div className="d-flex align-items-center justify-content-center">
                         {modalOpen && <Modal setOpenModal={setModalOpen} />}
+                        {errorModal && (
+                            <ErrorModal
+                                setErrorModal={setErrorModal}
+                                setErrorMessage={errorMessage}
+                            />
+                        )}
                     </div>
                     <div>
                         <h2>Your Lists</h2>
@@ -209,9 +179,7 @@ function Dashboard() {
                             {getUserList.map((lists, index) => {
                                 return (
                                     <div
-                                        className="custom-list rounded"
-                                        // eslint wont accept index as a key. to eliminete the console error
-                                        // I disabled this line
+                                        className="custom-list rounded" // eslint wont accept index as a key. to eliminete the console error I disabled this line
                                         // eslint-disable-next-line react/no-array-index-key
                                         key={index}
                                     >
@@ -230,7 +198,8 @@ function Dashboard() {
                                                     aria-label="remove list"
                                                     onClick={() => {
                                                         // eslint-disable-next-line no-underscore-dangle
-                                                        deleteList(lists._id)
+                                                        api.deleteList(lists._id, user)
+                                                        window.location.reload()
                                                     }}
                                                 />
                                             </li>
@@ -265,7 +234,8 @@ function Dashboard() {
                                                 aria-label="remove saved exercise"
                                                 onClick={() => {
                                                     // eslint-disable-next-line no-underscore-dangle
-                                                    deleteSaved(saves._id)
+                                                    api.deleteSave(saves._id, user)
+                                                    window.location.reload()
                                                 }}
                                             />
                                         </li>
@@ -279,5 +249,4 @@ function Dashboard() {
         </main>
     )
 }
-
 export default Dashboard

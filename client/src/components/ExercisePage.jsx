@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -22,11 +20,9 @@ function ExercisePage() {
         exId: '',
     })
 
-    // Will run all the functions inse useEffect when component mounts.
     useEffect(() => {
         // function will run if user is logged in to get its data
         const checkUser = () => {
-            // User sends its access_token in headers to BE to be decoded.
             axios
                 .get(`${process.env.REACT_APP_API_URL}user/protected`, {
                     withCredentials: true,
@@ -35,13 +31,7 @@ function ExercisePage() {
                     },
                 })
                 .then((res) => {
-                    if (res.data.user) {
-                        // Stores user info into the state.
-                        setGetUser(res.data.user)
-                    }
-                })
-                .catch((err) => {
-                    console.log(err)
+                    if (res.data.user) setGetUser(res.data.user) // Stores user info into the state.
                 })
         }
         // function to let users fetch its lists
@@ -54,12 +44,9 @@ function ExercisePage() {
                     },
                 })
                 .then((res) => {
-                    if (res.data.message) {
-                        setGetUserList(res.data.message) // Stores user info into the state.
-                    }
+                    if (res.data.message) setGetUserList(res.data.message) // Stores user info into the state.
                 })
         }
-
         // function to let users fetch its saved exercises
         const getSaves = () => {
             axios
@@ -75,15 +62,12 @@ function ExercisePage() {
                         getUserSaves.map((saved) => {
                             if (saved.exId === params.id) {
                                 setIsSaved(true)
-                            } else {
-                                setIsSaved(false)
                             }
                             return saved
                         })
                     }
                 })
         }
-
         // Fetch exercise with id and later display to the user
         const getExercise = () => {
             axios
@@ -101,7 +85,6 @@ function ExercisePage() {
                     console.error(error)
                 })
         }
-
         if (user) {
             setIsLoggedIn(true)
             checkUser()
@@ -110,7 +93,6 @@ function ExercisePage() {
                 getSaves()
             }
         }
-
         getExercise()
         // if exercise has fetch the name and id values, it will then store them into the formData
         if (exercise.name && exercise.id) {
@@ -223,7 +205,6 @@ function ExercisePage() {
                         </h2>
                     )}
                     <div className="d-flex justify-content-center gap-2">
-                        {/* if user is logged in then the button and the dropdown will be seen. Otherwise nothing */}
                         {isLoggedIn ? (
                             <>
                                 {isSaved ? (
