@@ -1,8 +1,8 @@
 import React from 'react'
 import './Modal.css'
 import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-/* eslint-disable react/prop-types */ // Needs to be disabled in order to work!
 function Modal({ setOpenModal }) {
     const navigate = useNavigate()
     return (
@@ -43,6 +43,13 @@ function Modal({ setOpenModal }) {
             </div>
         </section>
     )
+}
+Modal.defaultProps = {
+    setOpenModal: true,
+}
+
+Modal.propTypes = {
+    setOpenModal: PropTypes.bool,
 }
 
 export default Modal

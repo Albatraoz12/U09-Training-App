@@ -1,7 +1,7 @@
 import React from 'react'
 import './Modal.css'
+import PropTypes from 'prop-types'
 
-/* eslint-disable react/prop-types */ // Needs to be disabled in order to work!
 function ErrorModal({ setErrorModal, setErrorMessage }) {
     return (
         <section className="errorModalBackground">
@@ -23,6 +23,16 @@ function ErrorModal({ setErrorModal, setErrorMessage }) {
             </div>
         </section>
     )
+}
+
+ErrorModal.defaultProps = {
+    setErrorModal: true,
+    setErrorMessage: 'error',
+}
+
+ErrorModal.propTypes = {
+    setErrorModal: PropTypes.bool,
+    setErrorMessage: PropTypes.string,
 }
 
 export default ErrorModal
