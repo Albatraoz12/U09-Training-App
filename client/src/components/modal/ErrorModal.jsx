@@ -26,12 +26,12 @@ function ErrorModal({ setErrorModal, setErrorMessage }) {
 }
 
 ErrorModal.defaultProps = {
-    setErrorModal: true,
+    setErrorModal: () => {},
     setErrorMessage: 'error',
 }
 
 ErrorModal.propTypes = {
-    setErrorModal: PropTypes.bool,
+    setErrorModal: PropTypes.func,
     setErrorMessage: PropTypes.string,
 }
 

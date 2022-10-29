@@ -45,11 +45,11 @@ function Modal({ setOpenModal }) {
     )
 }
 Modal.defaultProps = {
-    setOpenModal: true,
+    setOpenModal: () => {},
 }
 
 Modal.propTypes = {
-    setOpenModal: PropTypes.bool,
+    setOpenModal: PropTypes.func,
 }
 
 export default Modal
