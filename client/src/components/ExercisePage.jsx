@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
 import Cookies from 'js-cookie'
 import ErrorModal from './modal/ErrorModal'
+import * as api from './utils'
 
 function ExercisePage() {
     const params = useParams() // Let developers get access to params
-    const user = Cookies.get('access_token')
+    const token = Cookies.get('access_token')
     const [errorModal, setErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [exercise, setExercise] = useState([]) // Stores the exercise data
@@ -21,145 +21,58 @@ function ExercisePage() {
     })
 
     useEffect(() => {
-        // function will run if user is logged in to get its data
-        const checkUser = () => {
-            axios
-                .get(`${process.env.REACT_APP_API_URL}user/protected`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.data.user) setGetUser(res.data.user) // Stores user info into the state.
-                })
-        }
-        // function to let users fetch its lists
-        const getLists = () => {
-            axios
-                .get(`${process.env.REACT_APP_API_URL}userList/${getUser.id}`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.data.message) setGetUserList(res.data.message) // Stores user info into the state.
-                })
-        }
-        // function to let users fetch its saved exercises
-        const getSaves = () => {
-            axios
-                .get(`${process.env.REACT_APP_API_URL}userSaves/saves/${getUser.id}`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.data.sInfo) {
-                        setGetUserSaves(res.data.sInfo) // Stores user info into the state.
-                        getUserSaves.map((saved) => {
-                            if (saved.exId === params.id) {
-                                setIsSaved(true)
-                            }
-                            return saved
-                        })
-                    }
-                })
-        }
-        // Fetch exercise with id and later display to the user
-        const getExercise = () => {
-            axios
-                .get(`https://exercisedb.p.rapidapi.com/exercises/exercise/${params.id}`, {
-                    headers: {
-                        'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
-                        'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
-                    },
-                })
-                .then((response) => {
-                    setExercise(response.data)
-                })
-                .catch((error) => {
-                    // eslint-disable-next-line no-console
-                    console.error(error)
-                })
-        }
-        if (user) {
+        async function fetchUserData() {
+            const userInfo = await api.checkUser(token)
+            setGetUser(userInfo.user)
             setIsLoggedIn(true)
-            checkUser()
             if (getUser.id) {
-                getLists()
-                getSaves()
+                const userLists = await api.getLists(getUser.id, token)
+                setGetUserList(userLists)
+                const userSaved = await api.getSaves(getUser.id, token)
+                setGetUserSaves(userSaved)
+                getUserSaves.map((saves) => {
+                    if (saves.exId === params.id) {
+                        setIsSaved(true)
+                    }
+                    return saves
+                })
             }
         }
-        getExercise()
-        // if exercise has fetch the name and id values, it will then store them into the formData
-        if (exercise.name && exercise.id) {
-            setFormData({
-                name: exercise.name,
-                exId: exercise.id,
-            })
+        const fetchExercise = async () => {
+            const currentEx = await api.getExercise(params.id)
+            setExercise(currentEx)
+            if (exercise.name && exercise.id) {
+                setFormData({
+                    name: exercise.name,
+                    exId: exercise.id,
+                })
+            }
         }
+        if (token) {
+            fetchUserData()
+        }
+        fetchExercise()
+
         // Disable this line because of not neeeding the dependensis
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params.id, user, getUser.id, exercise.name, exercise.id])
-
-    // function to let user save the exercise
-    const saveExercise = (exData) => {
-        axios
-            .post(`${process.env.REACT_APP_API_URL}userSaves/saveEx/${getUser.id}`, exData, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${user}`,
-                },
-            })
-            .then((res) => {
-                if (res) window.location.reload()
-            })
-    }
+    }, [params.id, token, getUser.id, exercise.name, exercise.id])
 
     // function will run when user clicks on Like button
     const save = (data) => {
-        saveExercise(data)
-    }
-
-    // function to let user save an exercise into a list
-    const exerciseToList = (exData, id) => {
-        axios
-            .post(`${process.env.REACT_APP_API_URL}userListInfo/createInfo/${id}`, exData, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${user}`,
-                },
-            })
-            .then((res) => {
-                if (res.data.message) {
-                    // eslint-disable-next-line no-alert
-                    alert('This Exercise is now added to the list!')
-                    window.location.reload()
-                }
-            })
-            .catch(() => {
-                setErrorModal(true)
-                setErrorMessage('This Exercise is already saved into that list!')
-            })
+        api.saveExercise(getUser.id, token, data)
+        window.location.reload()
     }
 
     // When user clicks on a list from the dropdown, the exercise will be saved into that list
-    const saveList = (id) => {
-        exerciseToList(formData, id)
-    }
-
-    // Deleting Saved exercise from ExercisePage
-    const deleteSaved = () => {
-        axios
-            .delete(
-                `${process.env.REACT_APP_API_URL}userSaves/deletesaved/${getUser.id}/${params.id}`
-            )
-            .then((res) => {
-                if (res) window.location.reload()
-            })
+    const saveList = async (id) => {
+        const saveToList = await api.exerciseToList(id, token, formData)
+        if (saveToList.message) {
+            // eslint-disable-next-line no-alert
+            alert('success')
+        } else {
+            setErrorMessage(saveToList.errorMessage)
+            setErrorModal(true)
+        }
     }
 
     return (
@@ -211,8 +124,12 @@ function ExercisePage() {
                                     <button
                                         type="button"
                                         className="btn btn-primary"
-                                        onClick={() => {
-                                            deleteSaved(formData)
+                                        onClick={async () => {
+                                            const deleted = await api.deleteSaved(
+                                                getUser.id,
+                                                params.id
+                                            )
+                                            if (deleted) window.location.reload()
                                         }}
                                     >
                                         Unsave

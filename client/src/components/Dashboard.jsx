@@ -1,5 +1,5 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 import Modal from './modal/Modal'
@@ -7,7 +7,7 @@ import ErrorModal from './modal/ErrorModal'
 import * as api from './utils'
 
 function Dashboard() {
-    const user = Cookies.get('access_token')
+    const token = Cookies.get('access_token')
     const navigate = useNavigate()
     const [getUser, setGetUser] = useState([]) // Stores user information
     const [isRole, setIsRole] = useState(Boolean) // if set to true, the user is a Admin else User
@@ -20,65 +20,23 @@ function Dashboard() {
     const [errorModal, setErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
-    // When dashboard loads, it will fetch the user, its lists and its saved exercises
     useEffect(() => {
-        const checkUser = () => {
-            // User sends its access_token in headers to BE to be decoded.
-            axios
-                .get(`${process.env.REACT_APP_API_URL}user/protected`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.data.user) {
-                        setGetUser(res.data.user) // Stores user info into the state.
-                        if (res.data.user.role === 'admin') setIsRole(true)
-                    }
-                })
-                .catch(() => {
-                    setErrorModal(true)
-                    setErrorMessage('Danger, Danger!')
-                })
-        }
-        // Fetch users lists
-        const getLists = () => {
-            axios
-                .get(`${process.env.REACT_APP_API_URL}userList/${getUser.id}`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.data.message) setGetUserList(res.data.message) // Stores user info into the state.
-                })
-        }
-        // fetch all the usesr saved exercises
-        const getSaves = () => {
-            axios
-                .get(`${process.env.REACT_APP_API_URL}userSaves/saves/${getUser.id}`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.data.sInfo) setGetUserSaves(res.data.sInfo) // Stores user info into the state.
-                })
-        }
-        // If there is no access token, the user will be redirected to homepage else fetch all the user data.
-        if (!user) {
-            navigate('/')
-        } else {
-            checkUser()
+        async function fetchUserData() {
+            const userInfo = await api.checkUser(token)
+            setGetUser(userInfo.user)
+            if (getUser.role === 'admin') setIsRole(true)
             if (getUser.id) {
-                getLists()
-                getSaves()
+                const userSaved = await api.getSaves(getUser.id, token)
+                setGetUserSaves(userSaved)
+                const userLists = await api.getLists(getUser.id, token)
+                setGetUserList(userLists)
             }
         }
-    }, [user, navigate, getUser.id])
+        if (!token) {
+            navigate('/signin')
+        }
+        fetchUserData()
+    }, [token, navigate, getUser.id, getUser.role])
 
     // variable and function to create a list
     const { title } = formData
@@ -88,29 +46,19 @@ function Dashboard() {
             [e.target.name]: e.target.value,
         }))
     }
-    // Function to create a user list
-    const createList = (userData) => {
-        axios
-            .post(`${process.env.REACT_APP_API_URL}userList/createList/${getUser.id}`, userData, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${user}`,
-                },
-            })
-            .then((res) => {
-                if (res) setModalOpen(true)
-            })
-            .catch(() => {
-                setErrorModal(true)
-                setErrorMessage('Please put in a title')
-            })
-    }
-    const onSubmit = (e) => {
+
+    const onSubmit = async (e) => {
         e.preventDefault()
         const userData = {
             title,
         }
-        createList(userData)
+        const newList = await api.createList(getUser.id, token, userData)
+        if (newList) {
+            setModalOpen(true)
+        } else {
+            setErrorModal(true)
+            setErrorMessage('please put in a title')
+        }
     }
 
     return (
@@ -176,18 +124,16 @@ function Dashboard() {
                         <h2>Your Lists</h2>
 
                         <div className="d-flex justify-content-center flex-column gap-1 container">
-                            {getUserList.map((lists, index) => {
+                            {getUserList.map((lists) => {
                                 return (
                                     <div
                                         className="custom-list rounded" // eslint wont accept index as a key. to eliminete the console error I disabled this line
-                                        // eslint-disable-next-line react/no-array-index-key
-                                        key={index}
+                                        key={lists._id}
                                     >
                                         <ul className="mb-0">
                                             <li className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2">
                                                 <a
                                                     className="text-white"
-                                                    // eslint-disable-next-line no-underscore-dangle
                                                     href={`/userList/${lists.title}/${lists._id}`}
                                                 >
                                                     {lists.title}
@@ -197,8 +143,7 @@ function Dashboard() {
                                                     className="bi bi-x-lg btn btn-danger"
                                                     aria-label="remove list"
                                                     onClick={() => {
-                                                        // eslint-disable-next-line no-underscore-dangle
-                                                        api.deleteList(lists._id, user)
+                                                        api.deleteList(lists._id, token)
                                                         window.location.reload()
                                                     }}
                                                 />
@@ -214,13 +159,9 @@ function Dashboard() {
                     <h2>Your Saves</h2>
                     <div>
                         <div className="d-flex justify-content-center flex-column gap-1 container">
-                            {getUserSaves.map((saves, index) => {
+                            {getUserSaves.map((saves) => {
                                 return (
-                                    <ul
-                                        className="mb-0"
-                                        // eslint-disable-next-line react/no-array-index-key
-                                        key={index}
-                                    >
+                                    <ul className="mb-0" key={saves._id}>
                                         <li className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2">
                                             <a
                                                 className="text-white"
@@ -233,8 +174,7 @@ function Dashboard() {
                                                 className="bi bi-x-lg btn btn-danger"
                                                 aria-label="remove saved exercise"
                                                 onClick={() => {
-                                                    // eslint-disable-next-line no-underscore-dangle
-                                                    api.deleteSave(saves._id, user)
+                                                    api.deleteSave(saves._id, token)
                                                     window.location.reload()
                                                 }}
                                             />

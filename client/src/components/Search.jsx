@@ -1,47 +1,21 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import * as api from './utils'
 
 function Search() {
     const [exercises, setExcercises] = useState([]) // Stores exercises into an arry
     const [exerciseName, setExerciseName] = useState('') // Stores user input value
 
-    // Function to let users serach by input with a value
-    const getExerciseByName = () => {
-        axios
-            .get(`https://exercisedb.p.rapidapi.com/exercises/name/${exerciseName.toLowerCase()}`, {
-                headers: {
-                    'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
-                    'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
-                },
-            })
-            .then((res) => {
-                setExcercises(res.data)
-            })
-    }
-
-    // Function to let user search exercises by body part direcly instead of typing.
-    const getBodypartEx = (bodypart) => {
-        axios
-            .get(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodypart.toLowerCase()}`, {
-                headers: {
-                    'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
-                    'X-RapidAPI-Host': process.env.REACT_APP_X_RapidAPI_Host,
-                },
-            })
-            .then((res) => {
-                setExcercises(res.data)
-            })
-    }
-
     // When user click on dropdown menu to find exercises by bodypar
-    const onChangeBP = (e) => {
-        getBodypartEx(e.target.value)
+    const onChangeBP = async (e) => {
+        const fetchBodyPart = await api.getBodypartEx(e.target.value)
+        setExcercises(fetchBodyPart)
     }
 
     // When user sumbits an exercise with input
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        getExerciseByName()
+        const getExercises = await api.getExerciseByName(exerciseName)
+        setExcercises(getExercises)
     }
 
     // Only display 10 exercises for better experiance, atlest for this project.
