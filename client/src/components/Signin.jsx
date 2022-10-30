@@ -31,7 +31,7 @@ function Signin() {
         }
         const signin = await api.login(userData)
         if (signin.token) {
-            Cookies.set('access_token', signin.token)
+            Cookies.set('access_token', signin.token, { expires: 365 })
             navigate('/dashboard')
         } else {
             setErrorModal(true)
