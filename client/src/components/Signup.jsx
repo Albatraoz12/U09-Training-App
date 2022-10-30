@@ -95,8 +95,7 @@ function Signup() {
         <main className="my-5">
             <section className="container my-3">
                 <h1>Sign Up</h1>
-                {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
-                {Object.keys(formErrors).length === 0 && submitted ? successmessage() : <></>}
+                {Object.keys(formErrors).length === 0 && submitted ? successmessage() : ''}
                 <div className="d-flex align-items-center justify-content-center">
                     {errorModal && (
                         <ErrorModal setErrorModal={setErrorModal} setErrorMessage={errorMessage} />

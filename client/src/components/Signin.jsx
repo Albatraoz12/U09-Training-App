@@ -1,13 +1,13 @@
-/* eslint-disable no-console */
-/* eslint-disable no-alert */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+// import axios from 'axios'
 import Cookies from 'js-cookie'
 import ErrorModal from './modal/ErrorModal'
+import * as api from './utils'
 
 function Signin() {
     const navigate = useNavigate()
+    const token = Cookies.get('access_token')
     const [errorModal, setErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [formData, setFormData] = useState({
@@ -16,25 +16,6 @@ function Signin() {
     })
     const { email, password } = formData
 
-    // Login function
-    const login = (userData) => {
-        axios
-            .post(`${process.env.REACT_APP_API_URL}user/signin`, userData, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                if (res) {
-                    Cookies.set('access_token', res.data.token)
-                    navigate('/dashboard')
-                }
-            })
-            .catch((error) => {
-                setErrorModal(true)
-                setErrorMessage('Email or password incorrect')
-                console.log(error)
-            })
-    }
-
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -42,16 +23,25 @@ function Signin() {
         }))
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
-
         const userData = {
             email,
             password,
         }
-
-        login(userData)
+        const signin = await api.login(userData)
+        if (signin.token) {
+            Cookies.set('access_token', signin.token, { expires: 365 })
+            navigate('/dashboard')
+        } else {
+            setErrorModal(true)
+            setErrorMessage('Email or password incorrect')
+        }
     }
+    useEffect(() => {
+        if (token) navigate('/')
+    }, [token, navigate])
+
     return (
         <main className="container my-5">
             <section className="my-5 pb-1">

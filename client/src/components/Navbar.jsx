@@ -19,7 +19,7 @@ function Navbar() {
                 })
                 .then((res) => {
                     if (res) {
-                        Cookies.remove('access_token') // FrontEnd removed access_token from cookies("localstorage").
+                        Cookies.remove('access_token') // FrontEnd removed access_token from cookies
                         navigate('/signin')
                         window.location.reload()
                     }
