@@ -58,9 +58,9 @@ function ExercisePage() {
     }, [params.id, token, getUser.id, exercise.name, exercise.id])
 
     // function will run when user clicks on Like button
-    const save = (data) => {
-        api.saveExercise(getUser.id, token, data)
-        window.location.reload()
+    const save = async (data) => {
+        const saved = await api.saveExercise(getUser.id, token, data)
+        if (saved.message) window.location.reload()
     }
 
     // When user clicks on a list from the dropdown, the exercise will be saved into that list
@@ -129,7 +129,7 @@ function ExercisePage() {
                                                 getUser.id,
                                                 params.id
                                             )
-                                            if (deleted) window.location.reload()
+                                            if (deleted.message) window.location.reload()
                                         }}
                                     >
                                         Unsave

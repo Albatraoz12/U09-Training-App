@@ -19,7 +19,6 @@ function Dashboard() {
     const [modalOpen, setModalOpen] = useState(false) // Checks if modal is open or not
     const [errorModal, setErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
-
     useEffect(() => {
         async function fetchUserData() {
             const userInfo = await api.checkUser(token)
@@ -37,7 +36,6 @@ function Dashboard() {
         }
         fetchUserData()
     }, [token, navigate, getUser.id, getUser.role])
-
     // variable and function to create a list
     const { title } = formData
     const onChange = (e) => {
@@ -46,21 +44,19 @@ function Dashboard() {
             [e.target.name]: e.target.value,
         }))
     }
-
     const onSubmit = async (e) => {
         e.preventDefault()
         const userData = {
             title,
         }
         const newList = await api.createList(getUser.id, token, userData)
-        if (newList) {
+        if (newList.message) {
             setModalOpen(true)
         } else {
             setErrorModal(true)
             setErrorMessage('please put in a title')
         }
     }
-
     return (
         <main className="py-5">
             <div className="container">
@@ -92,7 +88,6 @@ function Dashboard() {
                             <label htmlFor="title" className="fs-2">
                                 Create List
                             </label>
-
                             <input
                                 type="text"
                                 className="col-md-6 rounded form-control-lg"
@@ -122,14 +117,10 @@ function Dashboard() {
                     </div>
                     <div>
                         <h2>Your Lists</h2>
-
                         <div className="d-flex justify-content-center flex-column gap-1 container">
                             {getUserList.map((lists) => {
                                 return (
-                                    <div
-                                        className="custom-list rounded" // eslint wont accept index as a key. to eliminete the console error I disabled this line
-                                        key={lists._id}
-                                    >
+                                    <div className="custom-list rounded" key={lists._id}>
                                         <ul className="mb-0">
                                             <li className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2">
                                                 <a
@@ -142,9 +133,13 @@ function Dashboard() {
                                                     type="submit"
                                                     className="bi bi-x-lg btn btn-danger"
                                                     aria-label="remove list"
-                                                    onClick={() => {
-                                                        api.deleteList(lists._id, token)
-                                                        window.location.reload()
+                                                    onClick={async () => {
+                                                        const deleted = await api.deleteList(
+                                                            lists._id,
+                                                            token
+                                                        )
+                                                        if (deleted.message)
+                                                            window.location.reload()
                                                     }}
                                                 />
                                             </li>
@@ -173,9 +168,12 @@ function Dashboard() {
                                                 type="submit"
                                                 className="bi bi-x-lg btn btn-danger"
                                                 aria-label="remove saved exercise"
-                                                onClick={() => {
-                                                    api.deleteSave(saves._id, token)
-                                                    window.location.reload()
+                                                onClick={async () => {
+                                                    const deleted = await api.deleteSave(
+                                                        saves._id,
+                                                        token
+                                                    )
+                                                    if (deleted.message) window.location.reload()
                                                 }}
                                             />
                                         </li>

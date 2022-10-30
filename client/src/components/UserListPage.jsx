@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
@@ -7,20 +8,18 @@ import * as api from './utils'
 function UserListPage() {
     const navigate = useNavigate() // navigate user twords an destination
     const params = useParams() // let developers get access to params
-    const user = Cookies.get('access_token')
+    const token = Cookies.get('access_token')
     const [listInfo, setListInfo] = useState([]) // stores all the saved exercises assosiated with list id (from params)
     const [formData, setFormData] = useState({
         title: '',
     }) // Formdata to update list title/name
-
     useEffect(() => {
         async function fetchInfo() {
-            const response = await api.getListInfo(params.id, user)
-            setListInfo(response.lInfo)
+            const response = await api.getListInfo(params.id, token)
+            if (response.lInfo) setListInfo(response.lInfo)
         }
         fetchInfo()
-    }, [params, user])
-
+    }, [params, token])
     // Function to update a list by title/name
     const { title } = formData
     const onChange = (e) => {
@@ -29,17 +28,14 @@ function UserListPage() {
             [e.target.name]: e.target.value,
         }))
     }
-
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault()
-
         const userData = {
             title,
         }
-        api.updateList(params.id, userData, user)
-        navigate(`/userList/${title}/${params.id}`)
+        const updated = await api.updateList(params.id, userData, token)
+        if (updated.message) navigate(`/userList/${title}/${params.id}`)
     }
-
     const deleteListInfo = (id) => {
         axios
             .delete(`${process.env.REACT_APP_API_URL}userListInfo/listInfoDelete/${id}`)
@@ -47,7 +43,6 @@ function UserListPage() {
                 if (res) window.location.reload()
             })
     }
-
     return (
         <main className="my-5 p-2">
             <section className="my-5 py-5 container">
@@ -82,12 +77,11 @@ function UserListPage() {
                 </form>
                 <div className="d-flex justify-content-center flex-column gap-1 container">
                     <ul className="mb-0">
-                        {listInfo.map((info, index) => {
+                        {listInfo.map((info) => {
                             return (
                                 <li
                                     className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2"
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    key={index}
+                                    key={info._id}
                                 >
                                     <a className="text-white" href={`/exercise/${info.exId}`}>
                                         {info.name}
@@ -97,7 +91,6 @@ function UserListPage() {
                                         className="bi bi-x-lg btn btn-danger"
                                         aria-label="remove item"
                                         onClick={() => {
-                                            // eslint-disable-next-line no-underscore-dangle
                                             deleteListInfo(info._id)
                                         }}
                                     />
@@ -110,5 +103,4 @@ function UserListPage() {
         </main>
     )
 }
-
 export default UserListPage
