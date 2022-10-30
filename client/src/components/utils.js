@@ -57,7 +57,7 @@ export async function updateList(id, userData, token) {
                 },
             }
         )
-        return response
+        return response.data
     } catch (error) {
         return error
     }
@@ -173,7 +173,7 @@ export async function getBodypartEx(bodypart) {
         )
         return response.data
     } catch (error) {
-        return error
+        return error.response
     }
 }
 
@@ -191,7 +191,7 @@ export async function getExercise(id) {
         )
         return response.data
     } catch (error) {
-        return error
+        return error.response
     }
 }
 
