@@ -1,6 +1,8 @@
 import React from 'react'
+import Cookies from 'js-cookie'
 
 function Home() {
+    const token = Cookies.get('access_token')
     return (
         <main className="w-auto mx-auto mb-5">
             <article className="container mx-auto my-5 pb-5">
@@ -13,19 +15,31 @@ function Home() {
                         searching here
                     </a>
                 </p>
-                <p className="mt-2">
-                    Do you want to save exercises or maybe create a list with exercises?
-                </p>
-                <a className="btn btn-primary mb-1" href="/signup">
-                    Get started by Signing Up Here
-                </a>
-                <p className="my-5 pb-5">
-                    Already Signed Up,{' '}
-                    <a className="text-white fw-bolder" href="/signin">
-                        {' '}
-                        Sign in Here
-                    </a>
-                </p>
+                {token ? (
+                    <p>
+                        Go Back to{' '}
+                        <a className="text-white fw-bolder" href="/dashboard">
+                            {' '}
+                            Dashboard here
+                        </a>
+                    </p>
+                ) : (
+                    <>
+                        <p className="mt-2">
+                            Do you want to save exercises or maybe create a list with exercises?
+                        </p>
+                        <a className="btn btn-primary mb-1" href="/signup">
+                            Get started by Signing Up Here
+                        </a>
+                        <p className="my-5 pb-5">
+                            Already Signed Up,{' '}
+                            <a className="text-white fw-bolder" href="/signin">
+                                {' '}
+                                Sign in Here
+                            </a>
+                        </p>
+                    </>
+                )}
             </article>
         </main>
     )

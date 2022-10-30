@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import axios from 'axios'
+import * as api from './utils'
 
 function UserListPage() {
     const navigate = useNavigate() // navigate user twords an destination
@@ -13,24 +14,11 @@ function UserListPage() {
     }) // Formdata to update list title/name
 
     useEffect(() => {
-        const getListInfo = () => {
-            try {
-                axios
-                    .get(`${process.env.REACT_APP_API_URL}userListInfo/listInfo/${params.id}`, {
-                        headers: {
-                            Authorization: `Bearer ${user}`,
-                        },
-                    })
-                    .then((res) => {
-                        if (res.data.lInfo) setListInfo(res.data.lInfo)
-                    })
-            } catch (error) {
-                // eslint-disable-next-line no-console
-                console.log(error)
-            }
+        async function fetchInfo() {
+            const response = await api.getListInfo(params.id, user)
+            setListInfo(response.lInfo)
         }
-
-        getListInfo()
+        fetchInfo()
     }, [params, user])
 
     // Function to update a list by title/name
@@ -42,29 +30,14 @@ function UserListPage() {
         }))
     }
 
-    const updateList = (userData) => {
-        axios
-            .put(`${process.env.REACT_APP_API_URL}userList/editList/${params.id}`, userData, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${user}`,
-                },
-            })
-            .then((res) => {
-                if (res) {
-                    navigate(`/userList/${title}/${params.id}`)
-                    window.location.reload()
-                }
-            })
-    }
     const onSubmit = (e) => {
         e.preventDefault()
 
         const userData = {
             title,
         }
-
-        updateList(userData)
+        api.updateList(params.id, userData, user)
+        navigate(`/userList/${title}/${params.id}`)
     }
 
     const deleteListInfo = (id) => {
