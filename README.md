@@ -63,7 +63,7 @@ After creating a api request in insomia via the + sign, we then need to change t
 ### Sign Up route
 
 Create a user with POST
-Post to: http://localhost:8081/user/signup
+Post to: http://localhost:8081/user/signup  
 JSON:
 {
 "firstName": "John",
@@ -76,7 +76,7 @@ JSON:
 ### Sign In route
 
 Sign in a user with POST
-Post to: http://localhost:8081/user/signin
+Post to: http://localhost:8081/user/signin  
 JSON:
 {
 "email": "John.Doe@gmail.com",
@@ -87,7 +87,7 @@ Notis that we get an token and a success message as an respond. The token will b
 ### Protected route
 
 This route is to identify the user with its Token with GET.
-Get to: http://localhost:8081/user/protected
+Get to: http://localhost:8081/user/protected  
 Only in Headers:
 Content-Type: application/json
 Authorization: Bearer {Paste your token here, starts with ey}
@@ -95,92 +95,95 @@ If successfull, you will get the response of your user.
 
 ### Sign Out route
 
-The logout route is not working as intended in the insomia/postman due to how the backend is programmed. In the whole application the frontend will be responsible to remove the token and sign out the user. This is how it will look like with insomia:
-Get to: http://localhost:8081/user/signout
+The logout route is not working as intended in the insomia/postman due to how the backend is programmed. In the whole application the frontend will be responsible to remove the token and sign out the user. This is how it will look like with insomia:  
+Get to: http://localhost:8081/user/signout  
 Headers:
 Authorization: Bearer {Token}
 
-## Create lists
+## User lists Route
 
 ### Create a list
 
 Create a list with POST-Method
-POST to: http://localhost:8081/userList/createList/{User.ID "632af075d9a2a731da81f971"}
+POST to: http://localhost:8081/userList/createList/{user Id}  
 Headers:
 Authorization: Bearer {Token}
-You need to send the users token to make sure to identify the user and not an other.
+You need to send the users token to make sure to identify the user and not an other.  
+JSON {  
+ "title": "ListName"  
+}
 
 ### Read users list
 
-GET to: http://localhost:8081/userList/{User Id}
-Headers:
-Authorization: Bearer {Token}
+GET to: http://localhost:8081/userList/{User Id}  
+Headers:  
+Authorization: Bearer {Token}  
 Let the user read its own lists.
 
 ### Update a list by name
 
-PUT to: http://localhost:8081/userList/editList/{List Id}
-JSON:
-{
-"title": "New list name"
-}
-Headers:
-Authorization: Bearer {Token}
+PUT to: http://localhost:8081/userList/editList/{List Id}  
+JSON:  
+{  
+"title": "New list name  
+ }  
+Headers:  
+Authorization: Bearer {Token}  
 PUT to the lists id and change the title off the list to any disire title name.
 
 ### Delete a list
 
-DELETE to: http://localhost:8081/userList/{List Id}
-Headers:
+DELETE to: http://localhost:8081/userList/{List Id}  
+Headers:  
 Authorization: Bearer {Token}
 
 ## Save info into a list api
 
 ### Save info
 
-POST to: http://localhost:8081/userListInfo/createInfo/{list Id}
-JSON:
-{
+POST to: http://localhost:8081/userListInfo/createInfo/{list Id}  
+JSON:  
+{  
 "name": "Title1",
-"exId": "1"
-}
+"exId": "1"  
+}  
 This will save an exercise into the list with id {list id}
 
 ### Read all list information
 
-GET to: http://localhost:8081/userListInfo/listInfo/{list Id}
+GET to: http://localhost:8081/userListInfo/listInfo/{list Id}  
 This route will let the user read its list information with exercises.
 
 ### Delete a list info
 
-http://localhost:8081/userListInfo/listInfoDelete/{List info id}
+http://localhost:8081/userListInfo/listInfoDelete/{List info id}  
 Will remove the exercise form the list with id {list info id}
 
-## UserSaved Api
+## User Saved Api
 
 users can also save an exercise outside off a list to easier have access to one
 
 ### Let user save an exercise
 
-POST to: http://localhost:8081/userSaves/saveEx/{User id}
-Headers:
-Authorization: Bearer {Token}
-JSON:
-{
+POST to: http://localhost:8081/userSaves/saveEx/{User id}  
+Headers:  
+Authorization: Bearer {Token}  
+JSON:  
+{  
 "name": "Exercise1",
-"exId": "1"
+"exId": "1"  
 }
 
 ### Read User saved exercise
 
-GET to: http://localhost:8081/userSaves/saves/{user id}
-Headers:
+GET to: http://localhost:8081/userSaves/saves/{user id}  
+Headers:  
 Authorization: Bearer {Token}
 
 ### Delete Saved exercise
 
-DELETE to: http://localhost:8081/userSaves/deletesaved/{exercise id (Let user save an exercise)}
-Headers:
+DELETE to: http://localhost:8081/userSaves/deletesaved/{exercise id (Let user save an exercise)}  
+Headers:  
 Authorization: Bearer {Token}
 
 ## Admin routes API
@@ -189,53 +192,53 @@ Admin is the onlyone to create a user from dashboard and update/delete a user. W
 
 ### Get all Users
 
-GET to: http://localhost:8081/admin/getAllUsers
-Headers:
+GET to: http://localhost:8081/admin/getAllUsers  
+Headers:  
 Authorization: Bearer {Token}
 
 ### Get an user
 
-GET to: http://localhost:8081/admin/getUser/{user id}
-Headers:
+GET to: http://localhost:8081/admin/getUser/{user id}  
+Headers:  
 Authorization: Bearer {Token}
 
 ### Delete an user
 
-DELETE to: http://localhost:8081/admin/deleteUser/{user id}
-Headers:
+DELETE to: http://localhost:8081/admin/deleteUser/{user id}  
+Headers:  
 Authorization: Bearer {Token}
 
 ### Create a new user
 
-POST to: http://localhost:8081/admin/signup
-Headers:
-Authorization: Bearer {Token}
-JSON:
-{
-"firstName": "",
-"lastName":"",
-"role": "", !Note, an admin can choose if the new user should have a role off User or Admin
-"email": "",
-"password": ""
+POST to: http://localhost:8081/admin/signup  
+Headers:  
+Authorization: Bearer {Token}  
+JSON:  
+{  
+"firstName": "",  
+"lastName":"",  
+"role": "", !Note, an admin can choose if the new user should have a role off User or Admin  
+"email": "",  
+"password": ""  
 }
 
 ### update a user
 
-PUT to: http://localhost:8081/admin/editUser/{User Id}
-Headers:
-Authorization: Bearer {Token}
-JSON:
-{
-"firstName": "",
-"lastName":"",
-"role": "",
-"email": "",
-"password": ""
+PUT to: http://localhost:8081/admin/editUser/{User Id}  
+Headers:  
+Authorization: Bearer {Token}  
+JSON:  
+{  
+"firstName": "",  
+"lastName":"",  
+"role": "",  
+"email": "",  
+"password": ""  
 }
 
 # Frontend
 
-## Components
+## Components/Pages
 
 ### **Dashboard**
 
@@ -280,6 +283,10 @@ This component is responseble to create an user with the information given by th
 
 This component will fetch the users list and the information it has with other words the exercises saved to that list.
 
+# **Utils**
+
+This file is responsible to store all my api functions instead of writing them inside each component. This helped with Dont Repeat Your Self (DRYS)
+
 # Futher Work
 
 implement new role:
@@ -287,3 +294,8 @@ implement new role:
 ## **Trainers**
 
 Trainers can do what an registered user can but also puplish their workout lists to help users complete their goal.
+
+## **Better code structure**
+
+How I have implemented the code structure could have been better but for me I find this pleasent and easy to get started.  
+I managed to create an Utiles file to store all my functions in. I reacently found out something called useContaxt which would have helped me alot in this project but due to have learend about this hook this late, I skipped it for now and for futher work this should be considered to be implemented.
