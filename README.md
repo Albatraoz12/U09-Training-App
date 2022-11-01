@@ -64,32 +64,32 @@ After creating a api request in insomia via the + sign, we then need to change t
 
 Create a user with POST
 Post to: http://localhost:8081/user/signup  
-JSON:
-{
-"firstName": "John",
-"lastName":"Doe",
-"role": "Optional but will be user as default !even if you send in as admin!"
-"email": "John.Doe@gmail.com",
-"password": "JohnDoe123"
+JSON:  
+{  
+"firstName": "John",  
+"lastName":"Doe",  
+"role": "Optional but will be user as default !even if you send in as admin!"  
+"email": "John.Doe@gmail.com",  
+"password": "JohnDoe123"  
 }
 
 ### Sign In route
 
 Sign in a user with POST
 Post to: http://localhost:8081/user/signin  
-JSON:
-{
-"email": "John.Doe@gmail.com",
-"password": "JohnDoe123"
-}
+JSON:  
+{  
+"email": "John.Doe@gmail.com",  
+"password": "JohnDoe123"  
+}  
 Notis that we get an token and a success message as an respond. The token will be stored in the Cookies tab, left side of the route. Copy the token because we are going to be needing that to send it in the header.
 
 ### Protected route
 
 This route is to identify the user with its Token with GET.
 Get to: http://localhost:8081/user/protected  
-Only in Headers:
-Content-Type: application/json
+Only in Headers:  
+Content-Type: application/json  
 Authorization: Bearer {Paste your token here, starts with ey}
 If successfull, you will get the response of your user.
 
@@ -188,7 +188,7 @@ Authorization: Bearer {Token}
 
 ## Admin routes API
 
-Admin is the onlyone to create a user from dashboard and update/delete a user. When the admin routes are being used it will then check the token (in the header) if the user is an admin or not. If the user is not an Admin then he not going to be able to use those routes.
+Admin is the onlyone to create, read, update and delete a user from dashboard. When the admin routes are being used it will then check the token (in the header) if the user is an admin or not. If the user is not an Admin then he not going to be able to use those routes.
 
 ### Get all Users
 
@@ -282,6 +282,23 @@ This component is responseble to create an user with the information given by th
 ### **userListPage**
 
 This component will fetch the users list and the information it has with other words the exercises saved to that list.
+
+### **Modal**
+
+There are two components, one called Modal and one ErrorModal. Depending on what response the users get, the correct modal will appear.
+
+## **Admin**
+
+All the admin components/pages is only avalible for users that have the role of admin. This is to let an admin CRUD a user
+
+**AdminCreatePage**  
+This component is for admins to create a user
+
+**FindUsers**  
+Lets admin fins all the user in the database
+
+**UserPage**  
+Finds a user by id and let an admin update or delete the user.
 
 # **Utils**
 
