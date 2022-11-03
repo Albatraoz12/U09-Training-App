@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { BiUserMinus, BiUserCheck } from 'react-icons/bi'
 import { useNavigate, useParams } from 'react-router-dom'
 import ErrorPage from '../Errorpage'
 
@@ -188,7 +189,7 @@ function UserPage() {
                                 className="btn btn-primary btn-lg"
                                 onClick={submit}
                             >
-                                Update {firstName}
+                                Update {firstName} <BiUserCheck color="yellow" size={30} />
                             </button>
                         </div>
                     </form>
@@ -196,7 +197,7 @@ function UserPage() {
                 <section className="my-5">
                     <h2 className="py-2">Want to Delete the user?</h2>
                     <button className="btn btn-primary btn-lg" type="submit" onClick={deleteUser}>
-                        Delete {firstName}
+                        Delete {firstName} <BiUserMinus color="red" size={30} />
                     </button>
                 </section>
             </main>

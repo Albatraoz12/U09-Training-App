@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { BiUserCheck } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
 import ErrorPage from '../Errorpage'
 
@@ -246,7 +247,7 @@ function AdminCreateUser() {
                                 className="btn btn-primary btn-lg"
                                 onClick={onSubmit}
                             >
-                                Sign up
+                                <BiUserCheck size={30} color="yellow" /> Create User
                             </button>
                         </div>
                     </form>

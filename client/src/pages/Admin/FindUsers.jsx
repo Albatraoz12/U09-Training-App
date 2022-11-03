@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
+import { BiUserCircle } from 'react-icons/bi'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import ErrorPage from '../Errorpage'
@@ -85,7 +86,6 @@ function FindUsers() {
                             setSearchTerm(event.target.value)
                         }}
                     />
-                    {/* <div className="my-5"> */}
                     <div className="d-flex justify-content-center flex-column gap-1 container my-5 custom-list rounded">
                         {filteredUsers.map((userData, key) => {
                             return (
@@ -96,14 +96,13 @@ function FindUsers() {
                                 >
                                     <li className="list-unstyled d-flex justify-content-center align-items-center px-3 py-2">
                                         <a className="text-white" href={`getUser/${userData._id}`}>
-                                            {userData.firstName}
+                                            <BiUserCircle /> {userData.firstName}
                                         </a>
                                     </li>
                                 </ul>
                             )
                         })}
                     </div>
-                    {/* </div> */}
                 </section>
             </main>
         )
