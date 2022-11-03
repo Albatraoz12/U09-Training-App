@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
+import { BiListPlus, BiListCheck, BiUserCheck, BiUserCircle } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../components/modal/Modal'
 import ErrorModal from '../components/modal/ErrorModal'
@@ -71,10 +72,10 @@ function Dashboard() {
                     {isRole ? (
                         <div className="d-flex justify-content-center align-items-center gap-3">
                             <a className="btn btn-primary" href="/createUser">
-                                Create an User
+                                <BiUserCheck /> Create an User
                             </a>
                             <a className="btn btn-primary" href="/findUsers">
-                                Find an User
+                                <BiUserCircle /> Find an User
                             </a>
                         </div>
                     ) : (
@@ -88,7 +89,7 @@ function Dashboard() {
                     >
                         <div className="d-flex flex-column align-items-center justify-content-center gap-2">
                             <label htmlFor="title" className="fs-2">
-                                Create List
+                                Create List <BiListPlus />
                             </label>
                             <input
                                 type="text"
@@ -102,7 +103,7 @@ function Dashboard() {
                                 className="btn btn-primary col-md-3 col-sm-auto rounded"
                                 type="submit"
                             >
-                                Create
+                                Create <BiListCheck />
                             </button>
                         </div>
                     </form>
