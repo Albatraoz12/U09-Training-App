@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
-import Modal from './modal/Modal'
-import ErrorModal from './modal/ErrorModal'
-import * as api from './utils'
+import Modal from '../components/modal/Modal'
+import ErrorModal from '../components/modal/ErrorModal'
+import * as api from '../components/utils'
 
 function Dashboard() {
     const token = Cookies.get('access_token')

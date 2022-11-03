@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import ErrorModal from './modal/ErrorModal'
-import * as api from './utils'
+import ErrorModal from '../components/modal/ErrorModal'
+import * as api from '../components/utils'
 
 function ExercisePage() {
     const params = useParams() // Let developers get access to params

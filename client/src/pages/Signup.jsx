@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import ErrorModal from './modal/ErrorModal'
+import ErrorModal from '../components/modal/ErrorModal'
 
 function Signup() {
     const navigate = useNavigate()

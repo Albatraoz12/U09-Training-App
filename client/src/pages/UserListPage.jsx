@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import axios from 'axios'
-import * as api from './utils'
+import * as api from '../components/utils'
 
 function UserListPage() {
     const navigate = useNavigate() // navigate user twords an destination

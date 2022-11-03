@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import * as api from './utils'
+import * as api from '../components/utils'
 
 function Search() {
     const [exercises, setExcercises] = useState([]) // Stores exercises into an arry
