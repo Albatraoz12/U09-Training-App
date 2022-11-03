@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import Modal from '../components/modal/Modal'
 import ErrorModal from '../components/modal/ErrorModal'
 import * as api from '../components/utils'
+import List from '../components/List'
+import Saves from '../components/Saves'
 
 function Dashboard() {
     const token = Cookies.get('access_token')
@@ -119,33 +121,7 @@ function Dashboard() {
                         <h2>Your Lists</h2>
                         <div className="d-flex justify-content-center flex-column gap-1 container">
                             {getUserList.map((lists) => {
-                                return (
-                                    <div className="custom-list rounded" key={lists._id}>
-                                        <ul className="mb-0">
-                                            <li className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2">
-                                                <a
-                                                    className="text-white"
-                                                    href={`/userList/${lists.title}/${lists._id}`}
-                                                >
-                                                    {lists.title}
-                                                </a>
-                                                <button
-                                                    type="submit"
-                                                    className="bi bi-x-lg btn btn-danger"
-                                                    aria-label="remove list"
-                                                    onClick={async () => {
-                                                        const deleted = await api.deleteList(
-                                                            lists._id,
-                                                            token
-                                                        )
-                                                        if (deleted.message)
-                                                            window.location.reload()
-                                                    }}
-                                                />
-                                            </li>
-                                        </ul>
-                                    </div>
-                                )
+                                return <List lists={lists} key={lists._id} />
                             })}
                         </div>
                     </div>
@@ -155,30 +131,7 @@ function Dashboard() {
                     <div>
                         <div className="d-flex justify-content-center flex-column gap-1 container">
                             {getUserSaves.map((saves) => {
-                                return (
-                                    <ul className="mb-0" key={saves._id}>
-                                        <li className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2">
-                                            <a
-                                                className="text-white"
-                                                href={`/exercise/${saves.exId}`}
-                                            >
-                                                {saves.name}
-                                            </a>
-                                            <button
-                                                type="submit"
-                                                className="bi bi-x-lg btn btn-danger"
-                                                aria-label="remove saved exercise"
-                                                onClick={async () => {
-                                                    const deleted = await api.deleteSave(
-                                                        saves._id,
-                                                        token
-                                                    )
-                                                    if (deleted.message) window.location.reload()
-                                                }}
-                                            />
-                                        </li>
-                                    </ul>
-                                )
+                                return <Saves save={saves} key={saves._id} />
                             })}
                         </div>
                     </div>
