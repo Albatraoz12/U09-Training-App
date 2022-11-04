@@ -39,7 +39,6 @@ const getAllUsers = async (req, res) => {
   try {
     const isUser = await User.findOne({ _id: req.userId });
     if (!isUser) return res.status(404).json({ error: 'You are no user' });
-    console.log(req.role);
     if (req.role === 'admin') {
       const users = await User.find();
       res.status(200).json({ users });
