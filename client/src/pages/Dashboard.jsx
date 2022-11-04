@@ -84,7 +84,7 @@ function Dashboard() {
                 </section>
                 <section className="container">
                     <form
-                        className="d-flex justify-content-center row gap-1 my-3 col-12"
+                        className="d-flex justify-content-center row g-1 my-3"
                         onSubmit={onSubmit}
                     >
                         <div className="d-flex flex-column align-items-center justify-content-center gap-2">
@@ -93,16 +93,13 @@ function Dashboard() {
                             </label>
                             <input
                                 type="text"
-                                className="col-md-6 rounded form-control-lg"
+                                className="col-12 rounded form-control-lg"
                                 id="title"
                                 placeholder="Enter a title for your list"
                                 name="title"
                                 onChange={onChange}
                             />
-                            <button
-                                className="btn btn-primary col-md-3 col-sm-auto rounded"
-                                type="submit"
-                            >
+                            <button className="btn btn-primary col-12 rounded" type="submit">
                                 Create <BiListCheck />
                             </button>
                         </div>

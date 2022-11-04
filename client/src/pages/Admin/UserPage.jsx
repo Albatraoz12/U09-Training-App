@@ -70,8 +70,7 @@ function UserPage() {
                 },
             })
             .then((res) => {
-                // eslint-disable-next-line no-console
-                console.log(res.data)
+                if (res) navigate('/findUsers')
             })
     }
 
@@ -117,7 +116,11 @@ function UserPage() {
                 </section>
                 {/* Section for update the user information */}
                 <section className="container my-5">
-                    <h2>Update {firstName}</h2>
+                    <h2>
+                        {' '}
+                        <span className="text-warning">Update</span> {firstName}
+                    </h2>
+                    <hr className="bg-light border-4 border-top border-light" />
                     <form
                         className="row g-3 mt-2"
                         // onSubmit={submit}
@@ -194,8 +197,11 @@ function UserPage() {
                         </div>
                     </form>
                 </section>
-                <section className="my-5">
-                    <h2 className="py-2">Want to Delete the user?</h2>
+                <section className="container my-5">
+                    <h2 className="py-2">
+                        Want to <span className="text-danger">Delete</span> the user?
+                    </h2>
+                    <hr className="bg-danger border-4 border-top border-danger" />
                     <button className="btn btn-primary btn-lg" type="submit" onClick={deleteUser}>
                         Delete {firstName} <BiUserMinus color="red" size={30} />
                     </button>

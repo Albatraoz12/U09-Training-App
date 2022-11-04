@@ -22,7 +22,7 @@ function Saves({ save }) {
                         if (deleted.message) window.location.reload()
                     }}
                 >
-                    <BiTrash color="red" />
+                    <BiTrash color="red" size={20} />
                 </button>
             </li>
         </ul>
