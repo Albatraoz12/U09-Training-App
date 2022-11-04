@@ -25,13 +25,15 @@ const authorization = (req, res, next) => {
 //@desc Create a new user as an admin, checks if req.id has role of admin
 //@routes POST /signup
 //@access Private
-router.post('/signup', authorization, (req, res) => {
+router.post('/signup', authorization, async (req, res) => {
   try {
+    const isUser = await User.findOne({ _id: req.userId });
+    if (!isUser) return res.status(404).json({ error: 'You are no user' });
     if (req.role === 'admin') {
       const { firstName, lastName, email, password } = req.body;
       User.findOne({ email: email }, (err, user) => {
         if (user) {
-          res.status(201).json({
+          return res.status(201).json({
             failedMessage: 'user already exist',
           });
         }
@@ -62,6 +64,8 @@ router.post('/signup', authorization, (req, res) => {
 //@access Private
 router.get('/getAllUsers', authorization, async (req, res) => {
   try {
+    const isUser = await User.findOne({ _id: req.userId });
+    if (!isUser) return res.status(404).json({ error: 'You are no user' });
     if (req.role === 'admin') {
       const users = await User.find();
       res.status(200).json({ users });
@@ -78,6 +82,8 @@ router.get('/getAllUsers', authorization, async (req, res) => {
 //@access Private
 router.get('/getUser/:uid', authorization, async (req, res) => {
   try {
+    const isUser = await User.findOne({ _id: req.userId });
+    if (!isUser) return res.status(404).json({ error: 'You are no user' });
     if (req.role === 'admin') {
       const uid = req.params.uid;
       const userData = await User.findById(uid);
@@ -95,6 +101,8 @@ router.get('/getUser/:uid', authorization, async (req, res) => {
 //@access Public
 router.put('/editUser/:id/', authorization, async (req, res) => {
   try {
+    const isUser = await User.findOne({ _id: req.userId });
+    if (!isUser) return res.status(404).json({ error: 'You are no user' });
     if (req.role === 'admin') {
       const id = req.params.id;
       const update = req.body;
@@ -114,6 +122,8 @@ router.put('/editUser/:id/', authorization, async (req, res) => {
 //@access Public
 router.put('/editPassword/:id', authorization, async (req, res) => {
   try {
+    const isUser = await User.findOne({ _id: req.userId });
+    if (!isUser) return res.status(404).json({ error: 'You are no user' });
     if (req.role === 'admin') {
       const id = req.params.id;
       const update = req.body;
@@ -134,6 +144,8 @@ router.put('/editPassword/:id', authorization, async (req, res) => {
 //@access Private
 router.delete('/deleteUser/:id', authorization, async (req, res) => {
   try {
+    const isUser = await User.findOne({ _id: req.userId });
+    if (!isUser) return res.status(404).json({ error: 'You are no user' });
     if (req.role === 'admin') {
       const id = req.params.id;
       const user = await User.findById(id);
