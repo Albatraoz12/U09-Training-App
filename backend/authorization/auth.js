@@ -10,6 +10,7 @@ const authorization = (req, res, next) => {
   try {
     const data = jwt.verify(token, process.env.SECRET);
     req.userId = data.id;
+    req.role = data.role;
     return next();
   } catch {
     return res.status(500).json({ message: 'You have no valid token' });
