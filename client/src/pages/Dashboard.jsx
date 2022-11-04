@@ -13,7 +13,7 @@ function Dashboard() {
     const token = Cookies.get('access_token')
     const navigate = useNavigate()
     const [getUser, setGetUser] = useState([]) // Stores user information
-    const [isRole, setIsRole] = useState(Boolean) // if set to true, the user is a Admin else User
+    const [isRole, setIsRole] = useState(false) // if set to true, the user is a Admin else User
     const [getUserList, setGetUserList] = useState([]) // Stores users lists
     const [getUserSaves, setGetUserSaves] = useState([]) // Stores all the users saved/liked exercises
     const [formData, setFormData] = useState({
@@ -115,23 +115,19 @@ function Dashboard() {
                             />
                         )}
                     </div>
-                    <div>
-                        <h2>Your Lists</h2>
-                        <div className="d-flex justify-content-center flex-column gap-1 container">
-                            {getUserList.map((lists) => {
-                                return <List lists={lists} key={lists._id} />
-                            })}
-                        </div>
+                    <h2>Your Lists</h2>
+                    <div className="d-flex justify-content-center flex-column gap-1 container">
+                        {getUserList.map((lists) => {
+                            return <List lists={lists} key={lists._id} />
+                        })}
                     </div>
                 </section>
                 <section>
                     <h2>Your Saves</h2>
-                    <div>
-                        <div className="d-flex justify-content-center flex-column gap-1 container">
-                            {getUserSaves.map((saves) => {
-                                return <Saves save={saves} key={saves._id} />
-                            })}
-                        </div>
+                    <div className="d-flex justify-content-center flex-column gap-1 container">
+                        {getUserSaves.map((saves) => {
+                            return <Saves save={saves} key={saves._id} />
+                        })}
                     </div>
                 </section>
             </div>
