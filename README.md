@@ -2,7 +2,7 @@
 
 # **Introduction**
 
-Welcome to my fullstack application. This is a Traning/exercise app where you can search for exercises and If you are an Registerd User you will be able to:  
+Welcome to my fullstack webb application. This is a Traning/exercise app where you can search for exercises and If you are an Registerd User you will be able to:  
  Create a List  
  Update the name of that list  
  Read the List with exercises in them  
@@ -23,11 +23,13 @@ You also need an Rapid API Key which you can get by signing up [here](https://ra
 Git clone this reposetory to your desire destination and after you have clone it, open it on VS code or any other code edditor.
 Create an .env file for both client and backend folders and add this information:
 
-**Backend**  
- PORT = 8080 : 8081
+**Backend**
+
+PORT = 8080 : 8081
 SECRET = 'Your_Secret'
 DATABASE_URL = mongodb://localhost/{your db name}
 REQUEST_URL = http://localhost:3000
+
 **Client**
 
 REACT_APP_API_URL = http://localhost:8081/
@@ -47,7 +49,7 @@ May only be able to search gym exercises but will not be able to save them nor c
 
 ## **Registered User**
 
-Registered Users can make a list, delete a list, read a lits infor and save exercises into them as well as uppdating its name.
+Registered Users can make a list, delete a list, read the list information i.e exercises in that list, delete them form the list and save exercises into them as well as uppdating the lists name.
 
 ## **Admin**
 
@@ -188,7 +190,7 @@ Authorization: Bearer {Token}
 
 ## Admin routes API
 
-Admin is the onlyone to create, read, update and delete a user from dashboard. When the admin routes are being used it will then check the token (in the header) if the user is an admin or not. If the user is not an Admin then he not going to be able to use those routes.
+Admin is the only one to create, read, update and delete a user from dashboard. When the admin routes are being used it will then check the token (in the header) if the user is an admin or not. If the user is not an Admin then he not going to be able to use those routes.
 
 ### Get all Users
 
@@ -238,18 +240,18 @@ JSON:
 
 # Frontend
 
-## Components/Pages
+## Pages
 
 ### **Dashboard**
 
-Dashboard component is the users page where they can create lists and use that list wo save exercises to.
-The user can open its lists and see what exercises are stored inside that lists. The user can delete exercises from that list or delte the whole list.
+Dashboard page is the users page where they can create lists and use that list to save exercises awsell.
+The user can open its lists and see what exercises are stored inside that lists. The user can delete exercises from that list or delete the whole list.
 
 In the dasboard the user will also be able to see its saved exercises and if the user wants to see more details the user can then navigate through clicking on the saved item and see more dtails.
 
 ### **Errorpage**
 
-When ever the user types in the wrong url e.g https://relaxed-raindrop-21bc84.netlify.app/* a message will apear saying error message and a link to the home page.
+When ever the user types in the wrong url e.g https://localhost:3000/\* a message will apear saying error message and a link to the home page.
 
 ### **ExcercisePage**
 
@@ -300,7 +302,23 @@ Lets admin fins all the user in the database
 **UserPage**  
 Finds a user by id and let an admin update or delete the user.
 
-# **Utils**
+## **Components**
+
+**Modal**  
+This will display the error message or after a user has creatred a list a modal will appear to ask if the user wants to find new exercises to store inside that list.
+
+**BackButton**  
+This will displaty a button to use on the pages so that the user can navigate one step back.
+
+**Lists**
+
+Display the object prop thats get send into it instead of writing all in one page, this component will save some lines and better reading.
+
+**Saves**
+
+As the list but with difrent api call.
+
+**Utils**
 
 This file is responsible to store all my api functions instead of writing them inside each component. This helped with Dont Repeat Your Self (DRYS)
 
