@@ -245,3 +245,35 @@ export async function exerciseToList(id, token, exData) {
         return error.response.data
     }
 }
+
+// Admin functions
+
+// Get all users
+export async function getAllUsers(token) {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}admin/getAllUsers`, {
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        return response.data.users
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+// Get singel users information
+export async function fetchUserData(id, token) {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}admin/getUser/${id}`, {
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        return response.data
+    } catch (error) {
+        return error.response.data
+    }
+}
