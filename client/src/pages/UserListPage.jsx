@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import * as api from '../components/utils'
+import BackButton from '../components/BackButton'
 
 function UserListPage() {
     const navigate = useNavigate() // navigate user twords an destination
@@ -45,17 +46,8 @@ function UserListPage() {
     }
     return (
         <main className="my-5 p-2">
-            <section className="my-5 py-5 container">
-                <div className="d-flex align-self-start ms-5">
-                    <a
-                        href="/dashboard"
-                        role="button"
-                        className="btn btn-primary btn-sm"
-                        rel="noopener noreferrer"
-                    >
-                        Go back
-                    </a>
-                </div>
+            <section className="my-5 container">
+                <BackButton navTo="dashboard" />
                 <h1>{params.name}</h1>
                 <form className="d-flex justify-content-center row gap-1 my-3" onSubmit={onSubmit}>
                     <div className="d-flex align-items-center justify-content-center">

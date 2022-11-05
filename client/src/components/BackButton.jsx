@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 function BackButton({ navTo }) {
     return (
-        <div className="d-flex align-self-start mx-5">
+        <div className="d-flex align-self-start mx-5 mb-5">
             <a
                 href={`/${navTo}`}
                 role="button"
