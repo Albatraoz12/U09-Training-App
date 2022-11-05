@@ -39,15 +39,20 @@ function FindUsers() {
             <main className="my-5 min-vh-60">
                 <BackButton navTo="dashboard" />
                 <section className="container my-5">
-                    <h1>Search for a user</h1>
-                    <input
-                        type="text"
-                        placeholder="Search by name"
-                        className="form-control"
-                        onChange={(event) => {
-                            setSearchTerm(event.target.value)
-                        }}
-                    />
+                    <form>
+                        <label className="h1" htmlFor="search">
+                            Search for a user
+                        </label>
+                        <input
+                            type="text"
+                            id="search"
+                            placeholder="Search by name"
+                            className="form-control"
+                            onChange={(event) => {
+                                setSearchTerm(event.target.value)
+                            }}
+                        />
+                    </form>
                     <div className="d-flex justify-content-center flex-column gap-1 container my-5 custom-list rounded">
                         {filteredUsers.map((userData, key) => {
                             return (
