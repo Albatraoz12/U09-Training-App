@@ -5,6 +5,7 @@ import { BiUserCheck } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
 import ErrorPage from '../Errorpage'
 import * as api from '../../components/utils'
+import BackButton from '../../components/BackButton'
 
 function AdminCreateUser() {
     const navigate = useNavigate()
@@ -132,16 +133,7 @@ function AdminCreateUser() {
     if (isRole) {
         return (
             <main className="my-5">
-                <div className="d-flex align-self-start ms-5">
-                    <a
-                        href="/dashboard"
-                        role="button"
-                        className="btn btn-primary btn-sm"
-                        rel="noopener noreferrer"
-                    >
-                        Go back
-                    </a>
-                </div>
+                <BackButton navTo="dashboard" />
                 <section className="container my-3">
                     <h1>Create User</h1>
                     {Object.keys(formErrors).length === 0 && submitted ? successmessage() : ''}

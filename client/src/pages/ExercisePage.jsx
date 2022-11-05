@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import ErrorModal from '../components/modal/ErrorModal'
 import * as api from '../components/utils'
+import BackButton from '../components/BackButton'
 
 function ExercisePage() {
     const params = useParams() // Let developers get access to params
@@ -77,16 +78,7 @@ function ExercisePage() {
 
     return (
         <main className="my-5">
-            <div className="d-flex align-self-start ms-5">
-                <a
-                    href="/search"
-                    role="button"
-                    className="btn btn-primary btn-sm"
-                    rel="noopener noreferrer"
-                >
-                    Go back
-                </a>
-            </div>
+            <BackButton navTo="search" />
             <section className="container">
                 <h1>{exercise.name}</h1>
                 <article className="px-5">
