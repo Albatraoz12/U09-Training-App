@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { BiTrash, BiListUl, BiListCheck } from 'react-icons/bi'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import * as api from '../components/utils'
@@ -64,7 +65,7 @@ function UserListPage() {
                         onChange={onChange}
                     />
                     <button className="btn btn-primary col-md-6 col-sm-auto rounded" type="submit">
-                        Update
+                        Update <BiListCheck />
                     </button>
                 </form>
                 <div className="d-flex justify-content-center flex-column gap-1 container">
@@ -76,16 +77,18 @@ function UserListPage() {
                                     key={info._id}
                                 >
                                     <a className="text-white" href={`/exercise/${info.exId}`}>
-                                        {info.name}
+                                        <BiListUl /> {info.name}
                                     </a>
                                     <button
                                         type="submit"
-                                        className="bi bi-x-lg btn btn-danger"
+                                        className="btn btn-danger"
                                         aria-label="remove item"
                                         onClick={() => {
                                             deleteListInfo(info._id)
                                         }}
-                                    />
+                                    >
+                                        <BiTrash />
+                                    </button>
                                 </li>
                             )
                         })}
