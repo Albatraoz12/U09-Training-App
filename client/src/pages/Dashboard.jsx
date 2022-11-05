@@ -63,7 +63,7 @@ function Dashboard() {
     return (
         <main className="py-5">
             <div className="container">
-                <section className=" my-5">
+                <section className="my-5">
                     <h1>Welcome {getUser.firstName}</h1>
                     <p>
                         Hope you have a wonderfull day <br /> Let the workout start!
@@ -84,25 +84,28 @@ function Dashboard() {
                 </section>
                 <section className="container">
                     <form
-                        className="d-flex justify-content-center row g-1 my-3"
+                        className="d-flex justify-content-center row gap-1 my-3"
                         onSubmit={onSubmit}
                     >
-                        <div className="d-flex flex-column align-items-center justify-content-center gap-2">
+                        <div className="d-flex align-items-center justify-content-center">
                             <label htmlFor="title" className="fs-2">
                                 Create List <BiListPlus />
                             </label>
-                            <input
-                                type="text"
-                                className="col-12 rounded form-control-lg"
-                                id="title"
-                                placeholder="Enter a title for your list"
-                                name="title"
-                                onChange={onChange}
-                            />
-                            <button className="btn btn-primary col-12 rounded" type="submit">
-                                Create <BiListCheck />
-                            </button>
                         </div>
+                        <input
+                            type="text"
+                            className="col-md-6 col-sm-auto rounded form-control-lg"
+                            id="title"
+                            placeholder="Enter a title for your list"
+                            name="title"
+                            onChange={onChange}
+                        />
+                        <button
+                            className="btn btn-primary col-md-6 col-sm-auto rounded"
+                            type="submit"
+                        >
+                            Create <BiListCheck />
+                        </button>
                     </form>
                 </section>
                 <section className="container mb-3">
