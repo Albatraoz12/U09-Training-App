@@ -4,6 +4,7 @@ import Cookies from 'js-cookie'
 import { BiUserCheck } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
 import ErrorPage from '../Errorpage'
+import * as api from '../../components/utils'
 
 function AdminCreateUser() {
     const navigate = useNavigate()
@@ -25,30 +26,14 @@ function AdminCreateUser() {
 
     // When component mounts, this code will execute first to check the user
     useEffect(() => {
-        const checkUser = async () => {
-            // User sends its access_token in headers to BE to be decoded.
-            await axios
-                .get(`${process.env.REACT_APP_API_URL}user/protected`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.data.user) {
-                        // Stores user info into the state.
-                        setGetUser(res.data.user)
-                        if (res.data.user.role === 'admin') {
-                            setIsRole(true)
-                        } else {
-                            setIsRole(false)
-                        }
-                    }
-                })
+        async function fetchUserData() {
+            const userInfo = await api.checkUser(user)
+            setGetUser(userInfo.user)
+            if (getUser.role === 'admin') setIsRole(true)
         }
 
         if (user) {
-            checkUser()
+            fetchUserData()
         }
     }, [error, getUser.role, isRole, navigate, user])
     useEffect(() => {
@@ -79,14 +64,11 @@ function AdminCreateUser() {
 
     // Before signing up an new user, the validate function will validate that the admin has filled in
     // all the feilds with correct information.
-
     const validate = (values) => {
         // Empty errors object - data is added if the form is not filled out properly
         const errors = {}
-
         // Regular expression to validate the email format:
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
-
         // Display error messages if the user submits incorrect data in the form and stop registration from succeeding
         if (!values.firstName) {
             errors.firstName = 'First name is required!'
@@ -121,7 +103,6 @@ function AdminCreateUser() {
             errors.confirmPassword = 'Must be identical to password!'
             setError(true)
         }
-
         if (Object.keys(errors).length === 0) {
             setError(false)
         }
@@ -163,8 +144,7 @@ function AdminCreateUser() {
                 </div>
                 <section className="container my-3">
                     <h1>Create User</h1>
-                    {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
-                    {Object.keys(formErrors).length === 0 && submitted ? successmessage() : <></>}
+                    {Object.keys(formErrors).length === 0 && submitted ? successmessage() : ''}
                     <form className="row g-3 mt-2">
                         <div className="col-md-6">
                             <label htmlFor="firstName" className="form-label">

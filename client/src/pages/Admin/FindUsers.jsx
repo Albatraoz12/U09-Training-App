@@ -1,59 +1,30 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
 import { BiUserCircle } from 'react-icons/bi'
-import axios from 'axios'
 import Cookies from 'js-cookie'
 import ErrorPage from '../Errorpage'
+import * as api from '../../components/utils'
+import BackButton from '../../components/BackButton'
 
 function FindUsers() {
     const user = Cookies.get('access_token')
-    // eslint-disable-next-line no-unused-vars
     const [getUser, setGetUser] = useState([]) // Stores the admins information and verify that it is an admin on this page
     const [getAllUsers, setGetAllUsers] = useState([]) // Stores all the users
     const [searchTerms, setSearchTerm] = useState('') // Stores the admin input
     const [isRole, setIsRole] = useState(Boolean) // Checks if the role is admin
 
     useEffect(() => {
-        const checkUser = async () => {
-            // User sends its access_token in headers to BE to be decoded.
-            await axios
-                .get(`${process.env.REACT_APP_API_URL}user/protected`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.data.user) {
-                        // Stores user info into the state.
-                        setGetUser(res.data.user)
-                        if (res.data.user.role === 'admin') {
-                            setIsRole(true)
-                        } else {
-                            setIsRole(false)
-                        }
-                    }
-                })
+        async function fetchUserData() {
+            const userInfo = await api.checkUser(user)
+            setGetUser(userInfo.user)
+            if (getUser.role === 'admin') setIsRole(true)
+            const users = await api.getAllUsers(user)
+            setGetAllUsers(users)
         }
-
-        const getUsers = async () => {
-            await axios
-                .get(`${process.env.REACT_APP_API_URL}admin/getAllUsers`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    setGetAllUsers(res.data.users)
-                })
-        }
-
         if (user) {
-            checkUser()
-            getUsers()
+            fetchUserData()
         }
-    }, [user])
+    }, [getUser.role, user])
 
     // Function to filer the getAllUsers array to better search for the user the admin wants to find
     const filteredUsers = getAllUsers.filter((val) => {
@@ -66,16 +37,7 @@ function FindUsers() {
     if (isRole) {
         return (
             <main className="my-5 min-vh-60">
-                <div className="d-flex align-self-start ms-5">
-                    <a
-                        href="/dashboard"
-                        role="button"
-                        className="btn btn-primary btn-sm"
-                        rel="noopener noreferrer"
-                    >
-                        Go back
-                    </a>
-                </div>
+                <BackButton navTo="dashboard" />
                 <section className="container my-5">
                     <h1>Search for a user</h1>
                     <input
