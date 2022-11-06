@@ -97,7 +97,7 @@ export async function updateList(id, userData, token) {
         )
         return response.data
     } catch (error) {
-        return error
+        return error.response.data
     }
 }
 

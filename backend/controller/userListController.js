@@ -48,6 +48,8 @@ const updateList = async (req, res) => {
   try {
     const validUser = await User.findOne({ _id: req.userId });
     const id = req.params.lid;
+    const { title } = req.body;
+    if (!title) return res.status(400).json({ error: 'Please add a title' });
     if (validUser) {
       const list = await userList.findOne({ _id: id });
       if (list.user == validUser.id) {
