@@ -6,6 +6,7 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 import * as api from '../components/utils'
 import BackButton from '../components/BackButton'
+import ErrorModal from '../components/modal/ErrorModal'
 
 function UserListPage() {
     const navigate = useNavigate() // navigate user twords an destination
@@ -15,6 +16,9 @@ function UserListPage() {
     const [formData, setFormData] = useState({
         title: '',
     }) // Formdata to update list title/name
+    const [errorModal, setErrorModal] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+
     useEffect(() => {
         async function fetchInfo() {
             const response = await api.getListInfo(params.id, token)
@@ -36,7 +40,12 @@ function UserListPage() {
             title,
         }
         const updated = await api.updateList(params.id, userData, token)
-        if (updated.message) navigate(`/userList/${title}/${params.id}`)
+        if (updated.message) {
+            navigate(`/userList/${title}/${params.id}`)
+        } else {
+            setErrorModal(true)
+            setErrorMessage(updated.error)
+        }
     }
     const deleteListInfo = (id) => {
         axios
@@ -50,24 +59,41 @@ function UserListPage() {
             <section className="my-5 container">
                 <BackButton navTo="dashboard" />
                 <h1>{params.name}</h1>
-                <form className="d-flex justify-content-center row gap-1 my-3" onSubmit={onSubmit}>
-                    <div className="d-flex align-items-center justify-content-center">
-                        <label htmlFor="title" className="fs-2">
-                            Update List
-                        </label>
-                    </div>
-                    <input
-                        type="text"
-                        className="col-md-6 col-sm-auto rounded form-control-lg"
-                        id="title"
-                        placeholder="Enter a title for your list"
-                        name="title"
-                        onChange={onChange}
-                    />
-                    <button className="btn btn-primary col-md-6 col-sm-auto rounded" type="submit">
-                        Update <BiListCheck />
-                    </button>
-                </form>
+
+                <div className="container">
+                    <form
+                        className="d-flex justify-content-center row gap-1 my-3"
+                        onSubmit={onSubmit}
+                    >
+                        <div className="d-flex align-items-center justify-content-center">
+                            <label htmlFor="title" className="fs-2">
+                                Update List
+                            </label>
+                        </div>
+                        <input
+                            type="text"
+                            className="col-md-6 col-sm-auto rounded form-control-lg"
+                            id="title"
+                            placeholder="Enter a title for your list"
+                            name="title"
+                            onChange={onChange}
+                        />
+                        <button
+                            className="btn btn-primary col-md-6 col-sm-auto rounded"
+                            type="submit"
+                        >
+                            Update <BiListCheck />
+                        </button>
+                    </form>
+                </div>
+
+                {errorModal ? (
+                    <ErrorModal setErrorModal={setErrorModal} setErrorMessage={errorMessage} />
+                ) : (
+                    ''
+                )}
+            </section>
+            <section className="container">
                 <div className="d-flex justify-content-center flex-column gap-1 container">
                     <ul className="mb-0">
                         {listInfo.map((info) => {
