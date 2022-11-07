@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
-import { BiListPlus, BiListCheck, BiUserCheck, BiUserCircle } from 'react-icons/bi'
+import { BiListCheck, BiUserCheck, BiUserCircle, BiX } from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../components/modal/Modal'
 import ErrorModal from '../components/modal/ErrorModal'
@@ -22,6 +22,8 @@ function Dashboard() {
     const [modalOpen, setModalOpen] = useState(false) // Checks if modal is open or not
     const [errorModal, setErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+    const [create, setCreate] = useState(false)
+
     useEffect(() => {
         async function fetchUserData() {
             const userInfo = await api.checkUser(token)
@@ -82,32 +84,42 @@ function Dashboard() {
                         ''
                     )}
                 </section>
-                <section className="container">
-                    <form
-                        className="d-flex justify-content-center row gap-1 my-3"
-                        onSubmit={onSubmit}
-                    >
-                        <div className="d-flex align-items-center justify-content-center">
-                            <label htmlFor="title" className="fs-2">
-                                Create List <BiListPlus />
-                            </label>
-                        </div>
-                        <input
-                            type="text"
-                            className="col-md-6 col-sm-auto rounded form-control-lg"
-                            id="title"
-                            placeholder="Enter a title for your list"
-                            name="title"
-                            onChange={onChange}
-                        />
-                        <button
-                            className="btn btn-primary col-md-6 col-sm-auto rounded"
-                            type="submit"
+                {create ? (
+                    <section className="container">
+                        <form
+                            className="d-flex justify-content-center row gap-1 my-3"
+                            onSubmit={onSubmit}
                         >
-                            Create <BiListCheck />
-                        </button>
-                    </form>
-                </section>
+                            <div className="d-flex align-items-center justify-content-center">
+                                <label htmlFor="title" className="fs-2">
+                                    Create List <BiX color="red" onClick={() => setCreate(false)} />
+                                </label>
+                            </div>
+                            <input
+                                type="text"
+                                className="col-md-6 col-sm-auto rounded form-control-lg"
+                                id="title"
+                                placeholder="Enter a title for your list"
+                                name="title"
+                                onChange={onChange}
+                            />
+                            <button
+                                className="btn btn-primary col-md-6 col-sm-auto rounded"
+                                type="submit"
+                            >
+                                Create <BiListCheck />
+                            </button>
+                        </form>
+                    </section>
+                ) : (
+                    <button
+                        className="btn btn-primary col-md-3 col-sm-auto rounded my-3"
+                        type="submit"
+                        onClick={() => setCreate(true)}
+                    >
+                        Create a list <BiListCheck />
+                    </button>
+                )}
                 <section className="container mb-3">
                     <div className="d-flex align-items-center justify-content-center">
                         {modalOpen && <Modal setOpenModal={setModalOpen} />}
