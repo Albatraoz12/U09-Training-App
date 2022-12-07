@@ -29,8 +29,13 @@ function AdminCreateUser() {
     useEffect(() => {
         async function fetchUserData() {
             const userInfo = await api.checkUser(user)
-            setGetUser(userInfo.user)
-            if (getUser.role === 'admin') setIsRole(true)
+            if (userInfo.user) {
+                setGetUser(userInfo.user)
+                if (getUser.role === 'admin') setIsRole(true)
+            } else {
+                Cookies.remove('access_token')
+                navigate('/signin')
+            }
         }
 
         if (user) {

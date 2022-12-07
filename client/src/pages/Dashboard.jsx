@@ -27,13 +27,19 @@ function Dashboard() {
     useEffect(() => {
         async function fetchUserData() {
             const userInfo = await api.checkUser(token)
-            setGetUser(userInfo.user)
-            if (getUser.role === 'admin') setIsRole(true)
-            if (getUser.id) {
-                const userSaved = await api.getSaves(getUser.id, token)
-                setGetUserSaves(userSaved)
-                const userLists = await api.getLists(getUser.id, token)
-                setGetUserList(userLists)
+            // console.log(userInfo.response.data)
+            if (userInfo.user) {
+                setGetUser(userInfo.user)
+                if (getUser.role === 'admin') setIsRole(true)
+                if (getUser.id) {
+                    const userSaved = await api.getSaves(getUser.id, token)
+                    setGetUserSaves(userSaved)
+                    const userLists = await api.getLists(getUser.id, token)
+                    setGetUserList(userLists)
+                }
+            } else {
+                Cookies.remove('access_token')
+                navigate('/signin')
             }
         }
         if (!token) {

@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
 import { BiUserCircle } from 'react-icons/bi'
+import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import ErrorPage from '../Errorpage'
 import * as api from '../../components/utils'
@@ -8,6 +9,7 @@ import BackButton from '../../components/BackButton'
 
 function FindUsers() {
     const user = Cookies.get('access_token')
+    const navigate = useNavigate()
     const [getUser, setGetUser] = useState([]) // Stores the admins information and verify that it is an admin on this page
     const [getAllUsers, setGetAllUsers] = useState([]) // Stores all the users
     const [searchTerms, setSearchTerm] = useState('') // Stores the admin input
@@ -16,15 +18,22 @@ function FindUsers() {
     useEffect(() => {
         async function fetchUserData() {
             const userInfo = await api.checkUser(user)
-            setGetUser(userInfo.user)
-            if (getUser.role === 'admin') setIsRole(true)
-            const users = await api.getAllUsers(user)
-            setGetAllUsers(users)
+            if (userInfo.user) {
+                setGetUser(userInfo.user)
+                if (getUser.role === 'admin') setIsRole(true)
+                if (isRole) {
+                    const users = await api.getAllUsers(user)
+                    setGetAllUsers(users)
+                }
+            } else {
+                Cookies.remove('access_token')
+                navigate('/signin')
+            }
         }
         if (user) {
             fetchUserData()
         }
-    }, [getUser.role, user])
+    }, [getUser.role, user, isRole, navigate])
 
     // Function to filer the getAllUsers array to better search for the user the admin wants to find
     const filteredUsers = getAllUsers.filter((val) => {

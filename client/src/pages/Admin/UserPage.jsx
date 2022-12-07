@@ -20,10 +20,17 @@ function UserPage() {
     useEffect(() => {
         async function fetchUserData() {
             const adminInfo = await api.checkUser(user)
-            setGetAdmin(adminInfo.user)
-            if (getAdmin.role === 'admin') setIsRole(true)
-            const userInfo = await api.fetchUserData(params.id, user)
-            if (userInfo) setFormData(userInfo.userData)
+            if (adminInfo.user) {
+                setGetAdmin(adminInfo.user)
+                if (getAdmin.role === 'admin') setIsRole(true)
+                if (isRole) {
+                    const userInfo = await api.fetchUserData(params.id, user)
+                    if (userInfo) setFormData(userInfo.userData)
+                }
+            } else {
+                Cookies.remove('access_token')
+                navigate('/signin')
+            }
         }
 
         // If user is logged in it will run the functions
