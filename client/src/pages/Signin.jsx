@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import axios from 'axios'
 import Cookies from 'js-cookie'
-import ErrorModal from './modal/ErrorModal'
-import * as api from './utils'
+import ErrorModal from '../components/modal/ErrorModal'
+import * as api from '../components/utils'
 
 function Signin() {
     const navigate = useNavigate()
@@ -31,7 +30,7 @@ function Signin() {
         }
         const signin = await api.login(userData)
         if (signin.token) {
-            Cookies.set('access_token', signin.token, { expires: 365 })
+            Cookies.set('access_token', signin.token, { expires: 1 })
             navigate('/dashboard')
         } else {
             setErrorModal(true)

@@ -13,27 +13,11 @@ export async function login(userData) {
     }
 }
 
-// Delete a user Saved exercise
-export async function deleteSave(id, token) {
+// Fetch user information
+export async function checkUser(token) {
     try {
-        const response = await axios.delete(
-            `${process.env.REACT_APP_API_URL}userSaves/deletesaved/${id}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        )
-        return response.data
-    } catch (error) {
-        return error
-    }
-}
-
-// Deletes a user list
-export async function deleteList(id, token) {
-    try {
-        const response = await axios.delete(`${process.env.REACT_APP_API_URL}userList/${id}`, {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}user/protected`, {
+            withCredentials: true,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -44,20 +28,18 @@ export async function deleteList(id, token) {
     }
 }
 
-// Updates title of a user list
-export async function updateList(id, userData, token) {
+// User lists functions
+
+// Get all users lists
+export async function getLists(id, token) {
     try {
-        const response = await axios.put(
-            `${process.env.REACT_APP_API_URL}userList/editList/${id}`,
-            userData,
-            {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        )
-        return response.data
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}userList/${id}`, {
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        return response.data.message
     } catch (error) {
         return error
     }
@@ -81,51 +63,6 @@ export async function getListInfo(id, token) {
     }
 }
 
-// Fetch user information
-export async function checkUser(token) {
-    try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}user/protected`, {
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        return response.data
-    } catch (error) {
-        return error
-    }
-}
-
-// Fetch all users saved exercises
-export async function getSaves(id, token) {
-    try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}userSaves/saves/${id}`, {
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        return response.data.sInfo
-    } catch (error) {
-        return error
-    }
-}
-
-// Get all users lists
-export async function getLists(id, token) {
-    try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}userList/${id}`, {
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        return response.data.message
-    } catch (error) {
-        return error
-    }
-}
-
 // Create a list
 export async function createList(id, token, userData) {
     try {
@@ -144,6 +81,75 @@ export async function createList(id, token, userData) {
         return error.response.data.ErrorMessage
     }
 }
+
+// Updates title of a user list
+export async function updateList(id, userData, token) {
+    try {
+        const response = await axios.put(
+            `${process.env.REACT_APP_API_URL}userList/editList/${id}`,
+            userData,
+            {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        )
+        return response.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+// Deletes a user list
+export async function deleteList(id, token) {
+    try {
+        const response = await axios.delete(`${process.env.REACT_APP_API_URL}userList/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        return response.data
+    } catch (error) {
+        return error
+    }
+}
+
+// User saved exercises functions here
+
+// Fetch all users saved exercises
+export async function getSaves(id, token) {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}userSaves/saves/${id}`, {
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        return response.data.sInfo
+    } catch (error) {
+        return error
+    }
+}
+
+// Delete a user Saved exercise
+export async function deleteSave(id, token) {
+    try {
+        const response = await axios.delete(
+            `${process.env.REACT_APP_API_URL}userSaves/deletesaved/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        )
+        return response.data
+    } catch (error) {
+        return error
+    }
+}
+
+/* Exercise functions here */
 
 // fetch exercises by input
 export async function getExerciseByName(name) {
@@ -218,7 +224,7 @@ export async function saveExercise(id, token, exData) {
         )
         return response.data
     } catch (error) {
-        return error
+        return error.response.data
     }
 }
 // Save exercise to a list
@@ -234,6 +240,38 @@ export async function exerciseToList(id, token, exData) {
                 },
             }
         )
+        return response.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+// Admin functions
+
+// Get all users
+export async function getAllUsers(token) {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}admin/getAllUsers`, {
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        return response.data.users
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+// Get singel users information
+export async function fetchUserData(id, token) {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}admin/getUser/${id}`, {
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
         return response.data
     } catch (error) {
         return error.response.data

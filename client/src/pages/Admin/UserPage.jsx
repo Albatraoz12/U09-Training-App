@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { BiUserMinus, BiUserCheck } from 'react-icons/bi'
 import { useNavigate, useParams } from 'react-router-dom'
 import ErrorPage from '../Errorpage'
+import * as api from '../../components/utils'
+import BackButton from '../../components/BackButton'
 
 function UserPage() {
     const navigate = useNavigate()
@@ -15,47 +18,25 @@ function UserPage() {
 
     // when component mounts, the functions will run.
     useEffect(() => {
-        // Fetching admin info
-        const checkAdmin = async () => {
-            // User sends its access_token in headers to BE to be decoded.
-            await axios
-                .get(`${process.env.REACT_APP_API_URL}user/protected`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.data.user) {
-                        // Stores user info into the state.
-                        setGetAdmin(res.data.user)
-                        if (res.data.user.role === 'admin') {
-                            setIsRole(true)
-                        } else {
-                            setIsRole(false)
-                        }
-                    }
-                })
+        async function fetchUserData() {
+            const adminInfo = await api.checkUser(user)
+            if (adminInfo.user) {
+                setGetAdmin(adminInfo.user)
+                if (getAdmin.role === 'admin') setIsRole(true)
+                if (isRole) {
+                    const userInfo = await api.fetchUserData(params.id, user)
+                    if (userInfo) setFormData(userInfo.userData)
+                }
+            } else {
+                Cookies.remove('access_token')
+                navigate('/signin')
+            }
         }
-        // Fetching users information
-        const checkUser = async () => {
-            // User sends its access_token in headers to BE to be decoded.
-            await axios
-                .get(`${process.env.REACT_APP_API_URL}admin/getUser/${params.id}`, {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${user}`,
-                    },
-                })
-                .then((res) => {
-                    setFormData(res.data.userData)
-                })
-        }
+
         // If user is logged in it will run the functions
         // BUT! if user role is not admin the error page will be displayed.
         if (user) {
-            checkAdmin()
-            checkUser()
+            fetchUserData()
         }
     }, [getAdmin.role, isRole, navigate, params.id, user])
 
@@ -69,8 +50,7 @@ function UserPage() {
                 },
             })
             .then((res) => {
-                // eslint-disable-next-line no-console
-                console.log(res.data)
+                if (res) navigate('/findUsers')
             })
     }
 
@@ -101,22 +81,17 @@ function UserPage() {
     if (isRole) {
         return (
             <main className="my-5">
-                <div className="d-flex align-self-start ms-5">
-                    <a
-                        href="/findUsers"
-                        role="button"
-                        className="btn btn-primary btn-sm"
-                        rel="noopener noreferrer"
-                    >
-                        Go back
-                    </a>
-                </div>
+                <BackButton navTo="findUsers" />
                 <section className="my-5">
                     <h1>Want to Update or Delete {firstName}</h1>
                 </section>
                 {/* Section for update the user information */}
                 <section className="container my-5">
-                    <h2>Update {firstName}</h2>
+                    <h2>
+                        {' '}
+                        <span className="text-warning">Update</span> {firstName}
+                    </h2>
+                    <hr className="bg-light border-4 border-top border-light" />
                     <form
                         className="row g-3 mt-2"
                         // onSubmit={submit}
@@ -188,15 +163,18 @@ function UserPage() {
                                 className="btn btn-primary btn-lg"
                                 onClick={submit}
                             >
-                                Update {firstName}
+                                Update {firstName} <BiUserCheck color="yellow" size={30} />
                             </button>
                         </div>
                     </form>
                 </section>
-                <section className="my-5">
-                    <h2 className="py-2">Want to Delete the user?</h2>
+                <section className="container my-5">
+                    <h2 className="py-2">
+                        Want to <span className="text-danger">Delete</span> the user?
+                    </h2>
+                    <hr className="bg-danger border-4 border-top border-danger" />
                     <button className="btn btn-primary btn-lg" type="submit" onClick={deleteUser}>
-                        Delete {firstName}
+                        Delete {firstName} <BiUserMinus color="red" size={30} />
                     </button>
                 </section>
             </main>
