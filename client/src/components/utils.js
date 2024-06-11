@@ -154,7 +154,7 @@ export async function deleteSave(id, token) {
 // fetch exercises by input
 export async function getExerciseByName(name) {
     const response = await axios.get(
-        `https://exercisedb.p.rapidapi.com/exercises/name/${name.toLowerCase()}`,
+        `https://exercisedb.p.rapidapi.com/exercises/name/${name.toLowerCase()}?offset=0&limit=10`,
         {
             headers: {
                 'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
@@ -169,7 +169,7 @@ export async function getExerciseByName(name) {
 export async function getBodypartEx(bodypart) {
     try {
         const response = await axios.get(
-            `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodypart.toLowerCase()}`,
+            `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodypart.toLowerCase()}?offset=0&limit=10`,
             {
                 headers: {
                     'X-RapidAPI-Key': process.env.REACT_APP_X_RapidAPI_Key,
