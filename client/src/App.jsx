@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from 'react'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
-
 import Navbar from './pages/Navbar'
 import Footer from './pages/Footer'
 
@@ -16,19 +15,6 @@ const UserListPage = lazy(() => import('./pages/UserListPage'))
 const AdminCreateUser = lazy(() => import('./pages/Admin/AdminCreateUser'))
 const FindUsers = lazy(() => import('./pages/Admin/FindUsers'))
 const UserPage = lazy(() => import('./pages/Admin/UserPage'))
-// import Home from './pages/Home'
-// import Signin from './pages/Signin'
-// import Signup from './pages/Signup'
-// import Dashboard from './pages/Dashboard'
-// import Search from './pages/Search'
-// import Errorpage from './pages/Errorpage'
-// import Navbar from './pages/Navbar'
-// import Footer from './pages/Footer'
-// import ExercisePage from './pages/ExercisePage'
-// import UserListPage from './pages/UserListPage'
-// import AdminCreateUser from './pages/Admin/AdminCreateUser'
-// import FindUsers from './pages/Admin/FindUsers'
-// import UserPage from './pages/Admin/UserPage'
 
 function App() {
     return (
