@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import ErrorModal from '../components/modal/ErrorModal'
 import * as api from '../components/utils'
@@ -102,10 +102,10 @@ function ExercisePage() {
                         <h2>Save this Exercise or save it into a list</h2>
                     ) : (
                         <h2>
-                            <a className="text-white" href="/signin">
+                            <Link className="text-white" to="/signin">
                                 {' '}
-                                Log In here
-                            </a>{' '}
+                                Login here
+                            </Link>{' '}
                             to save exercise
                         </h2>
                     )}

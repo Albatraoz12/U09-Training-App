@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 function Home() {
@@ -10,33 +11,33 @@ function Home() {
                 <p>Here you will be able to find exercises and how to execute them correcly.</p>
                 <p>
                     You can start{' '}
-                    <a className="text-white fw-bolder" href="/search">
+                    <Link className="text-white fw-bolder" to="/search">
                         {' '}
                         searching here
-                    </a>
+                    </Link>
                 </p>
                 {token ? (
                     <p>
                         Go Back to{' '}
-                        <a className="text-white fw-bolder" href="/dashboard">
+                        <Link className="text-white fw-bolder" to="/dashboard">
                             {' '}
                             Dashboard here
-                        </a>
+                        </Link>
                     </p>
                 ) : (
                     <>
                         <p className="mt-2">
                             Do you want to save exercises or maybe create a list with exercises?
                         </p>
-                        <a className="btn btn-primary mb-1" href="/signup">
+                        <Link className="btn btn-primary mb-1" to="/signup">
                             Get started by Signing Up Here
-                        </a>
+                        </Link>
                         <p className="my-5 pb-5">
                             Already Signed Up,{' '}
-                            <a className="text-white fw-bolder" href="/signin">
+                            <Link className="text-white fw-bolder" to="/signin">
                                 {' '}
                                 Sign in Here
-                            </a>
+                            </Link>
                         </p>
                     </>
                 )}

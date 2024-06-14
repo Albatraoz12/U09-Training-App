@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { BiListCheck, BiUserCheck, BiUserCircle, BiX } from 'react-icons/bi'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Modal from '../components/modal/Modal'
 import ErrorModal from '../components/modal/ErrorModal'
 import * as api from '../components/utils'
@@ -79,12 +79,12 @@ function Dashboard() {
                     {/* If User is an admin, the two buttons bellow will appear otherwise null */}
                     {isRole ? (
                         <div className="d-flex justify-content-center align-items-center gap-3">
-                            <a className="btn btn-primary" href="/createUser">
+                            <Link className="btn btn-primary" to="/createUser">
                                 <BiUserCheck /> Create an User
-                            </a>
-                            <a className="btn btn-primary" href="/findUsers">
+                            </Link>
+                            <Link className="btn btn-primary" to="/findUsers">
                                 <BiUserCircle /> Find an User
-                            </a>
+                            </Link>
                         </div>
                     ) : (
                         ''

@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Cookies from 'js-cookie'
 import { BiTrash } from 'react-icons/bi'
@@ -10,9 +11,9 @@ function Saves({ save }) {
     return (
         <ul className="mb-0">
             <li className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2">
-                <a className="text-white" href={`/exercise/${save.exId}`}>
+                <Link className="text-white" href={`/exercise/${save.exId}`}>
                     {save.name}
-                </a>
+                </Link>
                 <button
                     type="submit"
                     className="btn btn-danger"

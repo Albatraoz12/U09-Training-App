@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import * as api from '../components/utils'
 
 function Search() {
@@ -78,8 +79,8 @@ function Search() {
                     {ten.map((exercise) => {
                         return (
                             <div className="col" key={exercise.id}>
-                                <a
-                                    href={`/exercise/${exercise.id}`}
+                                <Link
+                                    to={`/exercise/${exercise.id}`}
                                     className="text-decoration-none"
                                 >
                                     <div className="card">
@@ -102,7 +103,7 @@ function Search() {
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                         )
                     })}
