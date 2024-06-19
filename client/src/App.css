@@ -4,24 +4,77 @@
     margin: 0;
 }
 
-.App {
-    text-align: center;
-}
-
 body {
     font-family: 'Poppins', sans-serif;
     color: #ffffff;
     background-color: #272848;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
 }
 
 main {
-    min-height: 65vh;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-image: url('./assets/intro-img.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin: 10px 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+a {
+    color: #61dafb;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 .btn-primary {
     background-color: #6c6d84;
     border-color: #6c6d84;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 .btn-primary:hover {
@@ -60,19 +113,7 @@ main {
 
 footer {
     background-color: #6c6d84;
-    position: relative;
-    bottom: 0;
-}
-
-.container-fluid a {
-    color: #ffffff;
-}
-
-.hidden {
-    display: none;
-    visibility: hidden;
-}
-
-.custom-list {
-    background-color: #6c6d84;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
 }
