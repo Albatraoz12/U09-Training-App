@@ -16,7 +16,7 @@ function Home() {
                 <p>
                     Get started by{' '}
                     <Link className="text-white fw-bolder" to="/search">
-                        searching for exercises here
+                        searching for exercises here →
                     </Link>
                 </p>
                 {token ? (
@@ -37,7 +37,7 @@ function Home() {
                         <p className="my-5 pb-5">
                             Already a member?{' '}
                             <Link className="text-white fw-bolder" to="/signin">
-                                Sign in Here
+                                Sign in Here →
                             </Link>
                         </p>
                     </>
