@@ -7,7 +7,7 @@ function Home() {
     return (
         <main className="home-bg">
             <div className="overlay" />
-            <div className="container">
+            <div className="container home-wrapper">
                 <h1>Welcome to DTrain!</h1>
                 <p>
                     Discover a variety of exercises and learn the correct techniques to execute
