@@ -42,7 +42,7 @@ function Signin() {
     }, [token, navigate])
 
     return (
-        <main className="container my-5 d-flex flex-column justify-content-center align-items-center">
+        <main className="container d-flex flex-column justify-content-center align-items-center">
             <section className="my-5 pb-1 w-50">
                 <h1 className="text-center">Sign In</h1>
                 <form className="d-flex justify-content-center row g-3 my-3" onSubmit={onSubmit}>

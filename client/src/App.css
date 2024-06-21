@@ -13,6 +13,10 @@ body {
     margin: 0;
 }
 
+main {
+    height: 80vh;
+}
+
 .home-bg {
     position: relative;
     height: 100vh;
