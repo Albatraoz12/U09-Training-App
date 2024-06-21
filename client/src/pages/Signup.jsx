@@ -190,9 +190,9 @@ function Signup() {
                         )}
                     </div>
                     {!errorModal && (
-                        <div className="col-12">
+                        <div className="col-12 d-flex justify-content-center">
                             <button type="submit" className="btn btn-primary btn-lg">
-                                Sign up
+                                Sign in
                             </button>
                         </div>
                     )}
