@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-alert */
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -17,11 +15,12 @@ function Signup() {
         confirmPassword: '',
     })
     const [formErrors, setFormErrors] = useState({}) // stores the errors in array if accured
-    const [error, setError] = useState(true) // errors are true beacause all feilds are empy on mount, will not display anything
+    const [error, setError] = useState(true) // errors are true because all fields are empty on mount, will not display anything
     const [submitted, setSubmitted] = useState(false)
     const { firstName, lastName, email, password, confirmPassword } = formData
+
     // Before signing up, the validate function will validate that the user has filled in
-    // all the feilds with correct information.
+    // all the fields with correct information.
     const validate = (values) => {
         // Empty errors object - data is added if the form is not filled out properly
         const errors = {}
@@ -62,9 +61,11 @@ function Signup() {
         }
         return errors
     }
+
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+
     const onSubmit = (e) => {
         e.preventDefault()
         setFormErrors(validate(formData))
@@ -79,7 +80,7 @@ function Signup() {
                     if (res.data.message) navigate('/signin')
                 })
                 .catch(() => {
-                    setErrorMessage('Email is already in use, Try an other one')
+                    setErrorMessage('Email is already in use, Try another one')
                     setErrorModal(true)
                 })
         }
@@ -91,52 +92,56 @@ function Signup() {
     const successmessage = () => {
         console.log('Registration no errors')
     }
+
     return (
         <main className="my-5">
             <section className="container my-3">
-                <h1>Sign Up</h1>
+                <h1 className="text-center">Sign Up</h1>
                 {Object.keys(formErrors).length === 0 && submitted ? successmessage() : ''}
                 <div className="d-flex align-items-center justify-content-center">
                     {errorModal && (
                         <ErrorModal setErrorModal={setErrorModal} setErrorMessage={errorMessage} />
                     )}
                 </div>
-                <form className="row g-3 mt-2">
+                <form className="row g-3 mt-2" onSubmit={onSubmit}>
                     <div className="col-md-6">
                         <label htmlFor="firstName" className="form-label">
                             First name
                         </label>
-                        <p>{formErrors.firstName}</p>
                         <input
                             type="text"
                             className="form-control"
                             id="firstName"
                             name="firstName"
                             value={firstName}
-                            placeholder="your first name"
+                            placeholder="Your first name"
                             onChange={onChange}
                         />
+                        {formErrors.firstName && (
+                            <p className="validation-message">{formErrors.firstName}</p>
+                        )}
                     </div>
                     <div className="col-md-6">
                         <label htmlFor="lastName" className="form-label">
                             Last name
                         </label>
-                        <p>{formErrors.lastName}</p>
                         <input
                             type="text"
                             className="form-control"
                             id="lastName"
                             name="lastName"
                             value={lastName}
-                            placeholder="your last name"
+                            placeholder="Your last name"
                             onChange={onChange}
                         />
+                        {formErrors.lastName && (
+                            <p className="validation-message">{formErrors.lastName}</p>
+                        )}
                     </div>
                     <div className="col-12">
                         <label htmlFor="email" className="form-label">
                             Email
                         </label>
-                        <p>{formErrors.email}</p>
                         <input
                             type="email"
                             className="form-control"
@@ -146,12 +151,14 @@ function Signup() {
                             placeholder="example@gmail.com"
                             onChange={onChange}
                         />
+                        {formErrors.email && (
+                            <p className="validation-message">{formErrors.email}</p>
+                        )}
                     </div>
                     <div className="col-md-6">
                         <label htmlFor="password" className="form-label">
                             Password
                         </label>
-                        <p>{formErrors.password}</p>
                         <input
                             type="password"
                             className="form-control"
@@ -161,29 +168,30 @@ function Signup() {
                             placeholder="Password must be 5"
                             onChange={onChange}
                         />
+                        {formErrors.password && (
+                            <p className="validation-message">{formErrors.password}</p>
+                        )}
                     </div>
                     <div className="col-md-6">
                         <label htmlFor="confirmPassword" className="form-label">
                             Confirm Password
                         </label>
-                        <p>{formErrors.confirmPassword}</p>
                         <input
                             type="password"
                             className="form-control"
                             id="confirmPassword"
                             name="confirmPassword"
                             value={confirmPassword}
-                            placeholder="confirm your password"
+                            placeholder="Confirm your password"
                             onChange={onChange}
                         />
+                        {formErrors.confirmPassword && (
+                            <p className="validation-message">{formErrors.confirmPassword}</p>
+                        )}
                     </div>
                     {!errorModal && (
                         <div className="col-12">
-                            <button
-                                type="submit"
-                                className="btn btn-primary btn-lg"
-                                onClick={onSubmit}
-                            >
+                            <button type="submit" className="btn btn-primary btn-lg">
                                 Sign up
                             </button>
                         </div>
@@ -193,4 +201,5 @@ function Signup() {
         </main>
     )
 }
+
 export default Signup

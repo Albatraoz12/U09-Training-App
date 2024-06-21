@@ -115,6 +115,13 @@ a:hover {
     border: 1px solid #272848;
 }
 
+.validation-message {
+    margin: 0;
+    padding: 0;
+    color: red;
+    font-size: 1rem;
+}
+
 footer {
     background-color: #6c6d84;
     padding: 10px;
