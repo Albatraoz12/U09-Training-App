@@ -45,7 +45,7 @@ function Search() {
                         />
                         <button
                             type="submit"
-                            className="btn btn-primary m-1"
+                            className="btn btn-primary mt-1"
                             onClick={handleSubmit}
                         >
                             Search
