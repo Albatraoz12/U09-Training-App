@@ -90,6 +90,8 @@ function Signup() {
     }, [error, formData, navigate])
 
     const successmessage = () => {
+        // Disable the no-console rule for the next line
+        /* eslint-disable no-console */
         console.log('Registration no errors')
     }
 
