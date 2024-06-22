@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
 import { BiUserCircle } from 'react-icons/bi'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import ErrorPage from '../Errorpage'
 import * as api from '../../components/utils'
@@ -71,9 +71,9 @@ function FindUsers() {
                                     key={key}
                                 >
                                     <li className="list-unstyled d-flex justify-content-center align-items-center px-3 py-2">
-                                        <a className="text-white" href={`getUser/${userData._id}`}>
+                                        <Link className="text-white" to={`getUser/${userData._id}`}>
                                             <BiUserCircle /> {userData.firstName}
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             )

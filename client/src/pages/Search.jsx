@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
-import * as api from '../components/utils'
+import { Link } from 'react-router-dom'
+import { getBodypartEx, getExerciseByName } from '../components/utils'
 
 function Search() {
     const [exercises, setExcercises] = useState([]) // Stores exercises into an arry
     const [exerciseName, setExerciseName] = useState('') // Stores user input value
-
     // When user click on dropdown menu to find exercises by bodypar
     const onChangeBP = async (e) => {
-        const fetchBodyPart = await api.getBodypartEx(e.target.value)
+        const fetchBodyPart = await getBodypartEx(e.target.value)
         setExcercises(fetchBodyPart)
     }
 
     // When user sumbits an exercise with input
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const getExercises = await api.getExerciseByName(exerciseName)
+        const getExercises = await getExerciseByName(exerciseName)
         setExcercises(getExercises)
     }
 
@@ -45,7 +45,7 @@ function Search() {
                         />
                         <button
                             type="submit"
-                            className="btn btn-primary m-1"
+                            className="btn btn-primary mt-1"
                             onClick={handleSubmit}
                         >
                             Search
@@ -78,8 +78,8 @@ function Search() {
                     {ten.map((exercise) => {
                         return (
                             <div className="col" key={exercise.id}>
-                                <a
-                                    href={`/exercise/${exercise.id}`}
+                                <Link
+                                    to={`/exercise/${exercise.id}`}
                                     className="text-decoration-none"
                                 >
                                     <div className="card">
@@ -102,7 +102,7 @@ function Search() {
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                         )
                     })}

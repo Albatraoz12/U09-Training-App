@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Errorpage() {
     return (
@@ -12,9 +13,9 @@ function Errorpage() {
 
                 <p>Error code: 404</p>
 
-                <a href="/" className="btn btn-primary">
+                <Link to="/" className="btn btn-primary">
                     Click Here to go back to home
-                </a>
+                </Link>
             </section>
         </main>
     )

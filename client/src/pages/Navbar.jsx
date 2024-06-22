@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import logo from '../assets/logo-test.png'
@@ -33,10 +33,10 @@ function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark">
             <div className="container-fluid">
-                <a className="navbar-brand" href="/">
+                <Link className="navbar-brand" to="/">
                     <img src={logo} alt="DTrain Logo, go Home" height={35} width={35} />
                     DTrain
-                </a>
+                </Link>
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -54,20 +54,20 @@ function Navbar() {
                 >
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a
+                            <Link
                                 className="nav-link fw-bold text-white"
                                 aria-current="page"
-                                href="/search"
+                                to="/search"
                             >
                                 Search
-                            </a>
+                            </Link>
                         </li>
                         {user ? (
                             <>
                                 <li className="nav-item">
-                                    <a className="nav-link fw-bold text-white" href="/dashboard">
+                                    <Link className="nav-link fw-bold text-white" to="/dashboard">
                                         Dashboard
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
                                     <button
@@ -83,14 +83,14 @@ function Navbar() {
                         ) : (
                             <>
                                 <li className="nav-item">
-                                    <a className="nav-link fw-bold text-white" href="/signin">
+                                    <Link className="nav-link fw-bold text-white" to="/signin">
                                         Sign In
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link fw-bold text-white" href="/signup">
+                                    <Link className="nav-link fw-bold text-white" to="/signup">
                                         Sign Up
-                                    </a>
+                                    </Link>
                                 </li>
                             </>
                         )}

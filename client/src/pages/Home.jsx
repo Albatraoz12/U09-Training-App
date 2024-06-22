@@ -1,46 +1,48 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 function Home() {
     const token = Cookies.get('access_token')
     return (
-        <main className="w-auto mx-auto mb-5">
-            <article className="container mx-auto my-5 pb-5">
+        <main className="home-bg">
+            <div className="overlay" />
+            <div className="container home-wrapper">
                 <h1>Welcome to DTrain!</h1>
-                <p>Here you will be able to find exercises and how to execute them correcly.</p>
                 <p>
-                    You can start{' '}
-                    <a className="text-white fw-bolder" href="/search">
-                        {' '}
-                        searching here
-                    </a>
+                    Discover a variety of exercises and learn the correct techniques to execute
+                    them.
+                </p>
+                <p>
+                    Get started by{' '}
+                    <Link className="text-white fw-bolder" to="/search">
+                        searching for exercises here →
+                    </Link>
                 </p>
                 {token ? (
                     <p>
-                        Go Back to{' '}
-                        <a className="text-white fw-bolder" href="/dashboard">
-                            {' '}
-                            Dashboard here
-                        </a>
+                        Go back to your{' '}
+                        <Link className="text-white fw-bolder" to="/dashboard">
+                            dashboard
+                        </Link>
                     </p>
                 ) : (
                     <>
                         <p className="mt-2">
-                            Do you want to save exercises or maybe create a list with exercises?
+                            Save your favorite exercises or create custom exercise lists.
                         </p>
-                        <a className="btn btn-primary mb-1" href="/signup">
+                        <Link className="btn btn-primary mb-1" to="/signup">
                             Get started by Signing Up Here
-                        </a>
+                        </Link>
                         <p className="my-5 pb-5">
-                            Already Signed Up,{' '}
-                            <a className="text-white fw-bolder" href="/signin">
-                                {' '}
-                                Sign in Here
-                            </a>
+                            Already a member?{' '}
+                            <Link className="text-white fw-bolder" to="/signin">
+                                Sign in Here →
+                            </Link>
                         </p>
                     </>
                 )}
-            </article>
+            </div>
         </main>
     )
 }
