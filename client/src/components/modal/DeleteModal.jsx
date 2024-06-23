@@ -1,8 +1,9 @@
 import React from 'react'
 import './Modal.css'
 import PropTypes from 'prop-types'
+import { deleteList } from '../utils'
 
-function DeleteModal({ setErrorModal, errorMessage, delFunc, listsId, token }) {
+function DeleteModal({ setErrorModal, listId, token }) {
     return (
         <section className="modalBackground">
             <div className="modalContainer">
@@ -32,7 +33,16 @@ function DeleteModal({ setErrorModal, errorMessage, delFunc, listsId, token }) {
                     >
                         Cancel
                     </button>
-                    <button type="button" onClick={() => delFunc(listsId, token)}>
+                    <button
+                        type="button"
+                        onClick={async () => {
+                            const removeList = await deleteList(listId, token)
+                            if (removeList) {
+                                setErrorModal(false)
+                                window.location.reload()
+                            }
+                        }}
+                    >
                         Yes
                     </button>
                 </div>
@@ -43,16 +53,12 @@ function DeleteModal({ setErrorModal, errorMessage, delFunc, listsId, token }) {
 
 DeleteModal.defaultProps = {
     setErrorModal: () => {},
-    errorMessage: '',
-    delFunc: () => {},
     listId: '',
     token: '',
 }
 
 DeleteModal.propTypes = {
     setErrorModal: PropTypes.func,
-    errorMessage: PropTypes.string,
-    delFunc: PropTypes.func,
     listId: PropTypes.string,
     token: PropTypes.string,
 }
