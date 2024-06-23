@@ -2,7 +2,7 @@ import React from 'react'
 import './Modal.css'
 import PropTypes from 'prop-types'
 
-function DeleteModal({ setErrorModal, errorMessage }) {
+function DeleteModal({ setErrorModal, errorMessage, delFunc, listsId, token }) {
     return (
         <section className="modalBackground">
             <div className="modalContainer">
@@ -10,7 +10,7 @@ function DeleteModal({ setErrorModal, errorMessage }) {
                     <button
                         type="button"
                         onClick={() => {
-                            setOpenModal(false)
+                            setErrorModal(false)
                         }}
                     >
                         X
@@ -26,13 +26,13 @@ function DeleteModal({ setErrorModal, errorMessage }) {
                     <button
                         type="button"
                         onClick={() => {
-                            setOpenModal(false)
+                            setErrorModal(false)
                         }}
                         id="cancelBtn"
                     >
                         Cancel
                     </button>
-                    <button type="button" onClick={() => navigate('/search')}>
+                    <button type="button" onClick={() => delFunc(listsId, token)}>
                         Yes
                     </button>
                 </div>
@@ -41,14 +41,20 @@ function DeleteModal({ setErrorModal, errorMessage }) {
     )
 }
 
-ErrorModal.defaultProps = {
+DeleteModal.defaultProps = {
     setErrorModal: () => {},
     errorMessage: '',
+    delFunc: () => {},
+    listId: '',
+    token: '',
 }
 
-ErrorModal.propTypes = {
+DeleteModal.propTypes = {
     setErrorModal: PropTypes.func,
     errorMessage: PropTypes.string,
+    delFunc: PropTypes.func,
+    listId: PropTypes.string,
+    token: PropTypes.string,
 }
 
 export default DeleteModal
