@@ -11,7 +11,6 @@ function ErrorModal({ setErrorModal, setErrorMessage }) {
                         type="button"
                         onClick={() => {
                             setErrorModal(false)
-                            window.location.reload()
                         }}
                     >
                         X
