@@ -29,6 +29,7 @@ function Modal({ setOpenModal }) {
                         type="button"
                         onClick={() => {
                             setOpenModal(false)
+                            window.location.reload()
                         }}
                         id="cancelBtn"
                     >
