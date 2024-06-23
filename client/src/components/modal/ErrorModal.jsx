@@ -2,23 +2,22 @@ import React from 'react'
 import './Modal.css'
 import PropTypes from 'prop-types'
 
-function ErrorModal({ setErrorModal, setErrorMessage }) {
+function ErrorModal({ setErrorModal, errorMessage }) {
     return (
-        <section className="errorModalBackground">
+        <section className="modalBackground">
             <div className="modalContainer">
                 <div className="titleCloseBtn">
                     <button
                         type="button"
                         onClick={() => {
                             setErrorModal(false)
-                            window.location.reload()
                         }}
                     >
                         X
                     </button>
                 </div>
                 <div className="title">
-                    <h3>{setErrorMessage}</h3>
+                    <h3>{errorMessage}</h3>
                 </div>
             </div>
         </section>
@@ -27,12 +26,12 @@ function ErrorModal({ setErrorModal, setErrorMessage }) {
 
 ErrorModal.defaultProps = {
     setErrorModal: () => {},
-    setErrorMessage: 'error',
+    errorMessage: 'Error',
 }
 
 ErrorModal.propTypes = {
     setErrorModal: PropTypes.func,
-    setErrorMessage: PropTypes.string,
+    errorMessage: PropTypes.string,
 }
 
 export default ErrorModal

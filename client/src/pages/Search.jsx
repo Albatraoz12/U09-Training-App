@@ -25,8 +25,8 @@ function Search() {
     })
 
     return (
-        <main className="my-5">
-            <section className="container mx-auto my-5">
+        <main className="my-5 search-container">
+            <section className="container mx-auto my-5 h-auto">
                 <h1>Search</h1>
                 <form className="row g-3 mt-4">
                     <div className="col-12">
@@ -72,7 +72,7 @@ function Search() {
                     </div>
                 </form>
             </section>
-            <section className="container my-5">
+            <section className="container my-5 test">
                 <h1 className="text-start">You searched for: {exerciseName || ''}</h1>
                 <div className="row row-cols-1 row-cols-md-3 g-2 mx-auto">
                     {ten.map((exercise) => {

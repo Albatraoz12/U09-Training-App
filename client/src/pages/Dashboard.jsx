@@ -139,7 +139,7 @@ function Dashboard() {
                     <h2>Your Lists</h2>
                     <div className="d-flex justify-content-center flex-column gap-1 container">
                         {getUserList.map((lists) => {
-                            return <List lists={lists} key={lists._id} />
+                            return <List lists={lists} key={lists._id} getUserId={getUser.id} />
                         })}
                     </div>
                 </section>
