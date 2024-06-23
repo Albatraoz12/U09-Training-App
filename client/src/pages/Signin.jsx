@@ -82,7 +82,7 @@ function Signin() {
                 </form>
                 {errorModal && (
                     <div className="d-flex align-items-center justify-content-center">
-                        <ErrorModal setErrorModal={setErrorModal} setErrorMessage={errorMessage} />
+                        <ErrorModal setErrorModal={setErrorModal} errorMessage={errorMessage} />
                     </div>
                 )}
             </section>
