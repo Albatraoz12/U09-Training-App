@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import ErrorModal from '../modal/ErrorModal'
 import { login } from '../utils'
+import { UserContext } from '../../context/UserProvider'
 
 function SigninForm() {
     const navigate = useNavigate()
-    const token = Cookies.get('access_token')
+    const { token, setToken } = useContext(UserContext)
     const [errorModal, setErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [formData, setFormData] = useState({
@@ -32,12 +33,14 @@ function SigninForm() {
         const signin = await login(userData)
         if (signin.token) {
             Cookies.set('access_token', signin.token, { expires: 1 })
+            setToken(signin.token)
             navigate('/dashboard')
         } else {
             setErrorModal(true)
             setErrorMessage('Email or password incorrect')
         }
     }
+
     useEffect(() => {
         if (token) navigate('/')
     }, [token, navigate])
