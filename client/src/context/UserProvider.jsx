@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { createContext, useState, useMemo, useEffect } from 'react'
 import Cookies from 'js-cookie'
-import { checkUser } from '../components/utils'
+import { checkUser, getLists, getSaves } from '../components/utils'
 
 const UserContext = createContext()
 
@@ -29,23 +29,20 @@ function UserProvider({ children }) {
         }
         fetchUser()
     }, [token])
-    console.log('context', userLists)
-    console.log('context', userSaves)
+
     // useEffect to fetch user lists and saves once the user is set
-    // useEffect(() => {
-    //     const fetchUserListsAndSaves = async () => {
-    //         console.log(user)
-    //         if (user.id && token) {
-    //             const uLists = await getLists(user.id, token)
-    //             const uSaves = await getSaves(user.id, token)
-    //             setUserLists(uLists)
-    //             setUserSaves(uSaves)
-    //         }
-    //     }
-    //     console.log('context List', userLists)
-    //     console.log('context Saves', userSaves)
-    //     fetchUserListsAndSaves()
-    // }, [user, token])
+    useEffect(() => {
+        const fetchUserListsAndSaves = async () => {
+            if (user.id && token) {
+                const uLists = await getLists(user.id, token)
+                const uSaves = await getSaves(user.id, token)
+                setUserLists(uLists)
+                setUserSaves(uSaves)
+            }
+        }
+
+        fetchUserListsAndSaves()
+    }, [user, token])
 
     const value = useMemo(
         () => ({

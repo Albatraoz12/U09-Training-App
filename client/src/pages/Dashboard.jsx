@@ -5,16 +5,14 @@ import { BiListCheck, BiUserCheck, BiUserCircle, BiX } from 'react-icons/bi'
 import { Link, useNavigate } from 'react-router-dom'
 import Modal from '../components/modal/Modal'
 import ErrorModal from '../components/modal/ErrorModal'
-import * as api from '../components/utils'
+import { createList } from '../components/utils'
 import List from '../components/List'
 import Saves from '../components/Saves'
 import { UserContext } from '../context/UserProvider'
 
 function Dashboard() {
-    const { user, token, setUserLists, setUserSaves } = useContext(UserContext)
+    const { user, token, userLists, userSaves } = useContext(UserContext)
     const navigate = useNavigate()
-    const [getUserList, setGetUserList] = useState([]) // Stores user's lists
-    const [getUserSaves, setGetUserSaves] = useState([]) // Stores all the user's saved/liked exercises
     const [formData, setFormData] = useState({
         title: '',
     })
@@ -26,30 +24,17 @@ function Dashboard() {
 
     useEffect(() => {
         const fetchUserData = async () => {
-            if (token) {
-                const userInfo = await api.checkUser(token)
-                if (userInfo.user) {
-                    // setUser(userInfo.user)
-                    if (userInfo.user.role === 'admin') setIsRole(true)
-                    if (userInfo.user.id) {
-                        const userSaved = await api.getSaves(userInfo.user.id, token)
-                        setGetUserSaves(userSaved)
-                        setUserSaves(userSaved)
-                        const userLists = await api.getLists(userInfo.user.id, token)
-                        setGetUserList(userLists)
-                        setUserLists(userLists)
-                    }
-                } else {
-                    Cookies.remove('access_token')
-                    navigate('/')
+            if (token && user) {
+                if (user.role === 'admin') {
+                    setIsRole(true)
                 }
             } else {
+                Cookies.remove('access_token')
                 navigate('/signin')
             }
         }
-
         fetchUserData()
-    }, [token, navigate])
+    }, [navigate, user, token])
 
     const { title } = formData
     const onChange = (e) => {
@@ -64,7 +49,7 @@ function Dashboard() {
         const userData = {
             title,
         }
-        const newList = await api.createList(user.id, token, userData)
+        const newList = await createList(user.id, token, userData)
         if (newList.message) {
             setModalOpen(true)
         } else {
@@ -137,15 +122,16 @@ function Dashboard() {
                     </div>
                     <h2>Your Lists</h2>
                     <div className="d-flex justify-content-center flex-column gap-1 container">
-                        {getUserList.map((lists) => (
+                        {userLists.map((lists) => (
                             <List lists={lists} key={lists._id} getUserId={user.id} />
                         ))}
                     </div>
                 </section>
                 <section>
                     <h2>Your Saves</h2>
+
                     <div className="d-flex justify-content-center flex-column gap-1 container">
-                        {getUserSaves.map((saves) => (
+                        {userSaves.map((saves) => (
                             <Saves save={saves} key={saves._id} />
                         ))}
                     </div>
