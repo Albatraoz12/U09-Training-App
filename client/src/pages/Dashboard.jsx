@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Cookies from 'js-cookie'
 import { BiListCheck, BiUserCheck, BiUserCircle, BiX } from 'react-icons/bi'
 import { Link, useNavigate } from 'react-router-dom'
@@ -8,14 +8,13 @@ import ErrorModal from '../components/modal/ErrorModal'
 import * as api from '../components/utils'
 import List from '../components/List'
 import Saves from '../components/Saves'
+import { UserContext } from '../context/UserProvider'
 
 function Dashboard() {
-    const token = Cookies.get('access_token')
+    const { user, token, setUserLists, setUserSaves } = useContext(UserContext)
     const navigate = useNavigate()
-    const [getUser, setGetUser] = useState([]) // Stores user information
-    const [isRole, setIsRole] = useState(false) // if set to true, the user is a Admin else User
-    const [getUserList, setGetUserList] = useState([]) // Stores users lists
-    const [getUserSaves, setGetUserSaves] = useState([]) // Stores all the users saved/liked exercises
+    const [getUserList, setGetUserList] = useState([]) // Stores user's lists
+    const [getUserSaves, setGetUserSaves] = useState([]) // Stores all the user's saved/liked exercises
     const [formData, setFormData] = useState({
         title: '',
     })
@@ -23,31 +22,35 @@ function Dashboard() {
     const [errorModal, setErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [create, setCreate] = useState(false)
+    const [isRole, setIsRole] = useState(false) // if set to true, the user is an Admin else User
 
     useEffect(() => {
-        async function fetchUserData() {
-            const userInfo = await api.checkUser(token)
-            // console.log(userInfo.response.data)
-            if (userInfo.user) {
-                setGetUser(userInfo.user)
-                if (getUser.role === 'admin') setIsRole(true)
-                if (getUser.id) {
-                    const userSaved = await api.getSaves(getUser.id, token)
-                    setGetUserSaves(userSaved)
-                    const userLists = await api.getLists(getUser.id, token)
-                    setGetUserList(userLists)
+        const fetchUserData = async () => {
+            if (token) {
+                const userInfo = await api.checkUser(token)
+                if (userInfo.user) {
+                    // setUser(userInfo.user)
+                    if (userInfo.user.role === 'admin') setIsRole(true)
+                    if (userInfo.user.id) {
+                        const userSaved = await api.getSaves(userInfo.user.id, token)
+                        setGetUserSaves(userSaved)
+                        setUserSaves(userSaved)
+                        const userLists = await api.getLists(userInfo.user.id, token)
+                        setGetUserList(userLists)
+                        setUserLists(userLists)
+                    }
+                } else {
+                    Cookies.remove('access_token')
+                    navigate('/')
                 }
             } else {
-                Cookies.remove('access_token')
                 navigate('/signin')
             }
         }
-        if (!token) {
-            navigate('/signin')
-        }
+
         fetchUserData()
-    }, [token, navigate, getUser.id, getUser.role])
-    // variable and function to create a list
+    }, [token, navigate])
+
     const { title } = formData
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -55,12 +58,13 @@ function Dashboard() {
             [e.target.name]: e.target.value,
         }))
     }
+
     const onSubmit = async (e) => {
         e.preventDefault()
         const userData = {
             title,
         }
-        const newList = await api.createList(getUser.id, token, userData)
+        const newList = await api.createList(user.id, token, userData)
         if (newList.message) {
             setModalOpen(true)
         } else {
@@ -68,26 +72,24 @@ function Dashboard() {
             setErrorMessage('please put in a title')
         }
     }
+
     return (
         <main className="py-5">
             <div className="container">
                 <section className="my-5">
-                    <h1>Welcome {getUser.firstName}</h1>
+                    <h1>Welcome {user?.firstName}</h1>
                     <p>
-                        Hope you have a wonderfull day <br /> Let the workout start!
+                        Hope you have a wonderful day <br /> Let the workout start!
                     </p>
-                    {/* If User is an admin, the two buttons bellow will appear otherwise null */}
-                    {isRole ? (
+                    {isRole && (
                         <div className="d-flex justify-content-center align-items-center gap-3">
                             <Link className="btn btn-primary" to="/createUser">
-                                <BiUserCheck /> Create an User
+                                <BiUserCheck /> Create a User
                             </Link>
                             <Link className="btn btn-primary" to="/findUsers">
-                                <BiUserCircle /> Find an User
+                                <BiUserCircle /> Find a User
                             </Link>
                         </div>
-                    ) : (
-                        ''
                     )}
                 </section>
                 {create ? (
@@ -130,29 +132,27 @@ function Dashboard() {
                     <div className="d-flex align-items-center justify-content-center">
                         {modalOpen && <Modal setOpenModal={setModalOpen} />}
                         {errorModal && (
-                            <ErrorModal
-                                setErrorModal={setErrorModal}
-                                setErrorMessage={errorMessage}
-                            />
+                            <ErrorModal setErrorModal={setErrorModal} errorMessage={errorMessage} />
                         )}
                     </div>
                     <h2>Your Lists</h2>
                     <div className="d-flex justify-content-center flex-column gap-1 container">
-                        {getUserList.map((lists) => {
-                            return <List lists={lists} key={lists._id} getUserId={getUser.id} />
-                        })}
+                        {getUserList.map((lists) => (
+                            <List lists={lists} key={lists._id} getUserId={user.id} />
+                        ))}
                     </div>
                 </section>
                 <section>
                     <h2>Your Saves</h2>
                     <div className="d-flex justify-content-center flex-column gap-1 container">
-                        {getUserSaves.map((saves) => {
-                            return <Saves save={saves} key={saves._id} />
-                        })}
+                        {getUserSaves.map((saves) => (
+                            <Saves save={saves} key={saves._id} />
+                        ))}
                     </div>
                 </section>
             </div>
         </main>
     )
 }
+
 export default Dashboard
