@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import ErrorModal from '../components/modal/ErrorModal'
-import * as api from '../components/utils'
 import BackButton from '../components/BackButton'
+import { UserContext } from '../context/UserProvider'
+import { deleteSaved, exerciseToList, getExercise, saveExercise } from '../components/utils'
 
 function ExercisePage() {
+    const { user, userLists, userSaves } = useContext(UserContext)
     const params = useParams() // Let developers get access to params
     const token = Cookies.get('access_token')
     const [errorModal, setErrorModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [exercise, setExercise] = useState([]) // Stores the exercise data
     const [isLoggedIn, setIsLoggedIn] = useState(false) // checks if the user is logged in or not
-    const [getUser, setGetUser] = useState([]) // Stores the user information
-    const [getUserList, setGetUserList] = useState([]) // Stores the users lists to let user save exercise into a list
-    const [getUserSaves, setGetUserSaves] = useState([]) // Stores the users likes/saved to let user like/save exercise
     const [isSaved, setIsSaved] = useState(false) // If set to true, the user has then already liked/saved it
     const [formData, setFormData] = useState({
         name: '',
@@ -23,15 +22,9 @@ function ExercisePage() {
 
     useEffect(() => {
         async function fetchUserData() {
-            const userInfo = await api.checkUser(token)
-            setGetUser(userInfo.user)
             setIsLoggedIn(true)
-            if (getUser.id) {
-                const userLists = await api.getLists(getUser.id, token)
-                setGetUserList(userLists)
-                const userSaved = await api.getSaves(getUser.id, token)
-                setGetUserSaves(userSaved)
-                getUserSaves.map((saves) => {
+            if (userSaves && userSaves.length > 0) {
+                userSaves.map((saves) => {
                     if (saves.exId === params.id) {
                         setIsSaved(true)
                     }
@@ -40,7 +33,7 @@ function ExercisePage() {
             }
         }
         const fetchExercise = async () => {
-            const currentEx = await api.getExercise(params.id)
+            const currentEx = await getExercise(params.id)
             setExercise(currentEx)
             if (exercise.name && exercise.id) {
                 setFormData({
@@ -49,24 +42,24 @@ function ExercisePage() {
                 })
             }
         }
-        if (token) {
+        if (user) {
             fetchUserData()
         }
         fetchExercise()
 
         // Disable this line because of not neeeding the dependensis
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params.id, token, getUser.id, exercise.name, exercise.id])
+    }, [params.id, exercise.name, exercise.id])
 
     // function will run when user clicks on Like button
     const save = async (data) => {
-        const saved = await api.saveExercise(getUser.id, token, data)
+        const saved = await saveExercise(user.id, token, data)
         if (saved.message) window.location.reload()
     }
 
     // When user clicks on a list from the dropdown, the exercise will be saved into that list
     const saveList = async (id) => {
-        const saveToList = await api.exerciseToList(id, token, formData)
+        const saveToList = await exerciseToList(id, token, formData)
         if (saveToList.message) {
             // eslint-disable-next-line no-alert
             alert('success')
@@ -117,10 +110,7 @@ function ExercisePage() {
                                         type="button"
                                         className="btn btn-primary"
                                         onClick={async () => {
-                                            const deleted = await api.deleteSaved(
-                                                getUser.id,
-                                                params.id
-                                            )
+                                            const deleted = await deleteSaved(user.id, params.id)
                                             if (deleted.message) window.location.reload()
                                         }}
                                     >
@@ -151,7 +141,7 @@ function ExercisePage() {
                                         className="dropdown-menu"
                                         aria-labelledby="dropdownMenuButton1"
                                     >
-                                        {getUserList.map((list, index) => {
+                                        {userLists.map((list, index) => {
                                             return (
                                                 // eslint-disable-next-line react/no-array-index-key
                                                 <li key={index}>
