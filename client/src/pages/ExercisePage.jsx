@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect, useContext } from 'react'
 import { Link, useParams } from 'react-router-dom'
@@ -8,7 +9,7 @@ import { UserContext } from '../context/UserProvider'
 import { deleteSaved, exerciseToList, getExercise, saveExercise } from '../components/utils'
 
 function ExercisePage() {
-    const { user, userLists, userSaves } = useContext(UserContext)
+    const { user, userLists, userSaves, setUserSaves } = useContext(UserContext)
     const params = useParams()
     const token = Cookies.get('access_token')
     const [errorModal, setErrorModal] = useState(false)
@@ -49,16 +50,50 @@ function ExercisePage() {
     }, [user, userSaves, params.id])
 
     const save = async (data) => {
-        const saved = await saveExercise(user.id, token, data)
-        if (saved.message) window.location.reload()
+        try {
+            const saved = await saveExercise(user.id, token, data)
+            if (saved.message) {
+                setIsSaved(true)
+                // Fake mutate the userSaves array
+                const newUserSaves = [...userSaves, { exId: params.id }]
+                setUserSaves(newUserSaves)
+            } else {
+                setErrorMessage(saved.errorMessage)
+                setErrorModal(true)
+            }
+        } catch (error) {
+            setErrorMessage(error.message)
+            setErrorModal(true)
+        }
+    }
+
+    const unsave = async () => {
+        try {
+            const deleted = await deleteSaved(user.id, params.id)
+            if (deleted.message) {
+                setIsSaved(false)
+                // Fake mutate the userSaves array
+                const newUserSaves = userSaves.filter((save) => save.exId !== params.id)
+                setUserSaves(newUserSaves)
+            } else {
+                setErrorMessage(deleted.errorMessage)
+                setErrorModal(true)
+            }
+        } catch (error) {
+            setErrorMessage(error.message)
+            setErrorModal(true)
+        }
     }
 
     const saveList = async (id) => {
-        const saveToList = await exerciseToList(id, token, formData)
-        if (saveToList.message) {
-            alert('Success')
-        } else {
-            setErrorMessage(saveToList.errorMessage)
+        try {
+            const saveToList = await exerciseToList(id, token, formData)
+            if (!saveToList.message) {
+                setErrorMessage(saveToList.errorMessage)
+                setErrorModal(true)
+            }
+        } catch (error) {
+            setErrorMessage(error.message)
             setErrorModal(true)
         }
     }
@@ -66,7 +101,7 @@ function ExercisePage() {
     return (
         <main className="my-5">
             <BackButton navTo="search" />
-            <section className="container">
+            <section className="container text-center">
                 <h1>{exercise.name}</h1>
                 <article className="px-5">
                     <h2>About</h2>
@@ -83,13 +118,11 @@ function ExercisePage() {
                     />
                 </div>
                 {errorModal && (
-                    <div className="d-flex align-items-center justify-content-center">
-                        <ErrorModal setErrorModal={setErrorModal} setErrorMessage={errorMessage} />
-                    </div>
+                    <ErrorModal setErrorModal={setErrorModal} errorMessage={errorMessage} />
                 )}
                 <section className="my-2">
                     {isLoggedIn ? (
-                        <h2>Save this exercise or save it into a list</h2>
+                        <h2 className="text-center">Save this exercise or save it into a list</h2>
                     ) : (
                         <h2>
                             <Link className="text-white" to="/signin">
@@ -98,17 +131,14 @@ function ExercisePage() {
                             to save exercise
                         </h2>
                     )}
-                    <div className="d-flex justify-content-center gap-2">
+                    <div className="d-flex justify-content-center align-items-center gap-2">
                         {isLoggedIn && (
                             <>
                                 {isSaved ? (
                                     <button
                                         type="button"
                                         className="btn btn-primary"
-                                        onClick={async () => {
-                                            const deleted = await deleteSaved(user.id, params.id)
-                                            if (deleted.message) window.location.reload()
-                                        }}
+                                        onClick={unsave}
                                     >
                                         Unsave
                                     </button>
@@ -116,16 +146,14 @@ function ExercisePage() {
                                     <button
                                         type="button"
                                         className="btn btn-primary"
-                                        onClick={() => {
-                                            save(formData)
-                                        }}
+                                        onClick={() => save(formData)}
                                     >
                                         Save
                                     </button>
                                 )}
                                 <div className="dropdown">
                                     <button
-                                        className="btn btn-secondary dropdown-toggle"
+                                        className="btn btn-primary dropdown-toggle"
                                         type="button"
                                         id="dropdownMenuButton1"
                                         data-bs-toggle="dropdown"
