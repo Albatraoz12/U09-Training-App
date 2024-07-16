@@ -11,6 +11,7 @@ function Search() {
     const onChangeBP = async (e) => {
         const fetchBodyPart = await getBodypartEx(e.target.value)
         setExcercises(fetchBodyPart)
+        setSearchTerm(e.target.value)
     }
 
     // When user submits an exercise with input
@@ -18,7 +19,7 @@ function Search() {
         e.preventDefault()
         const getExercises = await getExerciseByName(exerciseName)
         setExcercises(getExercises)
-        setSearchTerm(exerciseName)
+        setSearchTerm(exerciseName) // Update the searchTerm state with the input value
     }
 
     // Only display 10 exercises for better experience, at least for this project.
@@ -42,6 +43,7 @@ function Search() {
                             placeholder="Enter an exercise name"
                             onChange={(e) => setExerciseName(e.target.value)}
                             value={exerciseName} // Add this to control the input value
+                            aria-label="Search exercise by name" // ARIA attribute
                         />
                         <button type="submit" className="btn btn-primary mt-1">
                             Search
@@ -51,7 +53,7 @@ function Search() {
                         <label htmlFor="selectedWorkoutGroup">Or search for muscle group</label>
                         <select
                             className="form-select form-select-sm mb-3"
-                            aria-label=".form-select-lg example"
+                            aria-label="Select muscle group" // ARIA attribute
                             id="selectedWorkoutGroup"
                             name="bodyPart"
                             onChange={onChangeBP}
@@ -78,7 +80,7 @@ function Search() {
                                     <img
                                         src={`${exercise.gifUrl}`}
                                         className="card-img-top"
-                                        alt="exercise-gif"
+                                        alt={`GIF of ${exercise.name}`}
                                     />
                                     <div className="card-body">
                                         <h2 className="card-title text-dark fs-6 fw-bold">
