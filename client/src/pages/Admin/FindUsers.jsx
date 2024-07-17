@@ -71,7 +71,10 @@ function FindUsers() {
                                     key={key}
                                 >
                                     <li className="list-unstyled d-flex justify-content-center align-items-center px-3 py-2">
-                                        <Link className="text-white" to={`getUser/${userData._id}`}>
+                                        <Link
+                                            className="text-white"
+                                            to={`/getUser/${userData._id}`}
+                                        >
                                             <BiUserCircle /> {userData.firstName}
                                         </Link>
                                     </li>

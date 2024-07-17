@@ -1,10 +1,9 @@
 import React from 'react'
 import './Modal.css'
-import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { deleteList } from '../utils'
 
-function Modal({ setOpenModal }) {
-    const navigate = useNavigate()
+function DeleteModal({ setErrorModal, listId, token }) {
     return (
         <section className="modalBackground">
             <div className="modalContainer">
@@ -12,43 +11,56 @@ function Modal({ setOpenModal }) {
                     <button
                         type="button"
                         onClick={() => {
-                            setOpenModal(false)
+                            setErrorModal(false)
                         }}
                     >
                         X
                     </button>
                 </div>
                 <div className="title">
-                    <h3>List has been created!</h3>
+                    <h3>Warning!</h3>
                 </div>
                 <div className="body">
-                    <p>Press continue to start searching for exercises or press cancel to return</p>
+                    <p>Are you sure you want to delete?</p>
                 </div>
                 <div className="footer">
                     <button
                         type="button"
                         onClick={() => {
-                            setOpenModal(false)
-                            window.location.reload()
+                            setErrorModal(false)
                         }}
                         id="cancelBtn"
                     >
                         Cancel
                     </button>
-                    <button type="button" onClick={() => navigate('/search')}>
-                        Continue
+                    <button
+                        type="button"
+                        onClick={async () => {
+                            const removeList = await deleteList(listId, token)
+                            if (removeList) {
+                                setErrorModal(false)
+                                window.location.reload()
+                            }
+                        }}
+                    >
+                        Yes
                     </button>
                 </div>
             </div>
         </section>
     )
 }
-Modal.defaultProps = {
-    setOpenModal: () => {},
+
+DeleteModal.defaultProps = {
+    setErrorModal: () => {},
+    listId: '',
+    token: '',
 }
 
-Modal.propTypes = {
-    setOpenModal: PropTypes.func,
+DeleteModal.propTypes = {
+    setErrorModal: PropTypes.func,
+    listId: PropTypes.string,
+    token: PropTypes.string,
 }
 
-export default Modal
+export default DeleteModal

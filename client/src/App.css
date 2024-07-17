@@ -13,8 +13,8 @@ body {
     margin: 0;
 }
 
-main {
-    height: 80vh;
+.search-container {
+    height: 100%;
 }
 
 .home-bg {
@@ -69,6 +69,10 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.close {
+    cursor: pointer;
 }
 
 .btn-primary {
@@ -127,4 +131,8 @@ footer {
     padding: 10px;
     text-align: center;
     width: 100%;
+}
+
+.test {
+    min-height: 20vh;
 }

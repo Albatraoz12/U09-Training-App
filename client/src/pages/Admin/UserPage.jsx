@@ -82,7 +82,7 @@ function UserPage() {
         return (
             <main className="my-5">
                 <BackButton navTo="findUsers" />
-                <section className="my-5">
+                <section className="my-5 text-center">
                     <h1>Want to Update or Delete {firstName}</h1>
                 </section>
                 {/* Section for update the user information */}
