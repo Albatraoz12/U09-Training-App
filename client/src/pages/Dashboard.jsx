@@ -80,24 +80,27 @@ function Dashboard() {
                 {create ? (
                     <section className="container">
                         <form
-                            className="d-flex justify-content-center row gap-1 my-3"
+                            className="d-flex justify-content-start row gap-1 my-3 new-list"
                             onSubmit={onSubmit}
                         >
-                            <div className="d-flex align-items-center justify-content-center">
-                                <label htmlFor="title" className="fs-2">
-                                    Create List <BiX color="red" onClick={() => setCreate(false)} />
+                            <div className="d-flex align-items-center justify-content-start">
+                                <label htmlFor="title" className="fs-4">
+                                    Create List{' '}
+                                    <span className="close">
+                                        <BiX color="red" onClick={() => setCreate(false)} />
+                                    </span>
                                 </label>
                             </div>
                             <input
                                 type="text"
-                                className="col-md-6 col-sm-auto rounded form-control-lg"
+                                className="col-md-6 col-sm-auto rounded form-control"
                                 id="title"
                                 placeholder="Enter a title for your list"
                                 name="title"
                                 onChange={onChange}
                             />
                             <button
-                                className="btn btn-primary col-md-6 col-sm-auto rounded"
+                                className="btn btn-primary col-md-6 col-sm-auto rounded cursor"
                                 type="submit"
                             >
                                 Create <BiListCheck />
