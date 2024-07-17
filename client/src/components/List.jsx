@@ -12,13 +12,13 @@ function List({ lists, getUserId }) {
     return (
         <div className="custom-list rounded">
             <ul className="mb-0">
-                <li className="list-unstyled d-flex justify-content-between align-items-center px-3 py-2">
+                <li className="list-unstyled d-flex justify-content-between align-items-center px-2 py-2 bg-secondary bg-gradient rounded">
                     <Link className="text-white" to={`/userList/${lists.title}/${lists._id}`}>
                         <BiListUl /> {lists.title}
                     </Link>
                     <button
                         type="submit"
-                        className="btn btn-danger"
+                        className="btn btn-danger border border-danger"
                         aria-label="remove list"
                         onClick={() => {
                             setErrorModal(true)
